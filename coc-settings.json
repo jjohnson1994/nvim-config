@@ -1,0 +1,11 @@
+{
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "eslint.filetypes": [
+    "vue",
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact"
+  ]
+}
