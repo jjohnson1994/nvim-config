@@ -7,7 +7,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'kien/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdcommenter'
@@ -20,6 +20,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
+Plug 'mattn/emmet-vim'
 " Initialize plugin system
 call plug#end()
 filetype plugin indent on    " required
@@ -138,6 +139,17 @@ nmap <silent> <C-f> :call CocAction('format')<CR>
 
 map <Leader>p :CocList commands <CR>
 map <Leader>o :CocList outline <CR>
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 set statusline+=%{coc#status()}
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
