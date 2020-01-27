@@ -7,13 +7,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'lifepillar/vim-gruvbox8'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tpope/vim-fugitive'
-" Plug 'airblade/vim-gitgutter'
 Plug 'kien/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'mileszs/ack.vim'
 Plug 'kshenoy/vim-signature' 
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-surround'
 Plug 'chriskempson/base16-vim'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
@@ -21,6 +19,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+
 " Initialize plugin system
 call plug#end()
 filetype plugin indent on    " required
@@ -51,6 +51,7 @@ set cmdheight=1
 set updatetime=300
 set mouse=a
 set signcolumn=yes      " Always show sign column
+set encoding=UTF-8
 set termguicolors
 colorscheme gruvbox8
 
@@ -102,19 +103,37 @@ let g:coc_global_extensions = [
     \'coc-syntax',
     \]
 
-function! s:GoToDefinition()
-  " Try Coc First
-  if CocAction('jumpDefinition')
-    return v:true
-  endif
-  " Try Tags Second
-  let ret = execute("silent! normal \<C-]>")
-  if ret[:5] =~ "Error"
-    " Try Vim Last
-    call searchdecl(expand('<cword>'))
-  endif
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" function! s:GoToDefinition()
+"   " Try Coc First
+"   if CocAction('jumpDefinition')
+"     return v:true
+"   endif
+"   " Try Tags Second
+"   let ret = execute("silent! normal \<C-]>")
+"   if ret[:5] =~ "Error"
+"     " Try Vim Last
+"     call searchdecl(expand('<cword>'))
+"   endif
+" endfunction
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
     \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
@@ -125,7 +144,7 @@ nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nmap <silent> gj <Plug>(coc-git-nextchunk)
 nmap <silent> gk <Plug>(coc-git-prevchunk)
-nmap <silent> gd :call <SID>GoToDefinition()<CR>
+nmap <silent> gd :call CocAction('jumpDefinition')<CR>
 nmap <silent> gD <Plug>(coc-declaration)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
