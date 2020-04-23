@@ -53,7 +53,7 @@ set mouse=a
 set signcolumn=yes      " Always show sign column
 set encoding=UTF-8
 set termguicolors
-colorscheme gruvbox8
+colorscheme gruvbox8_hard
 
 " NERDTree {{
 map <C-n> :NERDTreeToggle<CR>
@@ -69,6 +69,12 @@ let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
+  let g:ctrlp_use_caching = 0
+endif
 " }} CtrlP
 
 " Nerd Commenter {{
@@ -176,25 +182,6 @@ let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " }} coc.nvim
-
-" gf {{
-set path=.,src
-set suffixesadd=.js,.jsx
-function! LoadMainNodeModule(fname) 
-  let nodeModules = "./node_modules/"
-  let packageJsonPath = nodeModules . a:fname . "/package.json"
-  if filereadable(packageJsonPath)
-    return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
-  else
-    return nodeModules . a:fname
-  endif
-endfunction
-set includeexpr=LoadMainNodeModule(v:fname)
-" }} gf
-
-" Guten Tags {{
-set statusline+=%{gutentags#statusline()}
-" }} Guten Tags
 
 " Vim Vue {{
 autocmd FileType vue syntax sync fromstart
