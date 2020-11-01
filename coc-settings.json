@@ -6,6 +6,7 @@
     "javascript",
     "typescript",
     "typescriptreact",
-    "javascriptreact"
+    "javascriptreact",
+    "svelte"
   ]
 }

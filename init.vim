@@ -14,12 +14,13 @@ Plug 'mileszs/ack.vim'
 Plug 'kshenoy/vim-signature' 
 Plug 'tpope/vim-surround'
 Plug 'chriskempson/base16-vim'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install'  }
+Plug 'tomasiser/vim-code-dark'
 
 " Initialize plugin system
 call plug#end()
@@ -53,7 +54,7 @@ set mouse=a
 set signcolumn=yes      " Always show sign column
 set encoding=UTF-8
 set termguicolors
-colorscheme gruvbox8
+colorscheme codedark
 
 " NERDTree {{
 map <C-n> :NERDTreeToggle<CR>
@@ -68,7 +69,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+
 " }} CtrlP
 
 " Nerd Commenter {{
@@ -84,24 +87,22 @@ endif
 " }} Ack Silver Searcher
 
 " coc.nvim {{
-let g:coc_global_extensions = [
-    \'coc-git',
-    \'coc-vetur',
-    \'coc-lists',
-    \'coc-yank',
-    \'coc-marketplace'
-    \'coc-pairs',
-    \'coc-json',
-    \'coc-html',
-    \'coc-tsserver',
-    \'coc-eslint',
-    \'coc-highlight',
-    \'coc-tag',
-    \'coc-snippets',
-    \'coc-svg',
-    \'coc-css',
-    \'coc-syntax',
-    \]
+" let g:coc_global_extensions = [
+"     \'coc-git',
+"     \'coc-vetur',
+"     \'coc-lists',
+"     \'coc-yank',
+"     \'coc-marketplace'
+"     \'coc-tsserver',
+"     \'coc-eslint',
+"     \'coc-highlight',
+"     \'coc-tag',
+"     \'coc-snippets',
+"     \'coc-svg',
+"     \'coc-css',
+"     \'coc-syntax',
+"     \'coc-svelte',
+"     \]
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -201,5 +202,5 @@ autocmd FileType vue syntax sync fromstart
 " }} Vim Vue
 
 " airline {{
-let g:airline_theme='base16_monokai'
+let g:airline_theme='codedark'
 " }} airline
