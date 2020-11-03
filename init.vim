@@ -8,7 +8,6 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tpope/vim-fugitive'
 Plug 'kien/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'mileszs/ack.vim'
 Plug 'kshenoy/vim-signature' 
@@ -16,7 +15,6 @@ Plug 'tpope/vim-surround'
 Plug 'chriskempson/base16-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
@@ -165,7 +163,6 @@ endfunc
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -174,9 +171,19 @@ function! s:show_documentation()
   endif
 endfunction
 
-set statusline+=%{coc#status()}
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+set statusline=
+set statusline+=%#LineNr#
+set statusline+=%m " file modified status
+set statusline+=\ %t " file title
+set statusline+=%= 
+set statusline+=%#CursorColumn#
+set statusline+=\ %{coc#status()}%{get(b:,'coc_current_function','')} " Add Coc Status to Status line
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " }} coc.nvim
@@ -184,7 +191,3 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Vim Vue {{
 autocmd FileType vue syntax sync fromstart
 " }} Vim Vue
-
-" airline {{
-let g:airline_theme='codedark'
-" }} airline
