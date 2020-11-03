@@ -20,6 +20,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'leafgarland/typescript-vim'
 
 " Initialize plugin system
 call plug#end()
@@ -29,37 +30,36 @@ syntax on
 " => General
 """""""""""""""""""""""""""""
 syntax enable           " Syntax Processing
-set cursorline          " highlight current line
-set backspace=indent,eol,start " Allow backspace over everything
-set number              " Show line number
-set modifiable          " Make all buffers modifiable
-set nowrap              " Do Not Wrap
-set tabstop=4 softtabstop=0 expandtab shiftwidth=2 smarttab " tab as 2 Spaces
 filetype indent on      " load filetype-specific indent files
-set wildmenu            " visual autocomplete for command menu
-set lazyredraw          " redraw only when we need to.
-set showmatch           " highlight matching [{()}]
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
 set autoread            " read when a file is changed from outside 
-set so=7                " Give the cursor 7 line
-set nobackup
-set nowb
-set noswapfile
-set hidden
+set backspace=indent,eol,start " Allow backspace over everything
 set cmdheight=1
-set updatetime=300
-set mouse=a
-set signcolumn=yes      " Always show sign column
+set cursorline          " highlight current line
 set encoding=UTF-8
+set hidden
+set hlsearch            " highlight matches
+set incsearch           " search as characters are entered
+set lazyredraw          " redraw only when we need to.
+set modifiable          " Make all buffers modifiable
+set mouse=a
+set nobackup
+set noswapfile
+set nowb
+set nowrap              " Do Not Wrap
+set number              " Show line number
+set showmatch           " highlight matching [{()}]
+set signcolumn=yes      " Always show sign column
+set so=7                " Give the cursor 7 line
+set splitbelow
+set splitright
+set tabstop=4 softtabstop=0 expandtab shiftwidth=2 smarttab " tab as 2 Spaces
 set termguicolors
+set updatetime=300
+set wildmenu            " visual autocomplete for command menu
 colorscheme gruvbox8_hard
 
 " NERDTree {{
 map <C-n> :NERDTreeToggle<CR>
-" auto open nerdtree if no file is specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " close vim if only nerdtree is left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }} NERDTree
@@ -89,14 +89,16 @@ if executable('ag')
 endif
 " }} Ack Silver Searcher
 
+map <Leader>r :%s//g<LEFT><LEFT>
+
 " coc.nvim {{
+    " \'coc-pairs',
 let g:coc_global_extensions = [
     \'coc-git',
     \'coc-vetur',
     \'coc-lists',
     \'coc-yank',
-    \'coc-marketplace'
-    \'coc-pairs',
+    \'coc-marketplace',
     \'coc-json',
     \'coc-html',
     \'coc-tsserver',
@@ -111,19 +113,6 @@ let g:coc_global_extensions = [
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-
-" function! s:GoToDefinition()
-"   " Try Coc First
-"   if CocAction('jumpDefinition')
-"     return v:true
-"   endif
-"   " Try Tags Second
-"   let ret = execute("silent! normal \<C-]>")
-"   if ret[:5] =~ "Error"
-"     " Try Vim Last
-"     call searchdecl(expand('<cword>'))
-"   endif
-" endfunction
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -164,6 +153,15 @@ nmap <silent> <C-f> :call CocAction('format')<CR>
 
 map <Leader>p :CocList commands <CR>
 map <Leader>o :CocList outline <CR>
+
+" Multi Cursor
+nmap <expr> <silent> <C-d> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(g:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
