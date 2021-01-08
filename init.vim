@@ -43,12 +43,13 @@ set noswapfile
 set nowb
 set nowrap              " Do Not Wrap
 set number              " Show line number
+set paste
 set showmatch           " highlight matching [{()}]
 set signcolumn=yes      " Always show sign column
 set so=7                " Give the cursor 7 line
 set splitbelow
 set splitright
-set tabstop=4 softtabstop=0 expandtab shiftwidth=2 smarttab " tab as 2 Spaces
+set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab " tab as 2 Spaces
 set termguicolors
 set updatetime=300
 set wildmenu            " visual autocomplete for command menu
@@ -104,6 +105,7 @@ let g:coc_global_extensions = [
     \'coc-svg',
     \'coc-css',
     \'coc-syntax',
+    \'coc-jest',
     \]
 
 " don't give |ins-completion-menu| messages.
