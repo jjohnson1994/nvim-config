@@ -12,7 +12,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree' |
+    \ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 " Plug 'leafgarland/typescript-vim'
