@@ -98,6 +98,7 @@ let g:coc_global_extensions = [
     \'coc-git',
     \'coc-vetur',
     \'coc-lists',
+    \'coc-emmet',
     \'coc-yank',
     \'coc-marketplace',
     \'coc-json',
