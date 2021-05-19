@@ -113,6 +113,7 @@ let g:coc_global_extensions = [
     \'coc-prettier',
     \'coc-java',
     \'coc-pairs',
+    \'coc-phpls',
     \]
 
 nmap <silent> gj <Plug>(coc-git-nextchunk)
