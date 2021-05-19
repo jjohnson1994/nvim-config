@@ -16,9 +16,7 @@ Plug 'scrooloose/nerdtree' |
     \ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-" Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
-
 Plug 'tomasiser/vim-code-dark'
 
 " Initialize plugin system
@@ -47,7 +45,6 @@ set noswapfile
 set nowb
 set nowrap              " Do Not Wrap
 set number              " Show line number
-set paste
 set showmatch           " highlight matching [{()}]
 set signcolumn=yes      " Always show sign column
 set so=7                " Give the cursor 7 line
@@ -115,6 +112,7 @@ let g:coc_global_extensions = [
     \'coc-yaml',
     \'coc-prettier',
     \'coc-java',
+    \'coc-pairs',
     \]
 
 nmap <silent> gj <Plug>(coc-git-nextchunk)
