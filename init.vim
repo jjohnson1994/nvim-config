@@ -19,6 +19,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'tomasiser/vim-code-dark'
 Plug 'vim-test/vim-test'
+Plug 'puremourning/vimspector'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'jjohnson1994/vim-devicons'
 
 " Initialize plugin system
 call plug#end()
@@ -65,6 +68,10 @@ map <C-n> :NERDTreeToggle<CR>
 " close vim if only nerdtree is left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }} NERDTree
+
+" NERDTree Git {{
+let g:NERDTreeGitStatusUseNerdFonts = 1
+" }}
 
 " CtrlP {{
 let g:ctrlp_match_window = 'bottom,order:ttb'
