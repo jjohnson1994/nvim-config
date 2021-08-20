@@ -14,5 +14,17 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "yaml.format.enable": true,
   "yaml.format.printWidth": 80,
-  "yaml.format.proseWrap": "always"
+  "yaml.format.proseWrap": "always",
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
 }
