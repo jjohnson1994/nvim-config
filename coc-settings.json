@@ -15,6 +15,18 @@
   "yaml.format.enable": true,
   "yaml.format.printWidth": 80,
   "yaml.format.proseWrap": "always",
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  },
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de Keyword",
     "variable": "\ue79b Variable",

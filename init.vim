@@ -18,6 +18,7 @@ Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'tomasiser/vim-code-dark'
+Plug 'vim-test/vim-test'
 Plug 'puremourning/vimspector'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'jjohnson1994/vim-devicons'
@@ -38,6 +39,8 @@ set backspace=indent,eol,start " Allow backspace over everything
 set cmdheight=1
 set cursorline          " highlight current line
 set encoding=UTF-8
+set foldmethod=syntax   
+set nofoldenable
 set hidden
 set hlsearch            " highlight matches
 set incsearch           " search as characters are entered
@@ -121,12 +124,12 @@ let g:coc_global_extensions = [
     \'coc-svg',
     \'coc-css',
     \'coc-syntax',
-    \'coc-jest',
     \'coc-yaml',
     \'coc-prettier',
     \'coc-java',
     \'coc-pairs',
     \'coc-phpls',
+    \'coc-coverage',
     \]
 
 nmap <silent> gj <Plug>(coc-git-nextchunk)
