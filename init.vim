@@ -21,6 +21,7 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'puremourning/vimspector'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'jjohnson1994/vim-devicons'
+Plug 'joshdick/onedark.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -57,13 +58,18 @@ set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab " tab as 2 Spaces
 set termguicolors
 set updatetime=300
 set wildmenu            " visual autocomplete for command menu
-colorscheme codedark
+colorscheme onedark
 
 " NERDTree {{
 let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
+
 " close vim if only nerdtree is left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Hide Dir Arrows
+let NERDTreeDirArrowExpandable = "\u00a0"
+let NERDTreeDirArrowCollapsible = "\u00a0"
 " }} NERDTree
 
 " NERDTree Git {{
