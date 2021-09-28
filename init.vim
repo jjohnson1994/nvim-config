@@ -5,7 +5,7 @@ filetype off                  " required
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-fugitive'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'mileszs/ack.vim'
 Plug 'kshenoy/vim-signature' 
@@ -81,18 +81,9 @@ let NERDTreeDirArrowCollapsible = "\u00a0"
 let g:NERDTreeGitStatusUseNerdFonts = 1
 " }}
 
-" CtrlP {{
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
-  let g:ctrlp_use_caching = 0
-endif
-" }} CtrlP
+" Fzf {{
+map <C-p> :GFiles<CR>
+" }} Fzf
 
 " Nerd Commenter {{
 filetype plugin on
