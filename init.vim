@@ -5,7 +5,6 @@ filetype off                  " required
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-fugitive'
-" Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'mileszs/ack.vim'
 Plug 'kshenoy/vim-signature' 
