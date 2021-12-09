@@ -17,13 +17,16 @@ Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'tomasiser/vim-code-dark'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-test/vim-test'
 Plug 'puremourning/vimspector'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'jjohnson1994/vim-devicons'
 Plug 'joshdick/onedark.vim'
+Plug 'sainnhe/sonokai'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
 " Initialize plugin system
 call plug#end()
@@ -62,7 +65,12 @@ set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab " tab as 2 Spaces
 set termguicolors
 set updatetime=300
 set wildmenu            " visual autocomplete for command menu
-colorscheme onedark
+
+" THEME {{
+colorscheme sonokai
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+" }}
 
 " NERDTree {{
 let NERDTreeShowHidden=1
@@ -82,6 +90,7 @@ let g:NERDTreeGitStatusUseNerdFonts = 1
 
 " FZF {{
 map <C-p> :GFiles<CR>
+map <Leader>s :Ag<CR>
 " }} FZF
 
 " Nerd Commenter {{
@@ -90,7 +99,6 @@ let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 " }} Nerd Commenter
 
 " Ack Silver Searcher {{
-map <Leader>s :Ack -ri ''<LEFT>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
@@ -122,6 +130,7 @@ let g:coc_global_extensions = [
     \'coc-pairs',
     \'coc-phpls',
     \'coc-coverage',
+    \'coc-inline-jest'
     \]
 
 nmap <silent> gj <Plug>(coc-git-nextchunk)
