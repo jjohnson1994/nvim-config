@@ -27,6 +27,7 @@ Plug 'sainnhe/sonokai'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'wfxr/minimap.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -89,6 +90,11 @@ let g:NERDTreeGitStatusUseNerdFonts = 1
 " }}
 
 " FZF {{
+" command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS, fzf#vim#with_preview(), <bang>0)
+" command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, $AG_DEFAULT_OPTIONS, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%'), <bang>0)
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+
+
 map <C-p> :GFiles<CR>
 map <Leader>s :Ag<CR>
 " }} FZF
@@ -313,6 +319,15 @@ endfunc
 " Vim Vue {{
 autocmd FileType vue syntax sync fromstart
 " }} Vim Vue
+
+" Minimap {{
+let g:minimap_width = 10
+let g:minimap_auto_start = 0
+let g:minimap_auto_start_win_enter = 1
+let g:minimap_highlight_range	= 1
+let g:minimap_highlight_search = 1
+let g:minimap_git_colors = 1
+" }} Minimap
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
