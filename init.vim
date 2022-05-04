@@ -27,6 +27,7 @@ Plug 'sainnhe/sonokai'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'navarasu/onedark.nvim'
 Plug 'wfxr/minimap.vim'
 
 " Initialize plugin system
@@ -136,7 +137,8 @@ let g:coc_global_extensions = [
     \'coc-pairs',
     \'coc-phpls',
     \'coc-coverage',
-    \'coc-inline-jest'
+    \'coc-inline-jest',
+    \'coc-jest'
     \]
 
 nmap <silent> gj <Plug>(coc-git-nextchunk)
@@ -316,10 +318,6 @@ endfunc
 
 " }} coc.nvim
 
-" Vim Vue {{
-autocmd FileType vue syntax sync fromstart
-" }} Vim Vue
-
 " Minimap {{
 let g:minimap_width = 10
 let g:minimap_auto_start = 0
@@ -328,6 +326,12 @@ let g:minimap_highlight_range	= 1
 let g:minimap_highlight_search = 1
 let g:minimap_git_colors = 1
 " }} Minimap
+
+" OneDark {{
+let g:onedark_config = {
+    \ 'style': 'warmer',
+\}
+" }}
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
