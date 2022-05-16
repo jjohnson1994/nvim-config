@@ -15,16 +15,14 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
-Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree' |
     \ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mattn/emmet-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-Plug 'peitalin/vim-jsx-typescript'
 Plug 'tomasiser/vim-code-dark'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-test/vim-test'
-Plug 'puremourning/vimspector'
+Plug 'mfussenegger/nvim-dap'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'jjohnson1994/vim-devicons'
 Plug 'joshdick/onedark.vim'
@@ -33,6 +31,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Initialize plugin system
 call plug#end()
@@ -236,6 +235,28 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
+}
+EOF
+" }}
+
+" Treesitter {{
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { 
+    'html',
+    'javascript',
+    'typescript',
+    'json',
+    'dockerfile',
+    'css',
+    'jsdoc',
+    'scss',
+    'tsx',
+    'typescript',
+    'vim',
+    'vue',
+    'yaml'
+  }
 }
 EOF
 " }}
