@@ -23,6 +23,7 @@ Plug 'puremourning/vimspector'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'jjohnson1994/vim-devicons'
 Plug 'joshdick/onedark.vim'
+Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 Plug 'sainnhe/sonokai'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
