@@ -256,6 +256,9 @@ require'nvim-treesitter.configs'.setup {
     'vim',
     'vue',
     'yaml'
+  },
+  highlight = {
+    enable = true,
   }
 }
 EOF
