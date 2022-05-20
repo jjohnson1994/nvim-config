@@ -34,6 +34,8 @@ Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
 
 
 " Initialize plugin system
@@ -105,6 +107,12 @@ nnoremap <space>gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <space>gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <space>gt <cmd>lua require('telescope.builtin').lsp_type_definitions()<cr>
 nnoremap <space>b <cmd>lua require('telescope.builtin').buffers()<cr>
+
+lua << EOF
+require('telescope').setup {
+}
+require('telescope').load_extension('fzf')
+EOF
 " }}
 
 " Nerd Commenter {{
