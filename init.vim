@@ -32,6 +32,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 
 " Initialize plugin system
 call plug#end()
@@ -73,6 +76,7 @@ set wildmenu            " visual autocomplete for command menu
 
 " THEME {{
 colorscheme sonokai
+
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 " }}
@@ -93,12 +97,15 @@ let NERDTreeDirArrowCollapsible = "\u00a0"
 let g:NERDTreeGitStatusUseNerdFonts = 1
 " }}
 
-" FZF {{
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
-
-map <C-p> :GFiles<CR>
-map <Leader>s :Ag<CR>
-" }} FZF
+" Telescope {{
+nnoremap <Leader>s <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <space>p <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <space>go <cmd>lua require('telescope.builtin').treesitter()<cr>
+nnoremap <space>gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <space>gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <space>gt <cmd>lua require('telescope.builtin').lsp_type_definitions()<cr>
+nnoremap <space>b <cmd>lua require('telescope.builtin').buffers()<cr>
+" }}
 
 " Nerd Commenter {{
 filetype plugin on
