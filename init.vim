@@ -39,6 +39,9 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'rmehri01/onenord.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'numToStr/Comment.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -79,7 +82,7 @@ set updatetime=300
 set wildmenu            " visual autocomplete for command menu
 
 " THEME {{
-colorscheme sonokai
+colorscheme onenord
 
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
@@ -207,7 +210,8 @@ local servers = {
   'jsonls',
   'terraformls',
   'yamlls',
-  'html'
+  'html',
+  -- 'jest-lsp'
 }
 
 for _, lsp in ipairs(servers) do
@@ -302,6 +306,18 @@ let g:onedark_config = {
 " gitsigns {{
 lua << EOF
 require('gitsigns').setup()
+EOF
+" }}
+
+" lualine {{
+lua << END
+require('lualine').setup()
+END
+" }}
+
+" Comment {{
+lua << EOF
+require('Comment').setup()
 EOF
 " }}
 
