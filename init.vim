@@ -42,6 +42,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'rmehri01/onenord.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'numToStr/Comment.nvim'
+Plug 'windwp/nvim-autopairs'
+Plug 'jose-elias-alvarez/typescript.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -82,7 +84,7 @@ set updatetime=300
 set wildmenu            " visual autocomplete for command menu
 
 " THEME {{
-colorscheme onenord
+colorscheme sonokai
 
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
@@ -106,16 +108,19 @@ let g:NERDTreeGitStatusUseNerdFonts = 1
 
 " Telescope {{
 nnoremap <Leader>s <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <space>p <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <space>p <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <space>go <cmd>lua require('telescope.builtin').treesitter()<cr>
 nnoremap <space>gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap <space>gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <space>gt <cmd>lua require('telescope.builtin').lsp_type_definitions()<cr>
+nnoremap <space>gi <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
 nnoremap <space>b <cmd>lua require('telescope.builtin').buffers()<cr>
 
 lua << EOF
 require('telescope').setup {
+  file_ignore_patterns = {"node_modules"},
 }
+
 require('telescope').load_extension('fzf')
 EOF
 " }}
@@ -200,7 +205,6 @@ local lspconfig = require('lspconfig')
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-  'tsserver',
   'bashls' ,
   'volar',
   'graphql',
@@ -211,6 +215,7 @@ local servers = {
   'terraformls',
   'yamlls',
   'html',
+  'cucumber_language_server',
   -- 'jest-lsp'
 }
 
@@ -220,6 +225,15 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+require("typescript").setup({
+  disable_commands = false, -- prevent the plugin from creating Vim commands
+  debug = false, -- enable debug logging for commands
+  server = { -- pass options to lspconfig's setup method
+    on_attach = on_attach,
+    capabilities = capabilities,
+  },
+})
 EOF
 "}}
 
@@ -297,12 +311,6 @@ require'nvim-treesitter.configs'.setup {
 EOF
 " }}
 
-" OneDark {{
-let g:onedark_config = {
-    \ 'style': 'warmer',
-\}
-" }}
-
 " gitsigns {{
 lua << EOF
 require('gitsigns').setup()
@@ -318,6 +326,33 @@ END
 " Comment {{
 lua << EOF
 require('Comment').setup()
+EOF
+" }}
+
+" nvim-autopairs {{
+lua << EOF
+local npairs = require("nvim-autopairs")
+local Rule = require('nvim-autopairs.rule')
+
+npairs.setup({
+    check_ts = true,
+    ts_config = {
+        lua = {'string'},-- it will not add a pair on that treesitter node
+        javascript = {'template_string'},
+        java = false,-- don't check treesitter on java
+    }
+})
+
+local ts_conds = require('nvim-autopairs.ts-conds')
+
+
+-- press % => %% only while inside a comment or string
+npairs.add_rules({
+  Rule("%", "%", "lua")
+    :with_pair(ts_conds.is_ts_node({'string','comment'})),
+  Rule("$", "$", "lua")
+    :with_pair(ts_conds.is_not_ts_node({'function'}))
+})
 EOF
 " }}
 
