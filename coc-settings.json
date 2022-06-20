@@ -25,6 +25,17 @@
       ],
       "initializationOptions": {},
       "settings": {}
+    },
+    "jest": {
+      "module": "/Users/james.johnson/.nvm/versions/node/v14.18.1/bin/jest-lsp",
+      "args": ["--node-ipc"],
+      "filetypes": [
+        "typescript",
+        "javascript",
+        "typescriptreact",
+        "javascriptreact"
+      ],
+      "trace.server": "verbose"
     }
   },
   "suggest.completionItemKindLabels": {
@@ -53,5 +64,6 @@
     "snippet": "\ue60b Snippet",
     "typeParameter": "\uf728 TypeParameter",
     "default": "\uf29c"
-  }
+  },
+  "coc.preferences.enableLinkedEditing": true
 }

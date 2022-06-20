@@ -141,8 +141,7 @@ let g:coc_global_extensions = [
     \'coc-prettier',
     \'coc-java',
     \'coc-pairs',
-    \'coc-phpls',
-    \'coc-graphql'
+    \'coc-phpls'
     \]
 
 " Use tab for trigger completion with characters ahead and navigate.
