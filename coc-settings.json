@@ -27,7 +27,7 @@
       "settings": {}
     },
     "jest": {
-      "module": "/Users/james.johnson/.nvm/versions/node/v14.18.1/bin/jest-lsp",
+      "module": "/Users/jamesjohnson/.nvm/versions/node/v16.7.0/bin/jest-lsp",
       "args": ["--node-ipc"],
       "filetypes": [
         "typescript",
