@@ -13,6 +13,10 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'mfussenegger/nvim-dap'
 Plug 'jjohnson1994/vim-devicons'
 Plug 'sainnhe/sonokai'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'dracula/vim'
+Plug 'mhartington/oceanic-next'
+Plug 'shaunsingh/nord.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lewis6991/gitsigns.nvim'
@@ -63,7 +67,7 @@ set updatetime=300
 set wildmenu            " visual autocomplete for command menu
 
 " THEME {{
-colorscheme sonokai
+colorscheme tokyonight
 
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
@@ -110,10 +114,11 @@ let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 
 " Bufferline {{
 lua << EOF
-require("bufferline").setup{
+require("bufferline").setup {
   options = {
     mode = "tabs",
-    diagnostics = "coc"
+    diagnostics = "coc",
+    diagnostics_update_on_inssert = true
   }
 }
 EOF
@@ -122,7 +127,6 @@ EOF
 " Coc-nvim {{
 let g:coc_global_extensions = [
     \'coc-git',
-    \'coc-vetur',
     \'coc-lists',
     \'coc-emmet',
     \'coc-yank',
@@ -141,17 +145,25 @@ let g:coc_global_extensions = [
     \'coc-prettier',
     \'coc-java',
     \'coc-pairs',
-    \'coc-phpls'
+    \'coc-phpls',
+    \'@yaegassy/coc-volar',
+    \'@yaegassy/coc-volar-tools',
+    \'@yaegassy/coc-tailwindcss3',
     \]
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ coc#pum#visible() ? coc#pum#next(1):
       \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -165,15 +177,13 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+nmap <silent> <expr> [c &diff ? '[c' : '<Plug>(coc-git-prevchunk)'
+nmap <silent> <expr> ]c &diff ? ']c' : '<Plug>(coc-git-nextchunk)'
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -291,16 +301,16 @@ require'nvim-treesitter.configs'.setup {
     'jsdoc',
     'scss',
     'tsx',
-    'typescript',
     'vim',
     'vue',
     'yaml',
     'lua',
     'graphql',
-    'hcl'
+    'hcl',
   },
   highlight = {
     enable = true,
+    additional_vim_regex_highlighting = false,
   }
 }
 EOF
@@ -313,9 +323,17 @@ EOF
 " }}
 
 " lualine {{
-lua << END
-require('lualine').setup()
-END
+lua << EOF
+require('lualine').setup {
+  sections = {
+    lualine_b = {},
+    lualine_c = {{ 'filename', path = 1}}
+  },
+  inactive_sections = {
+    lualine_c = {{ 'filename', path = 1}}
+  }
+}
+EOF
 " }}
 
 " Comment {{
