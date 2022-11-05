@@ -34,11 +34,12 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'folke/trouble.nvim'
 Plug 'SmiteshP/nvim-navic'
 Plug 'onsails/lspkind.nvim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v<CurrentMajor>.*'}
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ThePrimeagen/refactoring.nvim'
+Plug 'wfxr/minimap.vim', {'do': ':!brew install code-minimap'}
 
 " Initialize plugin system
 call plug#end()
@@ -114,6 +115,8 @@ nnoremap <space>gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <space>gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
 nnoremap <space>gr <cmd>lua require('telescope.builtin').lsp_references()<CR>
 nnoremap <space>gt <cmd>lua require('telescope.builtin').lsp_type_definitions()<CR>
+nnoremap <space>ci <cmd>lua require('telescope.builtin').lsp_incoming_calls	()<CR>
+nnoremap <space>co <cmd>lua require('telescope.builtin').lsp_outgoing_calls	()<CR>
 nnoremap <space>b <cmd>lua require('telescope.builtin').buffers()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 
@@ -145,8 +148,11 @@ EOF
 nnoremap <silent> [g <cmd>lua vim.diagnostic.goto_next()<CR>
 nnoremap <silent> ]g <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <space>rn <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>ac <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <space>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <leader>f <cmd>lua vim.lsp.buf.format()<CR><CR>
+nnoremap <space>ff <cmd>lua vim.lsp.buf.format()<CR><CR>
 " nmap <leader>qf  <Plug>(coc-fix-current)
 " xmap if <Plug>(coc-funcobj-i)
 " omap if <Plug>(coc-funcobj-i)
@@ -217,19 +223,19 @@ EOF
 lua << EOF
 require("trouble").setup { }
 
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+vim.keymap.set("n", "<space>tt", "<cmd>TroubleToggle<cr>",
   {silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+vim.keymap.set("n", "<space>tD", "<cmd>TroubleToggle workspace_diagnostics<cr>",
   {silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+vim.keymap.set("n", "<space>td", "<cmd>TroubleToggle document_diagnostics<cr>",
   {silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+vim.keymap.set("n", "<space>tl", "<cmd>TroubleToggle loclist<cr>",
   {silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+vim.keymap.set("n", "<space>tq", "<cmd>TroubleToggle quickfix<cr>",
   {silent = true, noremap = true}
 )
 EOF
@@ -375,25 +381,38 @@ require("telescope").load_extension("refactoring")
 -- remap to open the Telescope refactoring menu in visual mode
 vim.api.nvim_set_keymap(
 	"v",
-	"<leader>rr",
+	"<space>rr",
 	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
 	{ noremap = true }
 )
 
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>rv",
+	"<space>rr",
+	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+	{ noremap = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<space>rv",
 	"<Esc><cmd>lua require('refactoring').debug.print_var({})<CR>",
 	{ noremap = true }
 )
 
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>rc",
+	"<space>rc",
 	"<Esc><cmd>lua require('refactoring').debug.cleanup({})<CR>",
 	{ noremap = true }
 )
 EOF
+
+"
+" Minimap
+"
+nnoremap <space>mt :MinimapToggle<CR>
+let g:minimap_git_colors = 1
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
