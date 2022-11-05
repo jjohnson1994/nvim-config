@@ -1,3 +1,13 @@
+"
+" Local Dependencies
+"
+" Fonts:
+" A patched nerd font
+"
+" DAP Adapters:
+" node-debug2 and vscode-chrome-debug cloned and build at ~/Projects
+"
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 call plug#begin('~/.local/share/nvim/plugged')
@@ -40,6 +50,9 @@ Plug 'L3MON4D3/LuaSnip', {'tag': 'v<CurrentMajor>.*'}
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ThePrimeagen/refactoring.nvim'
 Plug 'wfxr/minimap.vim', {'do': ':!brew install code-minimap'}
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
 
 " Initialize plugin system
 call plug#end()
@@ -413,6 +426,81 @@ EOF
 "
 nnoremap <space>mt :MinimapToggle<CR>
 let g:minimap_git_colors = 1
+
+"
+" DAP
+"
+noremap <space>db <cmd>lua require('dap').toggle_breakpoint()<CR>
+noremap <space>dc <cmd>lua require('dap').continue()<CR>
+noremap <space>do <cmd>lua require('dap').step_over()<CR>
+noremap <space>di <cmd>lua require('dap').step_into()<CR>
+noremap <space>dr <cmd>lua require('dap').run_to_cursor()<cr><CR>
+noremap <space>du <cmd>lua require('dapui').toggle()<cr><CR>
+noremap <space>dR <cmd>lua require('dap').repl.toggle()<CR>
+
+lua << EOF
+local dap = require('dap')
+require("nvim-dap-virtual-text").setup()
+require("dapui").setup()
+
+dap.adapters.node2 = {
+  type = 'executable',
+  command = 'node',
+  args = {os.getenv('HOME') .. '/Projects/vscode-node-debug2/out/src/nodeDebug.js'},
+}
+
+dap.adapters.chrome = {
+    type = "executable",
+    command = "node",
+    args = {os.getenv("HOME") .. "/Projects/vscode-chrome-debug/out/src/chromeDebug.js"}
+}
+
+dap.configurations.javascript = {
+  {
+    name = 'Launch',
+    type = 'node2',
+    request = 'launch',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+  },
+  {
+    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+    name = 'Attach to process',
+    type = 'node2',
+    request = 'attach',
+    processId = require'dap.utils'.pick_process,
+  },
+}
+
+dap.configurations.javascriptreact = { -- change this to javascript if needed
+    {
+        type = "chrome",
+        request = "attach",
+        program = "${file}",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = "inspector",
+        port = 9222,
+        webRoot = "${workspaceFolder}"
+    }
+}
+
+dap.configurations.typescriptreact = { -- change to typescript if needed
+    {
+        type = "chrome",
+        request = "attach",
+        program = "${file}",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = "inspector",
+        port = 9222,
+        webRoot = "${workspaceFolder}"
+    }
+}
+EOF
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
