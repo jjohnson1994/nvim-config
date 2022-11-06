@@ -45,7 +45,6 @@ Plug 'folke/trouble.nvim'
 Plug 'SmiteshP/nvim-navic'
 Plug 'onsails/lspkind.nvim'
 Plug 'windwp/nvim-autopairs'
-Plug 'williamboman/nvim-lsp-installer'
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v<CurrentMajor>.*'}
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ThePrimeagen/refactoring.nvim'
@@ -53,6 +52,7 @@ Plug 'wfxr/minimap.vim', {'do': ':!brew install code-minimap'}
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'williamboman/mason-lspconfig.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -254,66 +254,45 @@ vim.keymap.set("n", "<space>tq", "<cmd>TroubleToggle quickfix<cr>",
 EOF
 " }}
 
-" nvim-lspconfig {{
+"
+" Mason
+"
 lua << EOF
+require("mason").setup()
+local mason_lspconfig = require("mason-lspconfig")
 
-local servers = {
-  html = {},
-  jsonls = {},
-  sumneko_lua = {},
-  tsserver = {},
-  vimls = {},
-  tailwindcss = {},
-  volar = {},
-  cssls = {},
-  eslint = {}
-}
+mason_lspconfig.setup({
+  ensure_installed = {
+    "html",
+    "jsonls",
+    "sumneko_lua",
+    "tsserver",
+    "vimls",
+    "tailwindcss",
+    "volar",
+    "cssls",
+    "eslint"
+  }
+})
 
-local function on_attach(client, bufnr)
-  -- Enable completion triggered by <C-X><C-O>
-  -- See `:help omnifunc` and `:help ins-completion` for more information.
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  -- Use LSP as the handler for formatexpr.
-  -- See `:help formatexpr` for more information.
-  vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-
-  require("nvim-navic").attach(client, bufnr)
-
-  -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  --
-  -- require('lspconfig')[client.name].setup {
-  --   capabilities = capabilities
-  -- }
-end
-
-local lsp_installer_servers = require "nvim-lsp-installer.servers"
-
-for server_name, _ in pairs(servers) do
-  local server_available, server = lsp_installer_servers.get_server(server_name)
-
-  if server_available then
-    server:on_ready(function()
-      -- local opts = vim.tbl_deep_extend("force", options, servers[server.name] or {})
-      server:setup({
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        }
-      })
-    end)
-
-    if not server:is_installed() then
-      vim.notify('Installing', vim.log.levels.INFO, { title = server.name })
-      server:install()
+mason_lspconfig.setup_handlers({
+  function (server_name)
+    require("lspconfig")[server_name].setup {
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    on_attach = function(client, bufnr)
+      vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+      vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+      require("nvim-navic").attach(client, bufnr)
     end
-  else
-    vim.notify(server, vim.log.levels.ERROR, { title = name })
+  }
   end
-end
-
+})
 EOF
-" }}
 
 " Navic {{
 lua << EOF
@@ -326,7 +305,6 @@ EOF
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
-  -- Set up nvim-cmp.
   local cmp = require'cmp'
   local lspkind = require('lspkind')
 
@@ -354,16 +332,14 @@ lua <<EOF
     })
   })
 
-  -- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+      { name = 'cmp_git' },
     }, {
       { name = 'buffer' },
     })
   })
 
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
@@ -371,7 +347,6 @@ lua <<EOF
     }
   })
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
@@ -388,10 +363,8 @@ EOF
 "
 lua << EOF
 require('refactoring').setup({})
--- load refactoring Telescope extension
 require("telescope").load_extension("refactoring")
 
--- remap to open the Telescope refactoring menu in visual mode
 vim.api.nvim_set_keymap(
 	"v",
 	"<space>rr",
