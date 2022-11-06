@@ -2,7 +2,7 @@
 " Local Dependencies
 "
 " Fonts:
-" A patched nerd font
+" A patched nerd font, JetBrains Mono Nerd Font is good
 "
 " DAP Adapters:
 " node-debug2 and vscode-chrome-debug cloned and build at ~/Projects
@@ -280,15 +280,15 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 mason_lspconfig.setup_handlers({
   function (server_name)
     require("lspconfig")[server_name].setup {
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    on_attach = function(client, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-      vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-      require("nvim-navic").attach(client, bufnr)
-    end
+      capabilities = capabilities,
+      flags = {
+        debounce_text_changes = 150,
+      },
+      on_attach = function(client, bufnr)
+        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+        vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+        require("nvim-navic").attach(client, bufnr)
+      end
   }
   end
 })
