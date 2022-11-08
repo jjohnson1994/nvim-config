@@ -53,6 +53,9 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'rafamadriz/friendly-snippets'
+" Plug 'honza/vim-snippets'
 
 " Initialize plugin system
 call plug#end()
@@ -158,8 +161,8 @@ EOF
 " }}
 
 " TODO
-nnoremap <silent> [g <cmd>lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> ]g <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]g <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> [g <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <space>rn <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>ac <cmd>lua vim.lsp.buf.code_action()<CR>
@@ -271,7 +274,11 @@ mason_lspconfig.setup({
     "tailwindcss",
     "volar",
     "cssls",
-    "eslint"
+    "eslint",
+    "emmet_ls",
+    "yamlls",
+    "terraformls",
+    "dockerls"
   }
 })
 
@@ -330,7 +337,7 @@ lua <<EOF
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'vsnip' },
-    }, {
+      { name = "luasnip" },
       { name = 'buffer' },
     })
   })
@@ -476,6 +483,37 @@ dap.configurations.typescriptreact = { -- change to typescript if needed
         webRoot = "${workspaceFolder}"
     }
 }
+EOF
+
+"
+" lausnip
+"
+lua << EOF
+local ls = require('luasnip')
+require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_snipmate").lazy_load()
+
+ls.filetype_extend("all", { "_" })
+EOF
+
+" press <Tab> to expand or jump in a snippet. These can also be mapped separately
+" via <Plug>luasnip-expand-snippet and <Plug>luasnip-jump-next.
+imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>' 
+" -1 for jumping backwards.
+inoremap <silent> <S-Tab> <cmd>lua require'luasnip'.jump(-1)<Cr>
+
+snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
+snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
+
+" For changing choices in choiceNodes (not strictly necessary for a basic setup).
+imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'<expr>
+
+"
+" Autopairs
+"
+lua << EOF
+require("nvim-autopairs").setup {}
 EOF
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
