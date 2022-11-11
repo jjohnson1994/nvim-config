@@ -14,48 +14,54 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'kshenoy/vim-signature' 
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree' |
-    \ Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-Plug 'mfussenegger/nvim-dap'
-Plug 'jjohnson1994/vim-devicons'
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'sainnhe/sonokai'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-Plug 'dracula/vim'
-Plug 'mhartington/oceanic-next'
-Plug 'shaunsingh/nord.nvim'
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'numToStr/Comment.nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'williamboman/mason.nvim'
-Plug 'mfussenegger/nvim-dap'
-Plug 'folke/trouble.nvim'
-Plug 'SmiteshP/nvim-navic'
-Plug 'onsails/lspkind.nvim'
-Plug 'windwp/nvim-autopairs'
+" Plug 'scrooloose/nerdtree' |
+"     \ Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'nvim-tree/nvim-web-devicons'
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v<CurrentMajor>.*'}
-Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'SmiteshP/nvim-navic'
 Plug 'ThePrimeagen/refactoring.nvim'
-Plug 'wfxr/minimap.vim', {'do': ':!brew install code-minimap'}
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'dracula/vim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'folke/trouble.nvim'
+Plug 'haydenmeade/neotest-jest'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'jjohnson1994/vim-devicons'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap'
+Plug 'mhartington/oceanic-next'
+Plug 'mxsdev/nvim-dap-vscode-js'
+Plug 'neovim/nvim-lspconfig'
+Plug 'numToStr/Comment.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-neotest/neotest'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'onsails/lspkind.nvim'
 Plug 'rafamadriz/friendly-snippets'
-" Plug 'honza/vim-snippets'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'sainnhe/sonokai'
+Plug 'shaunsingh/nord.nvim'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'wfxr/minimap.vim', {'do': ':!brew install code-minimap'}
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'williamboman/mason.nvim'
+Plug 'windwp/nvim-autopairs'
 
 " Initialize plugin system
 call plug#end()
@@ -105,20 +111,55 @@ let g:sonokai_disable_italic_comment = 1
 " }}
 
 " NERDTree {{
-let NERDTreeShowHidden=1
-map <C-n> :NERDTreeToggle<CR>
-
-" close vim if only nerdtree is left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Hide Dir Arrows
-let NERDTreeDirArrowExpandable = "\u00a0"
-let NERDTreeDirArrowCollapsible = "\u00a0"
-" }} NERDTree
-
-" NERDTree Git {{
-let g:NERDTreeGitStatusUseNerdFonts = 1
+" let NERDTreeShowHidden=1
+" map <C-n> :NERDTreeToggle<CR>
+"
+" " close vim if only nerdtree is left open
+" " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"
+" " Hide Dir Arrows
+" let NERDTreeDirArrowExpandable = "\u00a0"
+" let NERDTreeDirArrowCollapsible = "\u00a0"
+" " }} NERDTree
+"
+" " NERDTree Git {{
+" let g:NERDTreeGitStatusUseNerdFonts = 1
 " }}
+"
+
+"
+" NvimTree
+"
+lua << EOF
+require("nvim-tree").setup({
+  actions = {
+    open_file = {
+      window_picker = {
+        enabled = false
+      }
+    }
+  },
+  view = {
+    signcolumn = 'yes',
+    number = true,
+    relativenumber = true,
+  },
+  renderer = {
+    icons = {
+      git_placement = 'signcolumn'
+    }
+  },
+  hijack_netrw = true,
+  respect_buf_cwd = true,
+  sync_root_with_cwd = true,
+  update_focused_file = {
+    enable = true,
+    update_root = true,
+  },
+})
+EOF
+
+map <C-n> :NvimTreeToggle<CR>
 
 " Telescope {{
 nnoremap <Leader>s <cmd>lua require('telescope.builtin').live_grep()<CR>
@@ -426,63 +467,43 @@ local dap = require('dap')
 require("nvim-dap-virtual-text").setup()
 require("dapui").setup()
 
+require("dap-vscode-js").setup({
+  -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+  debugger_path = '/Users/jamesjohnson/Projects/vscode-js-debug', -- Path to vscode-js-debug installation.
+  -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+})
+
 dap.adapters.node2 = {
   type = 'executable',
   command = 'node',
   args = {os.getenv('HOME') .. '/Projects/vscode-node-debug2/out/src/nodeDebug.js'},
 }
 
+dap.adapters.node = {
+  type = 'executable',
+  command = 'node',
+  args = {os.getenv('HOME') .. '/Projects/vscode-node-debug2/out/src/nodeDebug.js'},
+}
+
 dap.adapters.chrome = {
-    type = "executable",
-    command = "node",
-    args = {os.getenv("HOME") .. "/Projects/vscode-chrome-debug/out/src/chromeDebug.js"}
+  type = "executable",
+  command = "node",
+  args = {os.getenv("HOME") .. "/Projects/vscode-chrome-debug/out/src/chromeDebug.js"}
 }
 
-dap.configurations.javascript = {
+require('dap.ext.vscode').load_launchjs(
+  nil,
   {
-    name = 'Launch',
-    type = 'node2',
-    request = 'launch',
-    program = '${file}',
-    cwd = vim.fn.getcwd(),
-    sourceMaps = true,
-    protocol = 'inspector',
-    console = 'integratedTerminal',
-  },
-  {
-    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
-    name = 'Attach to process',
-    type = 'node2',
-    request = 'attach',
-    processId = require'dap.utils'.pick_process,
-  },
-}
-
-dap.configurations.javascriptreact = { -- change this to javascript if needed
-    {
-        type = "chrome",
-        request = "attach",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = "inspector",
-        port = 9222,
-        webRoot = "${workspaceFolder}"
+    node = {
+      'javascript',
+      'javascriptreact',
+      'typescript',
+      'typescriptreact'
     }
-}
+  }
+)
 
-dap.configurations.typescriptreact = { -- change to typescript if needed
-    {
-        type = "chrome",
-        request = "attach",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = "inspector",
-        port = 9222,
-        webRoot = "${workspaceFolder}"
-    }
-}
 EOF
 
 "
@@ -515,6 +536,29 @@ smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' 
 lua << EOF
 require("nvim-autopairs").setup {}
 EOF
+
+"
+" NeoTest
+"
+lua << EOF
+require("neotest").setup({
+  adapters = {
+    require("neotest-jest")
+  },
+})
+EOF
+
+nnoremap <space>ta <cmd>lua require('neotest').run.attach()<CR>
+nnoremap <space>tf <cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>
+nnoremap <space>tF <cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>
+nnoremap <space>tl <cmd>lua require('neotest').run.run_last()<cr>
+nnoremap <space>tL <cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<cr>
+nnoremap <space>tn <cmd>lua require('neotest').run.run()<cr>
+nnoremap <space>tN <cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>
+nnoremap <space>to <cmd>lua require('neotest').output.open({ enter = true })<cr>
+nnoremap <space>tS <cmd>lua require('neotest').run.stop()<cr>
+nnoremap <space>ts <cmd>lua require('neotest').summary.toggle()<cr>
+
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
