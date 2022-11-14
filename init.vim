@@ -62,6 +62,8 @@ Plug 'wfxr/minimap.vim', {'do': ':!brew install code-minimap'}
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'williamboman/mason.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'winston0410/range-highlight.nvim'
+Plug 'winston0410/cmd-parser.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -149,13 +151,15 @@ require("nvim-tree").setup({
       git_placement = 'signcolumn'
     }
   },
-  hijack_netrw = true,
   respect_buf_cwd = true,
   sync_root_with_cwd = true,
   update_focused_file = {
     enable = true,
     update_root = true,
   },
+  diagnostics = {
+    enabled = true
+  }
 })
 EOF
 
@@ -354,6 +358,7 @@ EOF
 
 " nvim-cmp {{
 set completeopt=menu,menuone,noselect
+set pumheight=10
 
 lua <<EOF
   local cmp = require'cmp'
@@ -394,7 +399,8 @@ lua <<EOF
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = 'buffer' }
+      { name = 'buffer' },
+      { name = 'nvim_lsp' }
     }
   })
 
@@ -559,6 +565,12 @@ nnoremap <space>to <cmd>lua require('neotest').output.open({ enter = true })<cr>
 nnoremap <space>tS <cmd>lua require('neotest').run.stop()<cr>
 nnoremap <space>ts <cmd>lua require('neotest').summary.toggle()<cr>
 
+"
+" range-highlight
+"
+lua << EOF
+require'range-highlight'.setup{}
+EOF
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
