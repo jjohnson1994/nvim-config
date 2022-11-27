@@ -7,6 +7,16 @@
 " DAP Adapters:
 " node-debug2 and vscode-chrome-debug cloned and build at ~/Projects
 "
+" Formatters:
+"
+"   eslint_d:
+"   npm install -g eslint_d
+"
+"   prettierd
+"   npm install -g @fsouza/prettierd
+"
+"
+"
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -64,6 +74,8 @@ Plug 'williamboman/mason.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'winston0410/range-highlight.nvim'
 Plug 'winston0410/cmd-parser.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/typescript.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -105,6 +117,11 @@ set termguicolors
 set updatetime=300
 set wildmenu            " visual autocomplete for command menu
 
+nnoremap <space>w :w<CR>
+nnoremap <space>W :wa<CR>
+nnoremap <space>q :q<CR>
+nnoremap <space>Q :qa<CR>
+
 " THEME {{
 colorscheme tokyonight-night
 
@@ -142,6 +159,7 @@ require("nvim-tree").setup({
     }
   },
   view = {
+    adaptive_size = true,
     signcolumn = 'yes',
     number = true,
     relativenumber = true,
@@ -168,9 +186,9 @@ map <C-n> :NvimTreeToggle<CR>
 " Telescope {{
 nnoremap <Leader>s <cmd>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <space>p <cmd>lua require('telescope.builtin').find_files()<CR>
-nnoremap <space>go <cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>
+nnoremap <space>o <cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>
 " nnoremap <space>go <cmd>lua require('telescope.builtin').treesitter()<CR>
-nnoremap <space>gO <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>
+nnoremap <space>O <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>
 nnoremap <space>gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
 nnoremap <space>gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <space>gi <cmd>lua require('telescope.builtin').lsp_implementations()<CR>
@@ -256,7 +274,9 @@ EOF
 
 " gitsigns {{
 lua << EOF
-require('gitsigns').setup()
+require('gitsigns').setup({
+  numhl = true
+})
 EOF
 " }}
 
@@ -319,7 +339,7 @@ mason_lspconfig.setup({
     "tailwindcss",
     "volar",
     "cssls",
-    "eslint",
+    -- "eslint",
     "emmet_ls",
     "yamlls",
     "terraformls",
@@ -423,31 +443,10 @@ require('refactoring').setup({})
 require("telescope").load_extension("refactoring")
 
 vim.api.nvim_set_keymap(
-	"v",
-	"<space>rr",
-	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
-	{ noremap = true }
-)
-
-vim.api.nvim_set_keymap(
-	"n",
-	"<space>rr",
-	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
-	{ noremap = true }
-)
-
-vim.api.nvim_set_keymap(
-	"n",
-	"<space>rv",
-	"<Esc><cmd>lua require('refactoring').debug.print_var({})<CR>",
-	{ noremap = true }
-)
-
-vim.api.nvim_set_keymap(
-	"n",
-	"<space>rc",
-	"<Esc><cmd>lua require('refactoring').debug.cleanup({})<CR>",
-	{ noremap = true }
+    "v",
+    "<leader>rr",
+    ":lua require('refactoring').select_refactor()<CR>",
+    { noremap = true, silent = true, expr = false }
 )
 EOF
 
@@ -502,6 +501,7 @@ require('dap.ext.vscode').load_launchjs(
   nil,
   {
     node = {
+      'vue',
       'javascript',
       'javascriptreact',
       'typescript',
@@ -570,6 +570,32 @@ nnoremap <space>ts <cmd>lua require('neotest').summary.toggle()<cr>
 "
 lua << EOF
 require'range-highlight'.setup{}
+EOF
+
+"
+" null-ls
+"
+lua << EOF
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.code_actions.gitsigns,
+    null_ls.builtins.code_actions.gitrebase,
+    require("typescript.extensions.null-ls.code-actions")
+  },
+})
+EOF
+
+"
+" typescript
+"
+lua << EOF
+require("typescript").setup({})
 EOF
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
