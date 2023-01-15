@@ -116,11 +116,17 @@ _G.packer_plugins = {
   },
   ["cmp-vsnip"] = {
     after = { "friendly-snippets" },
+    after_files = { "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/opt/cmp-vsnip/after/plugin/cmp_vsnip.lua" },
     load_after = {},
     loaded = true,
     needs_bufread = false,
     path = "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/opt/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
+  },
+  ["fidget.nvim"] = {
+    loaded = true,
+    path = "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
   },
   ["friendly-snippets"] = {
     load_after = {},
@@ -153,6 +159,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
+  },
+  ["neodev.nvim"] = {
+    loaded = true,
+    path = "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/start/neodev.nvim",
+    url = "https://github.com/folke/neodev.nvim"
   },
   neotest = {
     loaded = true,
@@ -223,6 +234,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-treesitter-textobjects"] = {
+    loaded = true,
+    path = "/Users/jamesjohnson/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
   },
   ["nvim-web-devicons"] = {
     loaded = true,

@@ -5,7 +5,7 @@ return require('packer').startup(function(use)
 	use 'hrsh7th/vim-vsnip-integ'
 	use 'SmiteshP/nvim-navic'
 	use 'ThePrimeagen/refactoring.nvim'
-    use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+  use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 	use 'antoinemadec/FixCursorHold.nvim'
 	use 'dracula/vim'
 	use 'folke/tokyonight.nvim'
@@ -17,23 +17,31 @@ return require('packer').startup(function(use)
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/nvim-cmp'
 	use {
-  'hrsh7th/cmp-vsnip',
-  after = 'nvim-cmp',
-  requires = {
-    'hrsh7th/vim-vsnip',
-    {
-      'rafamadriz/friendly-snippets',
-      after = 'cmp-vsnip'
+    'hrsh7th/cmp-vsnip',
+    after = 'nvim-cmp',
+    requires = {
+      'hrsh7th/vim-vsnip',
+      {
+        'rafamadriz/friendly-snippets',
+        after = 'cmp-vsnip'
+      }
     }
   }
-}
 	use 'jose-elias-alvarez/null-ls.nvim'
 	use 'kshenoy/vim-signature'
 	use 'lewis6991/gitsigns.nvim'
 	use 'mfussenegger/nvim-dap'
 	use 'mhartington/oceanic-next'
 	use 'mxsdev/nvim-dap-vscode-js'
-	use 'neovim/nvim-lspconfig'
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'j-hui/fidget.nvim',
+      'folke/neodev.nvim',
+    },
+  }
 	use 'numToStr/Comment.nvim'
 	use 'nvim-lua/plenary.nvim'
 	use 'nvim-lualine/lualine.nvim'
@@ -49,6 +57,7 @@ return require('packer').startup(function(use)
 		ts_update()
 		end,
 	}
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
 	use 'onsails/lspkind.nvim'
 	use 'rcarriga/nvim-dap-ui'
 	use 'sainnhe/sonokai'
@@ -56,8 +65,6 @@ return require('packer').startup(function(use)
 	use 'theHamsta/nvim-dap-virtual-text'
 	use 'tpope/vim-fugitive'
 	use 'tpope/vim-surround'
-	use 'williamboman/mason-lspconfig.nvim'
-	use 'williamboman/mason.nvim'
 	use 'windwp/nvim-autopairs'
 	use 'winston0410/cmd-parser.nvim'
 	use 'winston0410/range-highlight.nvim'
