@@ -20,20 +20,11 @@ mason_lspconfig.setup({
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- local lsp_formatting = function(bufnr)
---     vim.lsp.buf.format({
---         filter = function(client)
---             -- apply whatever logic you want (in this example, we'll only use null-ls)
---             return client.name == "null-ls"
---         end,
---         bufnr = bufnr,
---     })
--- end
+local lspconfig = require('lspconfig')
 
 mason_lspconfig.setup_handlers({
-  function (server_name)
-    require("lspconfig")[server_name].setup {
+  function(server_name)
+    lspconfig[server_name].setup {
       capabilities = capabilities,
       flags = {
         debounce_text_changes = 150,
@@ -45,19 +36,18 @@ mason_lspconfig.setup_handlers({
         if client.server_capabilities.documentSymbolProvider then
           require("nvim-navic").attach(client, bufnr)
         end
-        
-        -- if client.supports_method("textDocument/formatting") then
-        --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        --     vim.api.nvim_create_autocmd("BufWritePre", {
-        --         group = augroup,
-        --         buffer = bufnr,
-        --         callback = function()
-        --             lsp_formatting(bufnr)
-        --         end,
-        --     })
-        -- end
       end
-  }
-  end
+    }
+  end,
+  ["volar"] = function()
+    lspconfig.volar.setup {
+      settings = {
+        ['volar'] = {
+          ['completion'] = {
+            preferredTagNameCase = "auto-camel"
+          }
+        }
+      }
+    }
+  end,
 })
-

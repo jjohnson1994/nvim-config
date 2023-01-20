@@ -1,4 +1,25 @@
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    'html',
+    'javascript',
+    'typescript',
+    'json',
+    'dockerfile',
+    'css',
+    'jsdoc',
+    'scss',
+    'tsx',
+    'vim',
+    'vue',
+    'yaml',
+    'lua',
+    'graphql',
+    'hcl',
+  },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
   textobjects = {
     select = {
       enable = true,
@@ -59,26 +80,13 @@ require'nvim-treesitter.configs'.setup {
       ['[]'] = '@class.outer',
     },
   },
-  ensure_installed = {
-    'html',
-    'javascript',
-    'typescript',
-    'json',
-    'dockerfile',
-    'css',
-    'jsdoc',
-    'scss',
-    'tsx',
-    'vim',
-    'vue',
-    'yaml',
-    'lua',
-    'graphql',
-    'hcl',
-  },
-  highlight = {
+  incremental_selection = {
     enable = true,
-    additional_vim_regex_highlighting = false,
-  }
+    keymaps = {
+      init_selection = '<TAB>',
+      scope_incremental = '<C-TAB>',
+      node_incremental = '<TAB>',
+      node_decremental = '<S-TAB>',
+    },
+  },
 }
-

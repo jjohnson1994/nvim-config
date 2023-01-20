@@ -12,13 +12,6 @@
     
     DAP Adapters:
       node-debug2 and vscode-chrome-debug cloned and build at ~/Projects
-    
-    Formatters:
-      eslint_d:
-      npm install -g eslint_d
-    
-      prettierd
-      npm install -g @fsouza/prettierd
 ]]--
 
 
@@ -38,6 +31,7 @@ require "plugin/mason"
 require "plugin/navic"
 require "plugin/neotest"
 require "plugin/nerd-commented"
+require "plugin/null-ls"
 require "plugin/nvim-autopairs"
 require "plugin/nvim-cmp"
 require "plugin/nvim-tree"
@@ -46,4 +40,4 @@ require "plugin/refactoring"
 require "plugin/telescope"
 require "plugin/treesitter"
 require "plugin/trouble"
--- require "plugin/vim-vsnip"
+require "plugin/vim-vsnip"
