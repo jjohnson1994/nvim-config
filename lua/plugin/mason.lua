@@ -36,15 +36,15 @@ mason_lspconfig.setup_handlers({
         if client.server_capabilities.documentSymbolProvider then
           require("nvim-navic").attach(client, bufnr)
         end
-      end
-    }
-  end,
-  ["volar"] = function()
-    lspconfig.volar.setup {
+      end,
       settings = {
-        ['volar'] = {
-          ['completion'] = {
-            preferredTagNameCase = "auto-camel"
+        Lua = {
+          diagnostics = {
+            globals = { 'vim'}
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+            checkThirdParty = false
           }
         }
       }

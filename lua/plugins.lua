@@ -27,7 +27,6 @@ return require('packer').startup(function(use)
       }
     }
   }
-	use 'jose-elias-alvarez/null-ls.nvim'
 	use 'kshenoy/vim-signature'
 	use 'lewis6991/gitsigns.nvim'
 	use 'mfussenegger/nvim-dap'
