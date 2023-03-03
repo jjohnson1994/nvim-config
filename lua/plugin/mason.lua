@@ -15,12 +15,21 @@ mason_lspconfig.setup({
     "yamlls",
     "terraformls",
     "dockerls",
-    "eslint"
+    -- "eslint"
   }
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
+
+local lsp_formatting = function(bufnr)
+  vim.lsp.buf.format({
+    filter = function(client)
+      return client.name == "null-ls"
+    end,
+    bufnr = bufnr,
+  })
+end
 
 mason_lspconfig.setup_handlers({
   function(server_name)
@@ -36,11 +45,22 @@ mason_lspconfig.setup_handlers({
         if client.server_capabilities.documentSymbolProvider then
           require("nvim-navic").attach(client, bufnr)
         end
+
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+              lsp_formatting(bufnr)
+            end,
+          })
+        end
       end,
       settings = {
         Lua = {
           diagnostics = {
-            globals = { 'vim'}
+            globals = { 'vim' }
           },
           workspace = {
             library = vim.api.nvim_get_runtime_file("", true),

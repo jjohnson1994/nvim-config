@@ -12,7 +12,7 @@
     
     DAP Adapters:
       node-debug2 and vscode-chrome-debug cloned and build at ~/Projects
-]]--
+]] --
 
 
 require "plugins"
@@ -31,6 +31,7 @@ require "plugin/mason"
 require "plugin/navic"
 require "plugin/neotest"
 require "plugin/nerd-commented"
+require "plugin/null-ls"
 require "plugin/nvim-autopairs"
 require "plugin/nvim-cmp"
 require "plugin/nvim-tree"

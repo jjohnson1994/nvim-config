@@ -2,4 +2,4 @@ vim.keymap.set("n", "]g", vim.diagnostic.goto_next, { noremap = true, silent = t
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, { noremap = true, silent = true })
 vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { noremap = true, silent = true })
 vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { noremap = true, silent = true })
-vim.keymap.set("n", "<space>ff", vim.lsp.buf.format, { noremap = true, silent = true })
+vim.keymap.set("n", "<space>ff", function() vim.lsp.buf.format { async = true } end, { noremap = true, silent = true })

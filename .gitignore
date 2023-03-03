@@ -2,3 +2,4 @@ autoload
 .netrwhist
 tags
 .vimrc
+node_modules
