@@ -72,4 +72,15 @@ return require('packer').startup(function(use)
   use 'windwp/nvim-autopairs'
   use 'winston0410/cmd-parser.nvim'
   use 'winston0410/range-highlight.nvim'
+  use({
+    'jackMort/ChatGPT.nvim',
+    config = function()
+      require("chatgpt").setup()
+    end,
+    requires = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim'
+    }
+  })
 end)
