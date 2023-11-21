@@ -551,6 +551,20 @@ require("mason-lspconfig").setup_handlers({
 
 require("lspconfig")
 
+local icons = {
+  diagnostics = {
+    Error = " ",
+    Warn  = " ",
+    Hint  = " ",
+    Info  = " ",
+  }
+}
+
+for name, icon in pairs(icons.diagnostics) do
+  name = "DiagnosticSign" .. name
+  vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+end
+
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
