@@ -118,14 +118,29 @@ require("lazy").setup({
   },
   { "saadparwaiz1/cmp_luasnip" },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    -- "nvim-neo-tree/neo-tree.nvim",
+    -- branch = "v3.x",
+    -- dependencies = {
+    --   "nvim-lua/plenary.nvim",
+    --   "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    --   "MunifTanjim/nui.nvim",
+    --   -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    -- },
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = "*",
+    lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+      "nvim-tree/nvim-web-devicons",
     },
+    config = function()
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+      vim.opt.termguicolors = true
+
+      require("nvim-tree").setup {}
+    end
   },
   { "echasnovski/mini.nvim",   version = "*" },
   {
@@ -141,6 +156,10 @@ require("lazy").setup({
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
+    config = function ()
+      vim.cmd.colorscheme("catppuccin-mocha")
+      -- vim.cmd.colorscheme("tokyonight")
+    end
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
@@ -215,16 +234,42 @@ require("lazy").setup({
     "SmiteshP/nvim-navic",
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     config = function()
       local null_ls = require("null-ls")
+
+      local lsp_formatting = function(bufnr)
+        vim.lsp.buf.format({
+          filter = function(client)
+            -- apply whatever logic you want (in this example, we'll only use null-ls)
+            return client.name ~= "tsserver" and client.name ~= "volar"
+          end,
+          bufnr = bufnr,
+          timeout_ms = 2000
+        })
+      end
+
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
       null_ls.setup({
         sources = {
           null_ls.builtins.code_actions.eslint,
           null_ls.builtins.formatting.eslint,
           null_ls.builtins.diagnostics.eslint,
+          null_ls.builtins.code_actions.gitsigns,
         },
+        on_attach = function(client, bufnr)
+          if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = augroup,
+              buffer = bufnr,
+              callback = function()
+                lsp_formatting(bufnr)
+              end,
+            })
+          end
+        end,
       })
     end,
   },
@@ -305,15 +350,28 @@ require("lazy").setup({
       )
     end,
   },
-  { 'chentoast/marks.nvim' }
+  { 'chentoast/marks.nvim' },
+  {
+    'b0o/SchemaStore.nvim',
+    config = function()
+      require('lspconfig').jsonls.setup {
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      }
+    end
+  }
 })
+
 
 -- < which key
 local whichkey = require("which-key")
 -- which key >
 
 vim.notify = require("notify")
-vim.cmd([[colorscheme tokyonight-night]])
 
 -- <Nvim-comp
 -- gray
@@ -496,7 +554,7 @@ require("mini.indentscope").setup({
         "help",
         "alpha",
         "dashboard",
-        "neo-tree",
+        -- "neo-tree",
         "Trouble",
         "trouble",
         "lazy",
@@ -539,7 +597,19 @@ require("mason-lspconfig").setup_handlers({
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     require("lspconfig")[server_name].setup({
       capabilities = capabilities,
-      on_attach = function(client, bufnr) end,
+      on_attach = function(client, bufnr)
+      end,
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim' }
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+            checkThirdParty = false
+          }
+        }
+      }
     })
   end,
   -- Next, you can provide a dedicated handler for specific servers.
@@ -579,6 +649,7 @@ end
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
@@ -604,8 +675,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
     -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set("n", "<space>lf", function()
-      -- require("conform").format()
-      vim.lsp.buf.format({ async = true })
+      vim.lsp.buf.format({
+        filter = function(client)
+          return client.name ~= "tsserver" and client.name ~= "volar"
+        end,
+        bufnr = bufnr,
+        timeout_ms = 2000
+      })
     end, opts)
   end,
 })
@@ -634,10 +710,11 @@ map("n", "<S-l>", ":bnext<CR>")
 map("n", "<S-h>", ":bprev<CR>")
 map("n", "<space>bn", ":bnext<CR>")
 map("n", "<space>np", ":bprevious<CR>")
-map("n", "<space>bc", ":bdelete<CR>")
-map("n", "<space>b`", ":e #<CR>")
+map("n", "<space>bd", "::b#|bd#<CR>")
+map("n", "<space>bb", ":e #<CR>")
 
-map("n", "<space>e", ":Neotree toggle<CR>")
+-- map("n", "<space>e", ":Neotree toggle<CR>")
+map("n", "<space>e", ":NvimTreeToggle toggle<CR>")
 
 vim.opt.relativenumber = true
 
@@ -671,7 +748,7 @@ require("bufferline").setup({})
 -- vim.opt.number = true
 -- vim.opt.showmatch = true
 -- vim.opt.signcolumn = "yes"
--- vim.opt.so = 7
+vim.opt.so = 7
 vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -745,6 +822,10 @@ local gitsigns = require("gitsigns").setup({
     -- Text object
     map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
   end,
+  current_line_blame = true,
+  current_line_blame_opts = {
+    delay = 200
+  },
 })
 -- > git signs
 
@@ -831,9 +912,53 @@ local navic = require("nvim-navic").setup({
 
 -- navic >
 -- lua line <
+function lsp_clients()
+  local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
+      if #buf_clients == 0 then
+        return "LSP Inactive"
+      end
 
+      local buf_ft = vim.bo.filetype
+      local buf_client_names = {}
+      local copilot_active = false
+
+      -- add client
+      for _, client in pairs(buf_clients) do
+        if client.name ~= "null-ls" and client.name ~= "copilot" then
+          table.insert(buf_client_names, client.name)
+        end
+
+        if client.name == "copilot" then
+          copilot_active = true
+        end
+      end
+
+      -- add formatter
+      local formatters = require "lvim.lsp.null-ls.formatters"
+      local supported_formatters = formatters.list_registered(buf_ft)
+      vim.list_extend(buf_client_names, supported_formatters)
+
+      -- add linter
+      local linters = require "lvim.lsp.null-ls.linters"
+      local supported_linters = linters.list_registered(buf_ft)
+      vim.list_extend(buf_client_names, supported_linters)
+
+      local unique_client_names = table.concat(buf_client_names, ", ")
+      local language_servers = string.format("[%s]", unique_client_names)
+
+      if copilot_active then
+        language_servers = language_servers .. "%#SLCopilot#" .. " " .. lvim.icons.git.Octoface .. "%*"
+      end
+
+      return language_servers
+end
+
+-- TODO mode status line @recording (see Noice)
 require("lualine").setup({
   winbar = {
+    lualine_b = {
+      {'filename', file_status = false, path = 1 },
+    },
     lualine_c = {
       {
         "navic",
@@ -842,7 +967,58 @@ require("lualine").setup({
       },
     },
   },
+  inactive_winbar = {
+    lualine_b = {
+      {'filename', file_status = false, path = 1 },
+    }
+    
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {},
+    lualine_x = {
+      lsp_clients,
+      'encoding',
+      'fileformat',
+      { 
+        'filetype',
+        on_click = function()
+          require("notify")("My super important message")
+        end 
+      }
+    },
+    lualine_y = {'progress'},
+    lualine_z = {{
+      'location',
+      on_click = function()
+        return vim.ui.input(
+          {
+            prompt = "Go to line",
+          },
+          function(input)
+            if input then
+              print("You entered " .. input)
+              vim.cmd(":" .. input)
+            else
+              print "You cancelled"
+            end
+          end
+        )
+      end
+    }}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
 })
+
+vim.o.laststatus = 3 -- have a global statusline at the bottom
 -- lua line >
 
 -- todo comments <
@@ -868,7 +1044,7 @@ require("ibl").setup({
       "help",
       "alpha",
       "dashboard",
-      "neo-tree",
+      -- "neo-tree",
       "Trouble",
       "trouble",
       "lazy",
@@ -942,7 +1118,7 @@ require("noice").setup({
   },
   -- you can enable a preset for easier configuration
   presets = {
-    bottom_search = true,         -- use a classic bottom cmdline for search
+    bottom_search = false,        -- use a classic bottom cmdline for search
     command_palette = true,       -- position the cmdline and popupmenu together
     long_message_to_split = true, -- long messages will be sent to a split
     inc_rename = false,           -- enables an input dialog for inc-rename.nvim
