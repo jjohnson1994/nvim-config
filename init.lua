@@ -69,6 +69,9 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     opts = {},
+    config = function ()
+      -- vim.cmd.colorscheme("tokyonight")
+    end
   },
   { "neovim/nvim-lspconfig" },
   { "hrsh7th/cmp-nvim-lsp" },
@@ -139,7 +142,11 @@ require("lazy").setup({
       vim.g.loaded_netrwPlugin = 1
       vim.opt.termguicolors = true
 
-      require("nvim-tree").setup {}
+      require("nvim-tree").setup({
+        view = {
+          width = 40
+        }
+      })
     end
   },
   { "echasnovski/mini.nvim",   version = "*" },
@@ -216,7 +223,16 @@ require("lazy").setup({
     event = "VimEnter",
     config = function()
       require("dashboard").setup({
-        -- config
+        config = {
+          header = {
+            'neoji neojim neojim neojim',
+            'neoji neojim neojim neojim',
+            'neoji neojim neojim neojim',
+            'neoji neojim neojim neojim',
+            '',
+            ''
+          }
+        }
       })
     end,
     dependencies = { { "nvim-tree/nvim-web-devicons" } },
@@ -724,30 +740,30 @@ require("bufferline").setup({})
 -- bufferline >
 
 -- general vi config <
--- vim.opt.compatible = false
--- vim.opt.syntax = "enable"
--- vim.opt.autoread = true
--- vim.opt.autoindent = true
--- vim.opt.backspace = { "indent", "eol", "start" }
--- vim.opt.cmdheight = 1
--- vim.opt.cursorline = true
--- vim.opt.encoding = "UTF-8"
--- vim.opt.foldmethod = "syntax"
--- vim.opt.foldenable = false
--- vim.opt.hidden = true
--- vim.opt.hlsearch = true
--- vim.opt.incsearch = true
+vim.opt.compatible = false
+vim.opt.syntax = "enable"
+vim.opt.autoread = true
+vim.opt.autoindent = true
+vim.opt.backspace = { "indent", "eol", "start" }
+vim.opt.cmdheight = 1
+vim.opt.cursorline = true
+vim.opt.encoding = "UTF-8"
+vim.opt.foldmethod = "syntax"
+vim.opt.foldenable = false
+vim.opt.hidden = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 -- vim.opt.lazyredraw = true
--- vim.opt.modifiable = true
--- vim.opt.mouse = "a"
--- vim.opt.backup = false
--- vim.opt.swapfile = false
--- vim.opt.wb = false
--- vim.opt.wrap = false
--- vim.opt.relativenumber = true
--- vim.opt.number = true
--- vim.opt.showmatch = true
--- vim.opt.signcolumn = "yes"
+vim.opt.modifiable = true
+vim.opt.mouse = "a"
+vim.opt.backup = false
+vim.opt.swapfile = false
+vim.opt.wb = false
+vim.opt.wrap = false
+vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.showmatch = true
+vim.opt.signcolumn = "yes"
 vim.opt.so = 7
 vim.opt.splitright = true
 vim.opt.tabstop = 2
