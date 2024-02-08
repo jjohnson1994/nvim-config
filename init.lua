@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   checker = { enabled = true },
-  { "rcarriga/nvim-notify" },
+  -- { "rcarriga/nvim-notify" },
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "folke/which-key.nvim",
@@ -85,7 +85,7 @@ require("lazy").setup({
     -- follow latest release.
     version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     -- install jsregexp (optional!).
-    build = "make install_jsregexp",
+    -- build = "make install_jsregexp",
     opts = {
       history = true,
       delete_check_events = "TextChanged",
@@ -208,7 +208,7 @@ require("lazy").setup({
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
+      -- "rcarriga/nvim-notify",
     },
   },
   {
@@ -379,6 +379,20 @@ require("lazy").setup({
         },
       }
     end
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      { 
+        "nvim-telescope/telescope-live-grep-args.nvim" ,
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = "^1.0.0",
+      },
+    },
+    config = function()
+      require("telescope").load_extension("live_grep_args")
+    end
   }
 })
 
@@ -387,7 +401,7 @@ require("lazy").setup({
 local whichkey = require("which-key")
 -- which key >
 
-vim.notify = require("notify")
+-- vim.notify = require("notify")
 
 -- <Nvim-comp
 -- gray
@@ -846,12 +860,32 @@ local gitsigns = require("gitsigns").setup({
 -- > git signs
 
 -- telescope <
-require("telescope").setup()
+local lga_actions = require("telescope-live-grep-args.actions")
+require("telescope").setup({
+  extensions = {
+    live_grep_args = {
+      auto_quoting = true, -- enable/disable auto-quoting
+      -- define mappings, e.g.
+      mappings = { -- extend mappings
+        i = {
+          ["<C-k>"] = lga_actions.quote_prompt(),
+          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+        },
+      },
+      -- ... also accepts theme settings, for example:
+      -- theme = "dropdown", -- use dropdown theme
+      -- theme = { }, -- use own theme spec
+      -- layout_config = { mirror=true }, -- mirror preview pane
+    }
+  }
+})
+
 require("telescope").load_extension("fzf")
 
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<space>ff", builtin.git_files, {})
 vim.keymap.set("n", "<space>fg", builtin.live_grep, {})
+vim.keymap.set("n", "<space>fa", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 vim.keymap.set("n", "<space>fb", builtin.buffers, {})
 vim.keymap.set("n", "<space>fh", builtin.help_tags, {})
 vim.keymap.set("n", "<space>fr", builtin.registers, {})
@@ -1000,7 +1034,7 @@ require("lualine").setup({
       { 
         'filetype',
         on_click = function()
-          require("notify")("My super important message")
+          -- require("notify")("My super important message")
         end 
       }
     },
