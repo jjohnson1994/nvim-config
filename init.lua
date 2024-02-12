@@ -121,33 +121,14 @@ require("lazy").setup({
   },
   { "saadparwaiz1/cmp_luasnip" },
   {
-    -- "nvim-neo-tree/neo-tree.nvim",
-    -- branch = "v3.x",
-    -- dependencies = {
-    --   "nvim-lua/plenary.nvim",
-    --   "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    --   "MunifTanjim/nui.nvim",
-    --   -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    -- },
-  },
-  {
-    'nvim-tree/nvim-tree.lua',
-    version = "*",
-    lazy = false,
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
     dependencies = {
+      "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+      "3rd/image.nvim"
     },
-    config = function()
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-      vim.opt.termguicolors = true
-
-      require("nvim-tree").setup({
-        view = {
-          width = 40
-        }
-      })
-    end
   },
   { "echasnovski/mini.nvim",   version = "*" },
   {
@@ -584,7 +565,7 @@ require("mini.indentscope").setup({
         "help",
         "alpha",
         "dashboard",
-        -- "neo-tree",
+        "neo-tree",
         "Trouble",
         "trouble",
         "lazy",
@@ -743,8 +724,9 @@ map("n", "<space>np", ":bprevious<CR>")
 map("n", "<space>bd", "::b#|bd#<CR>")
 map("n", "<space>bb", ":e #<CR>")
 
--- map("n", "<space>e", ":Neotree toggle<CR>")
-map("n", "<space>e", ":NvimTreeToggle toggle<CR>")
+whichkey.register({
+  ["<space>e"] = { "<cmd>Neotree toggle<cr>", "Neotree Toggle" },
+})
 
 vim.opt.relativenumber = true
 
@@ -1094,7 +1076,7 @@ require("ibl").setup({
       "help",
       "alpha",
       "dashboard",
-      -- "neo-tree",
+      "neo-tree",
       "Trouble",
       "trouble",
       "lazy",
