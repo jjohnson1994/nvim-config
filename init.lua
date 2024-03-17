@@ -28,7 +28,7 @@ require("lazy").setup({
       -- refer to the configuration section below
     },
   },
-  { "folke/neoconf.nvim",   cmd = "Neoconf" },
+  { "folke/neoconf.nvim",    cmd = "Neoconf" },
   "folke/neodev.nvim",
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
@@ -69,7 +69,7 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     opts = {},
-    config = function ()
+    config = function()
       -- vim.cmd.colorscheme("tokyonight")
     end
   },
@@ -95,7 +95,7 @@ require("lazy").setup({
       local ls = require("luasnip").setup()
 
       -- vim.keymap.set({ "i" }, "<Tab>", function()
-        -- return ls.jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+      -- return ls.jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
       -- end, { expr = true, silent = true })
 
       -- vim.keymap.set({ "s" }, "<Tab>", function()
@@ -129,6 +129,19 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
       "3rd/image.nvim"
     },
+    config = function()
+      require("neo-tree").setup({
+        source_selector = {
+          winbar = false,
+          statusline = false
+        },
+        filesystem = {
+          follow_current_file = {
+            enabled = true
+          }
+        }
+      })
+    end
   },
   { "echasnovski/mini.nvim",   version = "*" },
   {
@@ -144,7 +157,7 @@ require("lazy").setup({
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
-    config = function ()
+    config = function()
       vim.cmd.colorscheme("catppuccin-mocha")
       -- vim.cmd.colorscheme("tokyonight")
     end
@@ -206,10 +219,10 @@ require("lazy").setup({
       require("dashboard").setup({
         config = {
           header = {
-            'neoji neojim neojim neojim',
-            'neoji neojim neojim neojim',
-            'neoji neojim neojim neojim',
-            'neoji neojim neojim neojim',
+            'neojim neojim neojim neojim',
+            'neojim neojim neojim neojim',
+            'neojim neojim neojim neojim',
+            'neojim neojim neojim neojim',
             '',
             ''
           }
@@ -364,8 +377,8 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      { 
-        "nvim-telescope/telescope-live-grep-args.nvim" ,
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim",
         -- This will not install any breaking changes.
         -- For major updates, this must be adjusted manually.
         version = "^1.0.0",
@@ -848,7 +861,7 @@ require("telescope").setup({
     live_grep_args = {
       auto_quoting = true, -- enable/disable auto-quoting
       -- define mappings, e.g.
-      mappings = { -- extend mappings
+      mappings = {         -- extend mappings
         i = {
           ["<C-k>"] = lga_actions.quote_prompt(),
           ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
@@ -946,50 +959,50 @@ local navic = require("nvim-navic").setup({
 -- lua line <
 function lsp_clients()
   local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
-      if #buf_clients == 0 then
-        return "LSP Inactive"
-      end
+  if #buf_clients == 0 then
+    return "LSP Inactive"
+  end
 
-      local buf_ft = vim.bo.filetype
-      local buf_client_names = {}
-      local copilot_active = false
+  local buf_ft = vim.bo.filetype
+  local buf_client_names = {}
+  local copilot_active = false
 
-      -- add client
-      for _, client in pairs(buf_clients) do
-        if client.name ~= "null-ls" and client.name ~= "copilot" then
-          table.insert(buf_client_names, client.name)
-        end
+  -- add client
+  for _, client in pairs(buf_clients) do
+    if client.name ~= "null-ls" and client.name ~= "copilot" then
+      table.insert(buf_client_names, client.name)
+    end
 
-        if client.name == "copilot" then
-          copilot_active = true
-        end
-      end
+    if client.name == "copilot" then
+      copilot_active = true
+    end
+  end
 
-      -- add formatter
-      local formatters = require "lvim.lsp.null-ls.formatters"
-      local supported_formatters = formatters.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_formatters)
+  -- add formatter
+  local formatters = require "lvim.lsp.null-ls.formatters"
+  local supported_formatters = formatters.list_registered(buf_ft)
+  vim.list_extend(buf_client_names, supported_formatters)
 
-      -- add linter
-      local linters = require "lvim.lsp.null-ls.linters"
-      local supported_linters = linters.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_linters)
+  -- add linter
+  local linters = require "lvim.lsp.null-ls.linters"
+  local supported_linters = linters.list_registered(buf_ft)
+  vim.list_extend(buf_client_names, supported_linters)
 
-      local unique_client_names = table.concat(buf_client_names, ", ")
-      local language_servers = string.format("[%s]", unique_client_names)
+  local unique_client_names = table.concat(buf_client_names, ", ")
+  local language_servers = string.format("[%s]", unique_client_names)
 
-      if copilot_active then
-        language_servers = language_servers .. "%#SLCopilot#" .. " " .. lvim.icons.git.Octoface .. "%*"
-      end
+  if copilot_active then
+    language_servers = language_servers .. "%#SLCopilot#" .. " " .. lvim.icons.git.Octoface .. "%*"
+  end
 
-      return language_servers
+  return language_servers
 end
 
 -- TODO mode status line @recording (see Noice)
 require("lualine").setup({
   winbar = {
     lualine_b = {
-      {'filename', file_status = false, path = 1 },
+      { 'filename', file_status = false, path = 1 },
     },
     lualine_c = {
       {
@@ -1001,27 +1014,27 @@ require("lualine").setup({
   },
   inactive_winbar = {
     lualine_b = {
-      {'filename', file_status = false, path = 1 },
+      { 'filename', file_status = false, path = 1 },
     }
-    
+
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = {},
     lualine_x = {
       lsp_clients,
       'encoding',
       'fileformat',
-      { 
+      {
         'filetype',
         on_click = function()
           -- require("notify")("My super important message")
-        end 
+        end
       }
     },
-    lualine_y = {'progress'},
-    lualine_z = {{
+    lualine_y = { 'progress' },
+    lualine_z = { {
       'location',
       on_click = function()
         return vim.ui.input(
@@ -1038,13 +1051,13 @@ require("lualine").setup({
           end
         )
       end
-    }}
+    } }
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
     lualine_c = {},
-    lualine_x = {'location'},
+    lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {}
   },
