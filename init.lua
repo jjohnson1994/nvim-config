@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   checker = { enabled = true },
-  -- { "rcarriga/nvim-notify" },
+  { "rcarriga/nvim-notify" },
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "folke/which-key.nvim",
@@ -28,7 +28,7 @@ require("lazy").setup({
       -- refer to the configuration section below
     },
   },
-  { "folke/neoconf.nvim",    cmd = "Neoconf" },
+  { "folke/neoconf.nvim",   cmd = "Neoconf" },
   "folke/neodev.nvim",
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
@@ -70,15 +70,17 @@ require("lazy").setup({
     priority = 1000,
     opts = {},
     config = function()
-      -- vim.cmd.colorscheme("tokyonight")
-    end
+      vim.cmd([[colorscheme tokyonight-moon]])
+    end,
   },
   { "neovim/nvim-lspconfig" },
   { "hrsh7th/cmp-nvim-lsp" },
   { "hrsh7th/cmp-buffer" },
   { "hrsh7th/cmp-path" },
   { "hrsh7th/cmp-cmdline" },
-  { "hrsh7th/nvim-cmp" },
+  {
+    "hrsh7th/nvim-cmp",
+  },
   {
     "L3MON4D3/LuaSnip",
     dependencies = { "rafamadriz/friendly-snippets" },
@@ -127,21 +129,21 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
-      "3rd/image.nvim"
+      "3rd/image.nvim",
     },
     config = function()
       require("neo-tree").setup({
         source_selector = {
           winbar = false,
-          statusline = false
+          statusline = false,
         },
         filesystem = {
           follow_current_file = {
-            enabled = true
-          }
-        }
+            enabled = true,
+          },
+        },
       })
-    end
+    end,
   },
   { "echasnovski/mini.nvim",   version = "*" },
   {
@@ -152,15 +154,51 @@ require("lazy").setup({
     "akinsho/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
+    after = "catppuccin",
   },
   {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme("catppuccin-mocha")
-      -- vim.cmd.colorscheme("tokyonight")
-    end
+      require("catppuccin").setup({
+        flavour = "macchiato", -- latte, frappe, macchiato, mocha
+        dim_inactive = {
+          enabled = true,
+        },
+        styles = {
+          comments = { "italic" },
+          conditionals = { "italic" },
+          loops = { "italic" },
+          keywords = { "italic" },
+        },
+        integrations = {
+          cmp = true,
+          bufferline = true,
+          dashboard = true,
+          gitsigns = true,
+          indent_blankline = { enabled = true },
+          mini = {
+            enabled = true,
+            indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+          },
+          neotree = true,
+          noice = true,
+          notifier = true,
+          dap = true,
+          dap_ui = true,
+          notify = true,
+          nvimtree = true,
+          treesitter_context = true,
+          treesitter = true,
+          lsp_trouble = true,
+          telescope = true,
+          which_key = true,
+        },
+      })
+
+      -- vim.cmd.colorscheme("catppuccin-mocha")
+    end,
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
@@ -177,15 +215,11 @@ require("lazy").setup({
       -- refer to the configuration section below
     },
   },
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
+  -- TODO
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
   },
-  { "lunarvim/Onedarker.nvim" },
   { "windwp/nvim-ts-autotag" },
   { "nvim-treesitter/nvim-treesitter-textobjects" },
   {
@@ -202,7 +236,7 @@ require("lazy").setup({
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      -- "rcarriga/nvim-notify",
+      "rcarriga/nvim-notify",
     },
   },
   {
@@ -219,14 +253,14 @@ require("lazy").setup({
       require("dashboard").setup({
         config = {
           header = {
-            'neojim neojim neojim neojim',
-            'neojim neojim neojim neojim',
-            'neojim neojim neojim neojim',
-            'neojim neojim neojim neojim',
-            '',
-            ''
-          }
-        }
+            "neojim neojim neojim neojim",
+            "neojim neojim neojim neojim",
+            "neojim neojim neojim neojim",
+            "neojim neojim neojim neojim",
+            "",
+            "",
+          },
+        },
       })
     end,
     dependencies = { { "nvim-tree/nvim-web-devicons" } },
@@ -243,44 +277,98 @@ require("lazy").setup({
   {
     "SmiteshP/nvim-navic",
   },
+  -- {
+  --   "nvimtools/none-ls.nvim",
+  --   config = function()
+  --     local null_ls = require("null-ls")
+  --
+  --     local lsp_formatting = function(bufnr)
+  --       vim.lsp.buf.format({
+  --         filter = function(client)
+  --           -- apply whatever logic you want (in this example, we'll only use null-ls)
+  --           return client.name ~= "tsserver" and client.name ~= "volar"
+  --         end,
+  --         bufnr = bufnr,
+  --         timeout_ms = 2000
+  --       })
+  --     end
+  --
+  --     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+  --
+  --     null_ls.setup({
+  --       sources = {
+  --         null_ls.builtins.code_actions.eslint,
+  --         null_ls.builtins.formatting.eslint,
+  --         null_ls.builtins.diagnostics.eslint,
+  --         null_ls.builtins.code_actions.gitsigns,
+  --       },
+  --       on_attach = function(client, bufnr)
+  --         if client.supports_method("textDocument/formatting") then
+  --           vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  --           vim.api.nvim_create_autocmd("BufWritePre", {
+  --             group = augroup,
+  --             buffer = bufnr,
+  --             callback = function()
+  --               lsp_formatting(bufnr)
+  --             end,
+  --           })
+  --         end
+  --       end,
+  --     })
+  --   end,
+  -- },
   {
-    "nvimtools/none-ls.nvim",
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local null_ls = require("null-ls")
+      local lint = require("lint")
 
-      local lsp_formatting = function(bufnr)
-        vim.lsp.buf.format({
-          filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
-            return client.name ~= "tsserver" and client.name ~= "volar"
-          end,
-          bufnr = bufnr,
-          timeout_ms = 2000
-        })
-      end
+      lint.linters_by_ft = {
+        vue = { "eslint_d" },
+        typescript = { "eslint_d" },
+        javascript = { "eslint_d" },
+      }
 
-      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+      local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.code_actions.eslint,
-          null_ls.builtins.formatting.eslint,
-          null_ls.builtins.diagnostics.eslint,
-          null_ls.builtins.code_actions.gitsigns,
-        },
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              group = augroup,
-              buffer = bufnr,
-              callback = function()
-                lsp_formatting(bufnr)
-              end,
-            })
-          end
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+        group = lint_augroup,
+        callback = function()
+          lint.try_lint()
         end,
       })
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("conform").setup({
+        format_on_save = {
+          timeout_ms = 2500,
+          lsp_fallback = false,
+        },
+        formatters_by_ft = {
+          lua = { "stylua" },
+          javascript = { { "eslint_d" } },
+          typescript = { { "eslint_d" } },
+          vue = { { "eslint_d" } },
+        },
+      })
+
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
+      vim.api.nvim_create_user_command("Format", function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = {
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+          }
+        end
+        require("conform").format({ async = true, lsp_fallback = true, range = range })
+      end, { range = true })
     end,
   },
   {
@@ -360,19 +448,19 @@ require("lazy").setup({
       )
     end,
   },
-  { 'chentoast/marks.nvim' },
+  { "chentoast/marks.nvim" },
   {
-    'b0o/SchemaStore.nvim',
+    "b0o/SchemaStore.nvim",
     config = function()
-      require('lspconfig').jsonls.setup {
+      require("lspconfig").jsonls.setup({
         settings = {
           json = {
-            schemas = require('schemastore').json.schemas(),
+            schemas = require("schemastore").json.schemas(),
             validate = { enable = true },
           },
         },
-      }
-    end
+      })
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -386,16 +474,32 @@ require("lazy").setup({
     },
     config = function()
       require("telescope").load_extension("live_grep_args")
-    end
-  }
+    end,
+  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-context",
+  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
+  --   config = function()
+  --     require("treesitter-context").setup()
+  --   end,
+  -- },
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    config = function()
+      require("ts-error-translator").setup()
+    end,
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 })
-
 
 -- < which key
 local whichkey = require("which-key")
 -- which key >
 
--- vim.notify = require("notify")
+vim.notify = require("notify")
 
 -- <Nvim-comp
 -- gray
@@ -450,7 +554,6 @@ local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
 
 cmp.setup({
   snippet = {
@@ -518,6 +621,9 @@ cmp.setup({
       return vim_item
     end,
   },
+  experimental = {
+    ghost_text = true,
+  },
 })
 
 -- Set configuration for specific filetype.
@@ -576,7 +682,6 @@ require("mini.indentscope").setup({
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
         "help",
-        "alpha",
         "dashboard",
         "neo-tree",
         "Trouble",
@@ -619,21 +724,44 @@ require("mason-lspconfig").setup_handlers({
   -- a dedicated handler.
   function(server_name) -- default handler (optional)
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+    local lsp_formatting = function(bufnr)
+      vim.lsp.buf.format({
+        filter = function(client)
+          -- apply whatever logic you want (in this example, we'll only use null-ls)
+          return client.name ~= "tsserver" and client.name ~= "volar"
+        end,
+        bufnr = bufnr,
+        timeout_ms = 2000,
+      })
+    end
+
     require("lspconfig")[server_name].setup({
       capabilities = capabilities,
       on_attach = function(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+              lsp_formatting(bufnr)
+            end,
+          })
+        end
       end,
       settings = {
         Lua = {
           diagnostics = {
-            globals = { 'vim' }
+            globals = { "vim" },
           },
           workspace = {
             library = vim.api.nvim_get_runtime_file("", true),
-            checkThirdParty = false
-          }
-        }
-      }
+            checkThirdParty = false,
+          },
+        },
+      },
     })
   end,
   -- Next, you can provide a dedicated handler for specific servers.
@@ -648,10 +776,10 @@ require("lspconfig")
 local icons = {
   diagnostics = {
     Error = " ",
-    Warn  = " ",
-    Hint  = " ",
-    Info  = " ",
-  }
+    Warn = " ",
+    Hint = " ",
+    Info = " ",
+  },
 }
 
 for name, icon in pairs(icons.diagnostics) do
@@ -697,16 +825,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
     vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+
     -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<space>lf", function()
-      vim.lsp.buf.format({
-        filter = function(client)
-          return client.name ~= "tsserver" and client.name ~= "volar"
-        end,
-        bufnr = bufnr,
-        timeout_ms = 2000
-      })
-    end, opts)
+    -- vim.keymap.set("n", "<space>lf", function()
+    --   -- TODO call formatter
+    -- vim.lsp.buf.format({
+    --   filter = function(client)
+    --     return client.name ~= "tsserver" and client.name ~= "volar"
+    --   end,
+    --   bufnr = bufnr,
+    --   timeout_ms = 2000
+    -- })
+    -- end, opts)
   end,
 })
 -- nvim lsp conf >
@@ -730,10 +860,6 @@ map("n", "<C-l>", "<C-w>l")
 map("n", "<C-k>", "<C-w>k")
 
 -- buffers
-map("n", "<S-l>", ":bnext<CR>")
-map("n", "<S-h>", ":bprev<CR>")
-map("n", "<space>bn", ":bnext<CR>")
-map("n", "<space>np", ":bprevious<CR>")
 map("n", "<space>bd", "::b#|bd#<CR>")
 map("n", "<space>bb", ":e #<CR>")
 
@@ -741,11 +867,27 @@ whichkey.register({
   ["<space>e"] = { "<cmd>Neotree toggle<cr>", "Neotree Toggle" },
 })
 
+whichkey.register({
+  ["<space>c"] = {
+    name = "code",
+    f = { "<cmd>:format<cr>", "format" },
+    l = {
+      function()
+        local lint = require("lint")
+        lint.try_lint()
+      end,
+      "lint",
+    },
+  },
+})
+
 vim.opt.relativenumber = true
 
 -- bufferline <
 vim.opt.termguicolors = true
-require("bufferline").setup({})
+require("bufferline").setup({
+  highlights = require("catppuccin.groups.integrations.bufferline").get(),
+})
 -- bufferline >
 
 -- general vi config <
@@ -782,6 +924,7 @@ vim.opt.expandtab = true
 vim.opt.termguicolors = true
 vim.opt.updatetime = 300
 vim.opt.wildmenu = true
+vim.opt.pumblend = 10
 vim.opt.pumheight = 10
 -- general vim config >
 
@@ -849,7 +992,7 @@ local gitsigns = require("gitsigns").setup({
   end,
   current_line_blame = true,
   current_line_blame_opts = {
-    delay = 200
+    delay = 200,
   },
 })
 -- > git signs
@@ -861,7 +1004,7 @@ require("telescope").setup({
     live_grep_args = {
       auto_quoting = true, -- enable/disable auto-quoting
       -- define mappings, e.g.
-      mappings = {         -- extend mappings
+      mappings = {      -- extend mappings
         i = {
           ["<C-k>"] = lga_actions.quote_prompt(),
           ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
@@ -871,8 +1014,8 @@ require("telescope").setup({
       -- theme = "dropdown", -- use dropdown theme
       -- theme = { }, -- use own theme spec
       -- layout_config = { mirror=true }, -- mirror preview pane
-    }
-  }
+    },
+  },
 })
 
 require("telescope").load_extension("fzf")
@@ -902,21 +1045,42 @@ vim.keymap.set("n", "gi", builtin.lsp_implementations, {})
 vim.keymap.set("n", "<leader>xx", function()
   require("trouble").toggle()
 end)
-vim.keymap.set("n", "<leader>xw", function()
-  require("trouble").toggle("workspace_diagnostics")
-end)
-vim.keymap.set("n", "<leader>xd", function()
-  require("trouble").toggle("document_diagnostics")
-end)
-vim.keymap.set("n", "<leader>xq", function()
-  require("trouble").toggle("quickfix")
-end)
-vim.keymap.set("n", "<leader>xl", function()
-  require("trouble").toggle("loclist")
-end)
-vim.keymap.set("n", "gR", function()
-  require("trouble").toggle("lsp_references")
-end)
+
+whichkey.register({
+  ["<space>x"] = {
+    name = "Trouble",
+    d = {
+      function()
+        require("trouble").toggle("document_diagnostics")
+      end,
+      "Document Diagnostics",
+    },
+    w = {
+      function()
+        require("trouble").toggle("workspace_diagnostics")
+      end,
+      "Workspace Diagnostics",
+    },
+    q = {
+      function()
+        require("trouble").toggle("quickfix")
+      end,
+      "Quickfix",
+    },
+    l = {
+      function()
+        require("trouble").toggle("loclist")
+      end,
+      "Loclist",
+    },
+    R = {
+      function()
+        require("trouble").toggle("lsp_references")
+      end,
+      "LSP References",
+    },
+  },
+})
 -- trouble >
 
 -- navic <
@@ -958,51 +1122,23 @@ local navic = require("nvim-navic").setup({
 -- navic >
 -- lua line <
 function lsp_clients()
-  local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
-  if #buf_clients == 0 then
-    return "LSP Inactive"
+  -- local formatters = require("conform").list_formatters()
+  -- vim.list_extend(buf_client_names, formatters)
+
+  local linters = require("lint").get_running()
+
+  if #linters == 0 then
+    return "󰦕"
   end
 
-  local buf_ft = vim.bo.filetype
-  local buf_client_names = {}
-  local copilot_active = false
-
-  -- add client
-  for _, client in pairs(buf_clients) do
-    if client.name ~= "null-ls" and client.name ~= "copilot" then
-      table.insert(buf_client_names, client.name)
-    end
-
-    if client.name == "copilot" then
-      copilot_active = true
-    end
-  end
-
-  -- add formatter
-  local formatters = require "lvim.lsp.null-ls.formatters"
-  local supported_formatters = formatters.list_registered(buf_ft)
-  vim.list_extend(buf_client_names, supported_formatters)
-
-  -- add linter
-  local linters = require "lvim.lsp.null-ls.linters"
-  local supported_linters = linters.list_registered(buf_ft)
-  vim.list_extend(buf_client_names, supported_linters)
-
-  local unique_client_names = table.concat(buf_client_names, ", ")
-  local language_servers = string.format("[%s]", unique_client_names)
-
-  if copilot_active then
-    language_servers = language_servers .. "%#SLCopilot#" .. " " .. lvim.icons.git.Octoface .. "%*"
-  end
-
-  return language_servers
+  return "󱉶 " .. table.concat(linters, ", ")
 end
 
 -- TODO mode status line @recording (see Noice)
 require("lualine").setup({
   winbar = {
     lualine_b = {
-      { 'filename', file_status = false, path = 1 },
+      { "filename", file_status = false, path = 1 },
     },
     lualine_c = {
       {
@@ -1014,52 +1150,53 @@ require("lualine").setup({
   },
   inactive_winbar = {
     lualine_b = {
-      { 'filename', file_status = false, path = 1 },
-    }
-
+      { "filename", file_status = false, path = 1 },
+    },
   },
   sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_a = { "mode" },
+    lualine_b = { "branch", "diff", "diagnostics" },
     lualine_c = {},
     lualine_x = {
       lsp_clients,
-      'encoding',
-      'fileformat',
+      "encoding",
+      "fileformat",
       {
-        'filetype',
+        "filetype",
         on_click = function()
           -- require("notify")("My super important message")
-        end
-      }
+        end,
+      },
     },
-    lualine_y = { 'progress' },
-    lualine_z = { {
-      'location',
-      on_click = function()
-        return vim.ui.input(
-          {
+    lualine_y = { "progress" },
+    lualine_z = {
+      {
+        "location",
+        on_click = function()
+          return vim.ui.input({
             prompt = "Go to line",
-          },
-          function(input)
+          }, function(input)
             if input then
               print("You entered " .. input)
               vim.cmd(":" .. input)
             else
-              print "You cancelled"
+              print("You cancelled")
             end
-          end
-        )
-      end
-    } }
+          end)
+        end,
+      },
+    },
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
     lualine_c = {},
-    lualine_x = { 'location' },
+    lualine_x = { "location" },
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {},
+  },
+  options = {
+    theme = "catppuccin",
   },
 })
 
@@ -1087,7 +1224,6 @@ require("ibl").setup({
   exclude = {
     filetypes = {
       "help",
-      "alpha",
       "dashboard",
       "neo-tree",
       "Trouble",
@@ -1132,7 +1268,7 @@ require("nvim-treesitter.configs").setup({
       -- mapping query_strings to modes.
       selection_modes = {
         ["@parameter.outer"] = "v", -- charwise
-        ["@function.outer"] = "V",  -- linewise
+        ["@function.outer"] = "V", -- linewise
         ["@class.outer"] = "<c-v>", -- blockwise
       },
       -- If you set this to `true` (default is `false`) then any textobject is
@@ -1163,15 +1299,15 @@ require("noice").setup({
   },
   -- you can enable a preset for easier configuration
   presets = {
-    bottom_search = false,        -- use a classic bottom cmdline for search
-    command_palette = true,       -- position the cmdline and popupmenu together
+    bottom_search = false,      -- use a classic bottom cmdline for search
+    command_palette = true,     -- position the cmdline and popupmenu together
     long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false,       -- add a border to hover docs and signature help
+    inc_rename = false,         -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false,     -- add a border to hover docs and signature help
   },
 })
 -- noice >
 
 -- marks <
-require('marks').setup()
+require("marks").setup()
 -- marks >
