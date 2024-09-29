@@ -20,6 +20,8 @@ map("n", "<C-k>", "<C-w>k")
 map("n", "<space>bd", "::b#|bd#<CR>")
 map("n", "<space>bb", ":e #<CR>")
 
+map("n", "<Esc>", ":noh<CR>")
+
 vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")

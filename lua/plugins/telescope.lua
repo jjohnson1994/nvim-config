@@ -65,7 +65,9 @@ return {
       {
         "<space>fg",
         function()
-          require("telescope.builtin").live_grep()
+          require("telescope.builtin").live_grep({
+            glob_pattern = { "!**/*.png", "!**/*.jpg", "!**/*.svg" },
+          })
         end,
         desc = "Live grep",
       },

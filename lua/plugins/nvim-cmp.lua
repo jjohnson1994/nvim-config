@@ -76,11 +76,14 @@ return {
           { name = "nvim_lsp" },
           { name = "luasnip" },
         }, {
+          { name = "codeium" },
+        }, {
           { name = "buffer" },
         }),
         formatting = {
           format = lspkind.cmp_format({
             before = tailwind.lspkind_format,
+            symbol_map = { Codeium = "" },
           }),
         },
         experimental = {
