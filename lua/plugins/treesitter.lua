@@ -12,16 +12,17 @@ return {
 
       configs.setup({
         ensure_installed = {
+          "css",
+          "html",
+          "javascript",
+          "json",
           "lua",
+          "markdown_inline",
+          "scss",
+          "typescript",
           "vim",
           "vimdoc",
-          "javascript",
-          "typescript",
-          "scss",
-          "css",
           "vue",
-          "json",
-          "html",
           "yaml",
         },
         autotag = {
