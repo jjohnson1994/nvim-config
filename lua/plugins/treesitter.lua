@@ -5,7 +5,6 @@ return {
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "windwp/nvim-ts-autotag",
     },
     config = function()
       local configs = require("nvim-treesitter.configs")
@@ -24,9 +23,6 @@ return {
           "vimdoc",
           "vue",
           "yaml",
-        },
-        autotag = {
-          enable = true,
         },
         sync_install = false,
         highlight = { enable = true },

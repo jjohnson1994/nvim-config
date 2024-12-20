@@ -20,6 +20,10 @@ map("n", "<C-k>", "<C-w>k")
 map("n", "<space>bd", "::b#|bd#<CR>")
 map("n", "<space>bb", ":e #<CR>")
 
+-- Move selected lines with shift+j or shift+k
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
 map("n", "<Esc>", ":noh<CR>")
 
 vim.cmd("set expandtab")
@@ -63,3 +67,4 @@ vim.opt.updatetime = 300
 vim.opt.wildmenu = true
 vim.opt.pumblend = 10
 vim.opt.pumheight = 10
+-- vim.opt.laststatus = 3

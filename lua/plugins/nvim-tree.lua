@@ -7,7 +7,7 @@ return {
     config = function()
       require("nvim-tree").setup()
 
-      vim.keymap.set("n", "<space>e", ":NvimTreeOpen <CR>", {})
+      vim.keymap.set("n", "<space>e", ":NvimTreeFindFile <CR>", {})
     end,
   },
 }
