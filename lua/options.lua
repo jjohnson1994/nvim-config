@@ -41,8 +41,15 @@ vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.cmdheight = 1
 vim.opt.cursorline = true
 vim.opt.encoding = "UTF-8"
-vim.opt.foldmethod = "syntax"
-vim.opt.foldenable = false
+
+-- folding
+vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
+-- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldnestmax = 4
+
 vim.opt.hidden = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
