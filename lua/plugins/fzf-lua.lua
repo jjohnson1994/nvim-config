@@ -84,5 +84,10 @@ return {
       "<cmd>FzfLua lsp_document_symbols<cr>",
       desc = "Lsp document symbols",
     },
+    {
+      "<space>ca",
+      "<cmd>FzfLua lsp_code_actions<cr>",
+      desc = "Lsp code actions",
+    },
   },
 }

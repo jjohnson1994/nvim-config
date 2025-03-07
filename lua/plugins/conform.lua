@@ -9,11 +9,11 @@ return {
       },
       formatters_by_ft = {
         lua = { "stylua" },
-        javascript = { { "eslint_d" }, { "prettierd" } },
-        javascriptreact = { { "eslint_d" }, { "prettierd" } },
-        typescript = { { "eslint_d" }, { "prettierd" } },
-        typescriptreact = { { "eslint_d" }, { "prettierd" } },
-        vue = { { "eslint_d" }, { "prettierd" } },
+        javascript = { "eslint_d", "prettierd" },
+        javascriptreact = { "eslint_d", "prettierd" },
+        typescript = { "eslint_d", "prettierd" },
+        typescriptreact = { "eslint_d", "prettierd" },
+        vue = { "eslint_d", "prettierd" },
       },
     })
 

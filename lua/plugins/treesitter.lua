@@ -5,11 +5,20 @@ return {
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
+      "windwp/nvim-ts-autotag",
     },
     config = function()
       local configs = require("nvim-treesitter.configs")
+      require("nvim-ts-autotag").setup({})
 
       configs.setup({
+        highlight = { enable = true },
+        incremental_selection = {
+          enable = true,
+        },
+        textobjects = {
+          enable = true,
+        },
         ensure_installed = {
           "css",
           "html",
@@ -24,6 +33,7 @@ return {
           "vue",
           "yaml",
         },
+        auto_install = false,
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
