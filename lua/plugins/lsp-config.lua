@@ -1,150 +1,57 @@
--- vim.lsp.inlay_hint.enable()
-
 return {
   {
     "williamboman/mason.nvim",
-    lazy = false,
+    config = true,
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    lazy = false,
-    opts = {
-      auto_install = true,
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-lspconfig").setup {
+        ensure_installed = { "vtsls" },
+      }
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      require("mason").setup()
-      require("mason-lspconfig").setup()
+      local lspconfig = require("lspconfig")
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      -- local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local function on_attach(client, bufnr)
+        if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+          vim.lsp.inlay_hint.enable(true)
+        end
+      end
 
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-          local lsp_formatting = function(bufnr)
-            vim.lsp.buf.format({
-              filter = function(client)
-                -- apply whatever logic you want (in this example, we'll only use null-ls)
-                return client.name ~= "tsserver" and client.name ~= "volar"
-              end,
-              bufnr = bufnr,
-              timeout_ms = 2000,
-            })
-          end
-
-          require("lspconfig")[server_name].setup({
-            capabilities = capabilities,
-            on_attach = function(client, bufnr)
-              if client.supports_method("textDocument/formatting") then
-                vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                  group = augroup,
-                  buffer = bufnr,
-                  callback = function()
-                    lsp_formatting(bufnr)
-                  end,
-                })
-              end
-            end,
-            settings = {
-              Lua = {
-                diagnostics = {
-                  globals = { "vim" },
-                },
-                workspace = {
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false,
-                },
-              },
+      lspconfig.vtsls.setup {
+        on_attach = on_attach,
+        settings = {
+          typescript = {
+            inlayHints = {
+              -- parameterNames = { enabled = "all" },
+              -- parameterTypes = { enabled = true },
+              -- variableTypes = { enabled = true },
+              -- propertyDeclarationTypes = { enabled = true },
+              -- functionLikeReturnTypes = { enabled = true },
+              -- enumMemberValues = { enabled = true },
             },
-          })
-        end,
-
-        ["tsserver"] = function()
-          local mason_packages = vim.fn.stdpath("data") .. "/mason/packages"
-          local volar_path = mason_packages .. "/vue-language-server/node_modules/@vue/language-server"
-
-          require("lspconfig").tsserver.setup({
-            -- NOTE: To enable Hybrid Mode, change hybrideMode to true above and uncomment the following filetypes block.
-            -- WARN: THIS MAY CAUSE HIGHLIGHTING ISSUES WITHIN THE TEMPLATE SCOPE WHEN TSSERVER ATTACHES TO VUE FILES
-
-            -- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-            init_options = {
-              plugins = {
-                {
-                  name = "@vue/typescript-plugin",
-                  location = volar_path,
-                  languages = { "vue" },
-                },
-              },
+          },
+          javascript = {
+            inlayHints = {
+              -- parameterNames = { enabled = "all" },
+              -- parameterTypes = { enabled = true },
+              -- variableTypes = { enabled = true },
+              -- propertyDeclarationTypes = { enabled = true },
+              -- functionLikeReturnTypes = { enabled = true },
+              -- enumMemberValues = { enabled = true },
             },
-            settings = {
-              typescript = {
-                inlayHints = {
-                  includeInlayParameterNameHints = "all",
-                  includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                  includeInlayFunctionParameterTypeHints = true,
-                  includeInlayVariableTypeHints = true,
-                  includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                  includeInlayPropertyDeclarationTypeHints = true,
-                  includeInlayFunctionLikeReturnTypeHints = true,
-                  includeInlayEnumMemberValueHints = true,
-                },
-              },
-            },
-          })
-        end,
-
-        ["volar"] = function()
-          require("lspconfig").volar.setup({
-            -- NOTE: Uncomment to enable volar in file types other than vue.
-            -- (Similar to Takeover Mode)
-
-            -- filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact", "json" },
-
-            -- NOTE: Uncomment to restrict Volar to only Vue/Nuxt projects. This will enable Volar to work alongside other language servers (tsserver).
-            root_dir = require("lspconfig").util.root_pattern(
-              "vue.config.js",
-              "vue.config.ts",
-              "nuxt.config.js",
-              "nuxt.config.ts"
-            ),
-            init_options = {
-              vue = {
-                hybridMode = false,
-              },
-              -- NOTE: This might not be needed. Uncomment if you encounter issues.
-
-              -- typescript = {
-              --   tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
-              -- },
-            },
-            settings = {
-              typescript = {
-                -- inlayHints = {
-                --   enumMemberValues = {
-                --     enabled = true,
-                --   },
-                --   functionLikeReturnTypes = {
-                --     enabled = true,
-                --   },
-                --   propertyDeclarationTypes = {
-                --     enabled = true,
-                --   },
-                --   parameterTypes = {
-                --     enabled = true,
-                --     suppressWhenArgumentMatchesName = true,
-                --   },
-                --   variableTypes = {
-                --     enabled = true,
-                --   },
-                -- },
-              },
-            },
-          })
-        end,
-      })
+          },
+        },
+      }
     end,
   },
   {
@@ -194,5 +101,6 @@ return {
         desc = "Rename",
       },
     },
-  },
+  }
 }
+
