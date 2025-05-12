@@ -62,41 +62,6 @@ return {
 				end,
 				desc = "Hover",
 			},
-			-- {
-			-- 	"<space>ca",
-			-- 	function()
-			-- 		vim.lsp.buf.code_action()
-			-- 	end,
-			-- 	desc = "Code action",
-			-- },
-			{
-				"gK",
-				function()
-					vim.lsp.buf.signature_help()
-				end,
-				desc = "Signature help",
-			},
-			{
-				"gd",
-				function()
-					vim.lsp.buf.definition()
-				end,
-				desc = "Definition",
-			},
-			{
-				"gD",
-				function()
-					vim.lsp.buf.declaration()
-				end,
-				desc = "Declaration",
-			},
-			{
-				"<space>rn",
-				function()
-					vim.lsp.buf.rename()
-				end,
-				desc = "Rename",
-			},
 		},
 	},
 }
