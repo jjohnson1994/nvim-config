@@ -1,6 +1,9 @@
 return {
 	settings = {
 		typescript = {
+			suggest = {
+				completeFunctionCalls = true,
+			},
 			inlayHints = {
 				parameterNames = { enabled = "all" },
 				parameterTypes = { enabled = true },
