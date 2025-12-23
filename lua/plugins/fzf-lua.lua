@@ -1,93 +1,62 @@
 return {
-	"ibhagwan/fzf-lua",
-	-- optional for icon support
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	config = function()
-		-- calling `setup` is optional for customization
-		require("fzf-lua").setup({
-			keymap = {
-				fzf = {
-					["ctrl-q"] = "select-all+accept",
-				},
-			},
-		})
-	end,
-	keys = {
-		{
-			"<space><space>",
-			"<cmd>FzfLua resume<cr>",
-			desc = "FzfLua resume",
-		},
-		{
-			"<space>ff",
-			"<cmd>FzfLua files<cr>",
-			desc = "FzfLua files",
-		},
-		{
-			"<space>fb",
-			"<cmd>FzfLua buffers<cr>",
-			desc = "FzfLua buffers",
-		},
-		{
-			"<space>fg",
-			"<cmd>FzfLua live_grep<cr>",
-			desc = "FzfLua live_grep",
-		},
-		{
-			"<space>fa",
-			"<cmd>FzfLua live_grep_glob<cr>",
-			desc = "FzfLua live_grep_glob",
-		},
-		{
-			"<space>fc",
-			"<cmd>FzfLua grep_cword<cr>",
-			desc = "FzfLua grep_cword",
-		},
-		{
-			"<space>fh",
-			"<cmd>FzfLua helptags<cr>",
-			desc = "FzfLua helptags",
-		},
-		{
-			"<space>fm",
-			"<cmd>FzfLua marks<cr>",
-			desc = "FzfLua marks",
-		},
-		{
-			"<space>fr",
-			"<cmd>FzfLua registers<cr>",
-			desc = "FzfLua registers",
-		},
-		-- lsp
-		{
-			"gri",
-			"<cmd>FzfLua lsp_implementation<cr>",
-			desc = "Lsp implementation",
-		},
-		{
-			"grr",
-			"<cmd>FzfLua lsp_references<cr>",
-			desc = "Lsp references",
-		},
-		{
-			"grt",
-			"<cmd>FzfLua lsp_typedefs<cr>",
-			desc = "Lsp type definitions",
-		},
-		{
-			"gO",
-			"<cmd>FzfLua lsp_document_symbols<cr>",
-			desc = "Lsp document symbols",
-		},
-		{
-			"gP",
-			"<cmd>FzfLua lsp_live_workspace_symbols<cr>",
-			desc = "Lsp workspace symbols",
-		},
-		{
-			"gra",
-			"<cmd>FzfLua lsp_code_actions<cr>",
-			desc = "Lsp code actions",
-		},
-	},
+  "ibhagwan/fzf-lua",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  cmd = "FzfLua",
+  keys = {
+    { "<leader><leader>", "<cmd>FzfLua resume<cr>", desc = "Resume last search" },
+    { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
+    { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Live grep" },
+    { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find buffers" },
+    { "<leader>fh", "<cmd>FzfLua help_tags<cr>", desc = "Help tags" },
+    { "<leader>fo", "<cmd>FzfLua oldfiles<cr>", desc = "Recent files" },
+    { "<leader>fc", "<cmd>FzfLua commands<cr>", desc = "Commands" },
+    { "<leader>fk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
+    { "<leader>fr", "<cmd>FzfLua lsp_references<cr>", desc = "LSP references" },
+    { "<leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document symbols" },
+    { "<leader>fw", "<cmd>FzfLua lsp_workspace_symbols<cr>", desc = "Workspace symbols" },
+    { "<leader>fd", "<cmd>FzfLua diagnostics_document<cr>", desc = "Document diagnostics" },
+    { "<leader>fD", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Workspace diagnostics" },
+    { "<leader>fm", "<cmd>FzfLua git_status<cr>", desc = "Git modified files" },
+    -- LSP navigation uses Neovim defaults (grr, gra, grn, gri, grt, gO)
+    -- Use <leader>f* mappings above for FZF versions if preferred
+  },
+  opts = {
+    fzf_opts = {
+      ["--cycle"] = true, -- Enable cyclic scrolling (wrap around when navigating)
+    },
+    defaults = {
+      file_icons = true,
+      git_icons = true,
+    },
+    keymap = {
+      fzf = {
+        ["alt-a"] = "select-all",
+        ["alt-d"] = "deselect-all",
+      },
+    },
+    winopts = {
+      height = 0.85,
+      width = 0.85,
+      preview = {
+        default = "bat",
+        border = "rounded",
+        wrap = "nowrap",
+        hidden = "nohidden",
+        vertical = "down:45%",
+        horizontal = "right:50%",
+        layout = "flex",
+        flip_columns = 120,
+      },
+    },
+    files = {
+      prompt = "Files❯ ",
+      git_icons = true,
+      file_icons = true,
+      cwd_prompt = false, -- Hide full path from prompt
+    },
+    grep = {
+      prompt = "Grep❯ ",
+      input_prompt = "Grep For❯ ",
+    },
+  },
 }

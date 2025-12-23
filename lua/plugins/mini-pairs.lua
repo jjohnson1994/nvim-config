@@ -1,7 +1,6 @@
 return {
   "echasnovski/mini.pairs",
-  version = "*",
-  config = function()
-    require("mini.pairs").setup()
-  end,
+  version = false,
+  event = "InsertEnter",
+  opts = {},
 }

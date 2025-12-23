@@ -2,94 +2,97 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "windwp/nvim-ts-autotag",
+      "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
-      local configs = require("nvim-treesitter.configs")
-      require("nvim-ts-autotag").setup({})
-
-      configs.setup({
-        highlight = { enable = true },
-        incremental_selection = {
-          enable = true,
-        },
-        textobjects = {
-          enable = true,
-        },
+      require("nvim-treesitter.configs").setup({
         ensure_installed = {
-          "css",
-          "html",
-          "javascript",
-          "json",
           "lua",
-          "markdown_inline",
-          "scss",
-          "typescript",
           "vim",
           "vimdoc",
+          "javascript",
+          "typescript",
+          "tsx",
+          "json",
+          "html",
+          "css",
+          "markdown",
+          "markdown_inline",
+          "bash",
+          "gitignore",
+          "svelte",
           "vue",
-          "yaml",
         },
         auto_install = false,
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+        indent = {
+          enable = true,
+        },
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "<tab>",
-            node_incremental = "<tab>",
+            init_selection = "<Tab>",
+            node_incremental = "<Tab>",
             scope_incremental = false,
-            node_decremental = "<S-tab>",
+            node_decremental = "<S-Tab>",
           },
         },
         textobjects = {
           select = {
             enable = true,
-
-            -- Automatically jump forward to textobj, similar to targets.vim
             lookahead = true,
-
             keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
               ["af"] = "@function.outer",
               ["if"] = "@function.inner",
               ["ac"] = "@class.outer",
-              -- You can optionally set descriptions to the mappings (used in the desc parameter of
-              -- nvim_buf_set_keymap) which plugins like which-key display
-              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-              -- You can also use captures from other query groups like `locals.scm`
-              ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+              ["ic"] = "@class.inner",
+              ["aa"] = "@parameter.outer",
+              ["ia"] = "@parameter.inner",
             },
-            -- You can choose the select mode (default is charwise 'v')
-            --
-            -- Can also be a function which gets passed a table with the keys
-            -- * query_string: eg '@function.inner'
-            -- * method: eg 'v' or 'o'
-            -- and should return the mode ('v', 'V', or '<c-v>') or a table
-            -- mapping query_strings to modes.
-            selection_modes = {
-              ["@parameter.outer"] = "v", -- charwise
-              ["@function.outer"] = "V", -- linewise
-              ["@class.outer"] = "<c-v>", -- blockwise
-            },
-            -- If you set this to `true` (default is `false`) then any textobject is
-            -- extended to include preceding or succeeding whitespace. Succeeding
-            -- whitespace has priority in order to act similarly to eg the built-in
-            -- `ap`.
-            --
-            -- Can also be a function which gets passed a table with the keys
-            -- * query_string: eg '@function.inner'
-            -- * selection_mode: eg 'v'
-            -- and should return true of false
-            include_surrounding_whitespace = true,
           },
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]f"] = "@function.outer",
+              ["]c"] = "@class.outer",
+            },
+            goto_next_end = {
+              ["]F"] = "@function.outer",
+              ["]C"] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[f"] = "@function.outer",
+              ["[c"] = "@class.outer",
+            },
+            goto_previous_end = {
+              ["[F"] = "@function.outer",
+              ["[C"] = "@class.outer",
+            },
+          },
+        },
+      })
+
+      -- Enable context commentstring
+      require("ts_context_commentstring").setup({
+        enable_autocmd = false,
+      })
+
+      -- Setup nvim-ts-autotag (standalone setup, not via treesitter config)
+      require("nvim-ts-autotag").setup({
+        opts = {
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
+          enable_close_on_slash = false, -- Auto close on trailing </
         },
       })
     end,
   },
-  { "nvim-treesitter/nvim-treesitter-textobjects" },
 }
