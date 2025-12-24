@@ -54,6 +54,7 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 
 ### Editing Enhancements
 
+- [**flash.nvim**](https://github.com/folke/flash.nvim) - Navigate code with search labels, enhanced character motions, and Treesitter integration
 - [**nvim-surround**](https://github.com/kylechui/nvim-surround) - Add/change/delete surrounding delimiter pairs with ease
 - [**mini.ai**](https://github.com/echasnovski/mini.ai) - Extended and enhanced text objects (around/inside)
 - [**mini.pairs**](https://github.com/echasnovski/mini.pairs) - Auto-pairs for brackets, quotes, and more
@@ -62,12 +63,11 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 
 ### UI & Visual
 
+- [**snacks.nvim**](https://github.com/folke/snacks.nvim) - Collection of QoL plugins: notifications, smooth scrolling, dashboard, terminal
 - [**which-key.nvim**](https://github.com/folke/which-key.nvim) - Display keybindings in a popup
-- [**nvim-notify**](https://github.com/rcarriga/nvim-notify) - Fancy, configurable notification manager
 - [**trouble.nvim**](https://github.com/folke/trouble.nvim) - Pretty list for diagnostics, references, quickfix, and more
 - [**vim-illuminate**](https://github.com/RRethy/vim-illuminate) - Automatically highlight other uses of word under cursor
 - [**mini.indentscope**](https://github.com/echasnovski/mini.indentscope) - Visualize and work with indent scope
-- [**neoscroll.nvim**](https://github.com/karb94/neoscroll.nvim) - Smooth scrolling
 - [**marks.nvim**](https://github.com/chentoast/marks.nvim) - View and interact with Vim marks in the sign column
 
 ### Testing
@@ -167,11 +167,11 @@ nvim
 │       ├── fugitive.lua             # Git commands
 │       ├── trouble.lua              # Diagnostics UI
 │       ├── which-key.lua            # Keymap hints
+│       ├── flash.lua                # Navigation with search labels
+│       ├── snacks.lua               # Notifications, scrolling, dashboard
 │       ├── mini-*.lua               # Mini.nvim plugins
 │       ├── nvim-surround.lua        # Surround operations
 │       ├── vim-illuminate.lua       # Highlight references
-│       ├── nvim-notify.lua          # Notifications
-│       ├── neoscroll.lua            # Smooth scrolling
 │       ├── marks.lua                # Mark indicators
 │       ├── neotest.lua              # Testing framework
 │       ├── tailwind-tools.lua       # Tailwind CSS support
@@ -386,6 +386,27 @@ nvim
 | `]]` | n    | Next reference     |
 | `[[` | n    | Previous reference |
 
+### Navigation (Flash)
+
+| Key     | Mode    | Action                   |
+| ------- | ------- | ------------------------ |
+| `s`     | n/x/o   | Flash jump               |
+| `S`     | n/x/o   | Flash treesitter         |
+| `r`     | o       | Remote flash             |
+| `R`     | o/x     | Treesitter search        |
+| `<c-s>` | c       | Toggle flash search      |
+
+### Snacks
+
+| Key          | Mode | Action                       |
+| ------------ | ---- | ---------------------------- |
+| `<leader>un` | n    | Dismiss all notifications    |
+| `<leader>nh` | n    | Notification history         |
+| `<leader>gg` | n    | Lazygit (root dir)           |
+| `<leader>gf` | n    | Lazygit current file history |
+| `<c-/>`      | n/t  | Toggle terminal              |
+| `<c-_>`      | n/t  | Toggle terminal (alternative)|
+
 ## Plugins
 
 ### Plugin Manager
@@ -429,6 +450,7 @@ nvim
 
 ### Editing Enhancements
 
+- **flash.nvim**: Navigate with search labels and enhanced motions
 - **nvim-surround**: Surround text objects
 - **mini.ai**: Enhanced text objects with treesitter
 - **mini.pairs**: Auto-pairing brackets
@@ -438,10 +460,9 @@ nvim
 
 ### UI Enhancements
 
+- **snacks.nvim**: Notifications, smooth scrolling, dashboard, terminal integration
 - **which-key.nvim**: Keymap hints
-- **nvim-notify**: Notification manager
 - **vim-illuminate**: Highlight word references
-- **neoscroll.nvim**: Smooth scrolling
 - **nvim-web-devicons**: File icons
 
 ### TypeScript/React/Web Development

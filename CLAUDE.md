@@ -105,6 +105,23 @@ When modifying core settings or options:
 
 ## Plugin-Specific Notes
 
+### snacks.nvim
+- Unified quality-of-life plugin collection that replaces nvim-notify and neoscroll.nvim
+- Provides multiple modules: notifier, scroll, dashboard, terminal, and more
+- The notifier module replaces `vim.notify` in the init function
+- Dashboard shows on startup when opening Neovim without a file
+- Terminal can be toggled with `<c-/>` (or `<c-_>` as alternative)
+- Some modules are disabled (indent, statuscolumn, words) as we use other plugins for those features
+- Lazygit integration available through snacks (optional - requires lazygit installed)
+
+### flash.nvim
+- Modern navigation plugin using search labels and enhanced character motions
+- Primary key is `s` for jump mode - shows labels on search matches
+- `S` for treesitter-aware navigation (jumps to syntax nodes)
+- Enhances default `f`, `t`, `F`, `T` motions with multi-line support
+- Works across multiple windows when enabled
+- Can be toggled in command mode with `<c-s>` during search
+
 ### marks.nvim
 - Displays marks in the sign column with visual indicators
 - Works alongside diagnostics and git signs thanks to `signcolumn = "auto:2"`
@@ -121,6 +138,13 @@ When modifying core settings or options:
 ### nvim-treesitter
 - Treesitter parsers are installed for: lua, vim, javascript, typescript, tsx, json, html, css, markdown, bash, svelte, vue
 - Auto-install is disabled - parsers must be explicitly listed
+
+### conform.nvim (Auto-format Toggle)
+- Auto-format on save is controlled by `vim.g.autoformat` global variable
+- Default: enabled (`vim.g.autoformat = true`)
+- Toggle with `<leader>uf` - shows notification when toggled
+- Uses function-based `format_on_save` to check the global flag
+- Manual formatting (`<leader>cf`) always works regardless of toggle state
 
 ## Remember
 
