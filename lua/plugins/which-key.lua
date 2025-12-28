@@ -3,11 +3,6 @@ return {
   event = "VeryLazy",
   opts = {
     preset = "modern",
-    icons = {
-      breadcrumb = "»",
-      separator = "➜",
-      group = "+",
-    },
     win = {
       border = "rounded",
     },

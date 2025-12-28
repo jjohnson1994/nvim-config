@@ -50,8 +50,6 @@ return {
     },
     files = {
       prompt = "Files❯ ",
-      git_icons = true,
-      file_icons = true,
       cwd_prompt = false, -- Hide full path from prompt
     },
     grep = {

@@ -103,8 +103,6 @@ return {
   keys = {
     { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
     { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
-    { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit (root dir)" },
-    { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit current file history" },
     { "<c-/>", function() Snacks.terminal() end, desc = "Toggle terminal", mode = { "n", "t" } },
     { "<c-_>", function() Snacks.terminal() end, desc = "Toggle terminal (alternative)", mode = { "n", "t" } },
   },

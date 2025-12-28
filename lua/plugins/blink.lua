@@ -43,16 +43,7 @@ return {
       preset = "luasnip",
     },
 
-    sources = {
-      default = { "lsp", "path", "snippets", "buffer" },
-    },
-
     completion = {
-      accept = {
-        auto_brackets = {
-          enabled = true,
-        },
-      },
       menu = {
         border = "rounded",
         draw = {
@@ -77,11 +68,6 @@ return {
       window = {
         border = "rounded",
       },
-    },
-
-    appearance = {
-      use_nvim_cmp_as_default = false,
-      nerd_font_variant = "mono",
     },
   },
 }

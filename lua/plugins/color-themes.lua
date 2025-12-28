@@ -1,7 +1,8 @@
 return {
   {
     "folke/tokyonight.nvim",
-    lazy = true,
+    lazy = false,
+    priority = 1000,
     opts = {
       style = "night",
       transparent = false,
@@ -13,6 +14,11 @@ return {
         variables = {},
       },
     },
+    config = function(_, opts)
+      require("tokyonight").setup(opts)
+      -- Set as default colorscheme
+      vim.cmd([[colorscheme tokyonight-night]])
+    end,
   },
   {
     "catppuccin/nvim",
@@ -29,23 +35,29 @@ return {
     },
   },
   {
+    "projekt0n/github-nvim-theme",
+    lazy = true,
+    opts = {},
+  },
+  {
+    "loctvl842/monokai-pro.nvim",
+    lazy = true,
+    opts = {},
+  },
+  {
+    "navarasu/onedark.nvim",
+    lazy = true,
+    opts = {},
+  },
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = true,
+    opts = {},
+  },
+  {
     "rose-pine/neovim",
     name = "rose-pine",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      variant = "main",
-      dark_variant = "main",
-      dim_inactive_windows = false,
-      extend_background_behind_borders = true,
-      styles = {
-        transparency = false,
-      },
-    },
-    config = function(_, opts)
-      require("rose-pine").setup(opts)
-      -- Set as default colorscheme
-      vim.cmd([[colorscheme rose-pine-main]])
-    end,
+    lazy = true,
+    opts = {},
   },
 }

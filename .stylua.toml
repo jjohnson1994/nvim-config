@@ -1,0 +1,46 @@
+# StyLua Configuration
+# https://github.com/JohnnyMorganz/StyLua
+
+# Lua syntax variant (All, Lua51, Lua52, Lua53, Lua54, LuaJIT, Luau, CfxLua)
+# LuaJIT is recommended for Neovim configuration
+syntax = "LuaJIT"
+
+# Approximate line length for printing (used as a guide for line wrapping)
+column_width = 120
+
+# Line ending style (Unix = LF, Windows = CRLF)
+line_endings = "Unix"
+
+# Indentation type (Tabs or Spaces)
+indent_type = "Spaces"
+
+# Number of spaces per indentation level
+indent_width = 2
+
+# Quote style for string literals
+# Options: AutoPreferDouble, AutoPreferSingle, ForceDouble, ForceSingle
+quote_style = "AutoPreferDouble"
+
+# Whether to use parentheses on function calls with a single string/table argument
+# Options: Always, NoSingleString, NoSingleTable, None, Input
+# Always = print("hello")
+# NoSingleString = print "hello" for single string arguments
+call_parentheses = "Always"
+
+# Collapse simple statements onto a single line
+# Options: Never, FunctionOnly, ConditionalOnly, Always
+collapse_simple_statement = "Never"
+
+# Add spaces between function names and parentheses
+# Options: Never, Definitions, Calls, Always
+# Never = function foo() / foo()
+# Definitions = function foo () / foo()
+space_after_function_names = "Never"
+
+# Preserve leading/trailing newlines in code blocks
+# Options: Never, Preserve
+block_newline_gaps = "Never"
+
+# Sort require statements
+[sort_requires]
+enabled = false

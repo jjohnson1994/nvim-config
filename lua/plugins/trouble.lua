@@ -12,10 +12,6 @@ return {
   },
   opts = {
     focus = true,
-    auto_close = false,
-    auto_open = false,
-    auto_preview = true,
-    auto_refresh = true,
     use_diagnostic_signs = true,
   },
 }

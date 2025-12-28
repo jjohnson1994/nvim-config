@@ -7,7 +7,7 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 - 🚀 **Modern Architecture**: Built on Neovim 0.11+ with native LSP support
 - ⚡ **Fast Performance**: Lazy loading with lazy.nvim plugin manager
 - 💻 **Web Development**: Optimized for React, TypeScript, Vue, Svelte
-- 🎨 **Multiple Themes**: tokyonight, catppuccin, rose-pine
+- 🎨 **Multiple Themes**: tokyonight, catppuccin, rose-pine, github, monokai-pro, onedark, kanagawa
 - 📦 **Minimal Core**: Close to stock Neovim with essential enhancements
 - 🔍 **Smart Search**: FZF-lua for fuzzy finding and navigation
 - 🌳 **File Explorer**: nvim-tree with git integration
@@ -80,9 +80,13 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 
 ### Colorschemes
 
-- [**tokyonight.nvim**](https://github.com/folke/tokyonight.nvim) - Clean, dark Neovim theme
 - [**catppuccin**](https://github.com/catppuccin/nvim) - Soothing pastel theme
-- [**rose-pine**](https://github.com/rose-pine/neovim) - All natural pine, faux fur and a bit of soho vibes (default)
+- [**github-nvim-theme**](https://github.com/projekt0n/github-nvim-theme) - GitHub's Neovim theme with 10+ variants (default: dark_dimmed)
+- [**kanagawa.nvim**](https://github.com/rebelot/kanagawa.nvim) - Inspired by the colors of the famous painting by Katsushika Hokusai
+- [**monokai-pro.nvim**](https://github.com/loctvl842/monokai-pro.nvim) - Monokai Pro theme with multiple filter variants
+- [**onedark.nvim**](https://github.com/navarasu/onedark.nvim) - Atom One Dark theme with multiple style variants
+- [**rose-pine**](https://github.com/rose-pine/neovim) - All natural pine, faux fur and a bit of soho vibes
+- [**tokyonight.nvim**](https://github.com/folke/tokyonight.nvim) - Clean, dark Neovim theme
 
 ## Prerequisites
 
@@ -151,6 +155,7 @@ nvim
 
 ```
 ~/.config/nvim/
+├── .stylua.toml                      # Stylua (Lua formatter) configuration
 ├── init.lua                          # Entry point - bootstraps lazy.nvim
 ├── lua/
 │   ├── options.lua                   # Core settings, keymaps, LSP enable
@@ -388,13 +393,13 @@ nvim
 
 ### Navigation (Flash)
 
-| Key     | Mode    | Action                   |
-| ------- | ------- | ------------------------ |
-| `s`     | n/x/o   | Flash jump               |
-| `S`     | n/x/o   | Flash treesitter         |
-| `r`     | o       | Remote flash             |
-| `R`     | o/x     | Treesitter search        |
-| `<c-s>` | c       | Toggle flash search      |
+| Key          | Mode    | Action                   |
+| ------------ | ------- | ------------------------ |
+| `<leader>fj` | n/x/o   | Flash jump               |
+| `<leader>fJ` | n/x/o   | Flash treesitter         |
+| `<leader>fr` | o       | Remote flash             |
+| `<leader>fR` | o/x     | Treesitter search        |
+| `<c-s>`      | c       | Toggle flash search      |
 
 ### Snacks
 
@@ -402,10 +407,17 @@ nvim
 | ------------ | ---- | ---------------------------- |
 | `<leader>un` | n    | Dismiss all notifications    |
 | `<leader>nh` | n    | Notification history         |
-| `<leader>gg` | n    | Lazygit (root dir)           |
-| `<leader>gf` | n    | Lazygit current file history |
 | `<c-/>`      | n/t  | Toggle terminal              |
 | `<c-_>`      | n/t  | Toggle terminal (alternative)|
+
+### UI Toggles
+
+| Key          | Mode | Action                |
+| ------------ | ---- | --------------------- |
+| `<leader>uf` | n    | Toggle autoformat     |
+| `<leader>up` | n    | Toggle auto-pairs     |
+| `<leader>th` | n    | Toggle inlay hints    |
+| `<leader>tb` | n    | Toggle git blame      |
 
 ## Plugins
 
@@ -477,9 +489,13 @@ nvim
 
 ### Themes
 
-- **tokyonight.nvim**: Tokyo Night theme
+- **github-nvim-theme**: GitHub theme (active: dark_dimmed)
 - **catppuccin/nvim**: Catppuccin theme
-- **rose-pine/neovim**: Rosé Pine theme (active)
+- **kanagawa.nvim**: Kanagawa theme
+- **monokai-pro.nvim**: Monokai Pro theme
+- **onedark.nvim**: Atom One Dark theme
+- **rose-pine/neovim**: Rosé Pine theme
+- **tokyonight.nvim**: Tokyo Night theme
 
 ## Language Servers
 
@@ -515,12 +531,18 @@ nvim
 Edit `lua/plugins/color-themes.lua`:
 
 ```lua
--- Change this line in the rose-pine config:
-vim.cmd([[colorscheme rose-pine]])
+-- Change this line in the tokyonight config:
+vim.cmd([[colorscheme tokyonight-night]])
 
 -- To one of:
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme tokyonight-storm]])
+vim.cmd([[colorscheme tokyonight-day]])
+vim.cmd([[colorscheme github_dark_dimmed]]) -- or github_light, github_dark_high_contrast, etc.
 vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme kanagawa]])
+vim.cmd([[colorscheme onedark]])
+vim.cmd([[colorscheme rose-pine]])
+vim.cmd([[colorscheme monokai-pro]])
 ```
 
 ### Add Custom LSP Server

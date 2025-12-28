@@ -24,6 +24,10 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.undofile = true
 
+-- Completion settings (blink.cmp only, disable built-in completion)
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append("c") -- Don't show completion messages
+
 -- LSP folding with native API (Neovim 0.11+)
 vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 vim.opt.foldmethod = "expr"
@@ -35,22 +39,22 @@ vim.opt.foldlevelstart = 99
 
 -- Diagnostic configuration with sign icons (Neovim 0.11+ API)
 vim.diagnostic.config({
-	virtual_text = true,
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = "",
-			[vim.diagnostic.severity.WARN] = "",
-			[vim.diagnostic.severity.HINT] = "",
-			[vim.diagnostic.severity.INFO] = "",
-		},
-	},
-	underline = true,
-	update_in_insert = false,
-	severity_sort = true,
-	float = {
-		border = "rounded",
-		source = "always",
-	},
+  virtual_text = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.HINT] = "",
+      [vim.diagnostic.severity.INFO] = "",
+    },
+  },
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = "always",
+  },
 })
 
 -- Core keymaps
@@ -111,23 +115,23 @@ keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
 -- Statusline with LSP diagnostics
 _G.statusline_diagnostics = function()
-	local counts = vim.diagnostic.count(0)
-	local parts = {}
+  local counts = vim.diagnostic.count(0)
+  local parts = {}
 
-	if counts[vim.diagnostic.severity.ERROR] then
-		table.insert(parts, "  " .. counts[vim.diagnostic.severity.ERROR])
-	end
-	if counts[vim.diagnostic.severity.WARN] then
-		table.insert(parts, "  " .. counts[vim.diagnostic.severity.WARN])
-	end
-	if counts[vim.diagnostic.severity.INFO] then
-		table.insert(parts, "  " .. counts[vim.diagnostic.severity.INFO])
-	end
-	if counts[vim.diagnostic.severity.HINT] then
-		table.insert(parts, "  " .. counts[vim.diagnostic.severity.HINT])
-	end
+  if counts[vim.diagnostic.severity.ERROR] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.ERROR])
+  end
+  if counts[vim.diagnostic.severity.WARN] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.WARN])
+  end
+  if counts[vim.diagnostic.severity.INFO] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.INFO])
+  end
+  if counts[vim.diagnostic.severity.HINT] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.HINT])
+  end
 
-	return #parts > 0 and " " .. table.concat(parts, " ") .. " " or ""
+  return #parts > 0 and " " .. table.concat(parts, " ") .. " " or ""
 end
 
 -- Set statusline

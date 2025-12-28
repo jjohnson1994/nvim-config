@@ -56,6 +56,9 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
         callback = function(event)
+          -- Disable omnifunc (blink.cmp handles LSP completion directly)
+          vim.bo[event.buf].omnifunc = ""
+
           local map = function(modes, keys, func, desc)
             vim.keymap.set(modes, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end

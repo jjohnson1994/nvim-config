@@ -116,10 +116,10 @@ When modifying core settings or options:
 
 ### flash.nvim
 - Modern navigation plugin using search labels and enhanced character motions
-- Primary key is `s` for jump mode - shows labels on search matches
-- `S` for treesitter-aware navigation (jumps to syntax nodes)
-- Enhances default `f`, `t`, `F`, `T` motions with multi-line support
-- Works across multiple windows when enabled
+- Primary key is `<leader>fj` for jump mode - shows labels on search matches
+- `<leader>fJ` for treesitter-aware navigation (jumps to syntax nodes)
+- `<leader>fr` for remote flash (operator mode only)
+- `<leader>fR` for treesitter search (operator/visual modes)
 - Can be toggled in command mode with `<c-s>` during search
 
 ### marks.nvim

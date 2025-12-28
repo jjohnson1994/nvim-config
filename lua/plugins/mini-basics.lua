@@ -18,6 +18,5 @@ return {
       basic = true,
       relnum_in_visual_mode = false,
     },
-    silent = false,
   },
 }
