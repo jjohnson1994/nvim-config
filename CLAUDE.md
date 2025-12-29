@@ -75,6 +75,14 @@ When modifying core settings or options:
 6. **Check for conflicts**: When adding keymaps, verify no conflicts exist with existing bindings
 7. **Use latest APIs**: Always use the latest versions of Neovim and plugin APIs. Check the official Neovim documentation online at https://neovim.io/doc/ for the most current API methods. Avoid deprecated APIs and patterns.
 
+## Git Commit Guidelines
+
+When creating git commits:
+
+1. **No AI attribution**: Do NOT add Claude Code attribution, Co-Authored-By lines, or any AI-related metadata to commit messages
+2. **Keep commits clean**: Write concise, descriptive commit messages that focus on what changed and why
+3. **Follow existing style**: Match the style and format of recent commits in the repository
+
 ## Common Mistakes to Avoid
 
 - ❌ Adding a plugin without updating the README plugins list
@@ -84,6 +92,7 @@ When modifying core settings or options:
 - ❌ Leaving outdated information after removing plugins or keymaps
 - ❌ Using `<space>` instead of `<leader>` in keymap definitions or documentation
 - ❌ Using deprecated or outdated API methods instead of checking the latest Neovim/plugin documentation
+- ❌ Adding Claude attribution or Co-Authored-By lines to git commits
 
 ## Configuration Notes
 
