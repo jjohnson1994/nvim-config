@@ -2,6 +2,8 @@
 
 A modern Neovim configuration built for web development with React, TypeScript, and modern JavaScript tooling. Uses Neovim 0.11+ native LSP APIs with lazy loading and optimized performance.
 
+99% Built by Claude Code
+
 ## Features
 
 - 🚀 **Modern Architecture**: Built on Neovim 0.11+ with native LSP support
@@ -205,6 +207,82 @@ nvim
 - **Update time**: 300ms
 - **Scroll offset**: 8 lines
 
+## Status Bar
+
+This configuration uses a custom native statusline (not a plugin) that displays:
+
+**Left side:**
+
+- Relative file path
+- Help buffer flag `[Help]`
+- Modified flag `[+]`
+- Readonly flag `[RO]`
+- LSP diagnostics counts (errors, warnings, info, hints with icons)
+
+**Right side:**
+
+- Current line and column `line,col`
+- Virtual column (if different from physical column)
+- Percentage through file
+
+### Statusline Special Characters Reference
+
+| Code       | Description                                                       |
+| ---------- | ----------------------------------------------------------------- |
+| `%<`       | Truncation point - if line is too long, truncate from here        |
+| `%f`       | File path relative to current directory                           |
+| `%F`       | Full file path                                                    |
+| `%t`       | File name (tail) only                                             |
+| `%h`       | Help buffer flag - shows `[Help]` if in help buffer               |
+| `%m`       | Modified flag - shows `[+]` if buffer has unsaved changes         |
+| `%r`       | Readonly flag - shows `[RO]` if file is readonly                  |
+| `%w`       | Preview window flag - shows `[Preview]`                           |
+| `%y`       | File type - shows `[vim]`, `[lua]`, etc.                          |
+| `%{expr}`  | Evaluate vimscript expression and insert result                   |
+| `%{%...%}` | Evaluate expression - same as `%{}` but allows `%` inside         |
+| `v:lua.`   | Call a Lua function from statusline (requires `%{%...%}` wrapper) |
+| `%=`       | Separation point - items after this are right-aligned             |
+| `%(...)`   | Group items - useful for conditional display or spacing           |
+| `%l`       | Current line number                                               |
+| `%L`       | Total number of lines in buffer                                   |
+| `%c`       | Current column number (byte index)                                |
+| `%v`       | Virtual column number (accounts for tabs)                         |
+| `%V`       | Virtual column - only shown when different from `%c`              |
+| `%P`       | Percentage through file (0%, 50%, 100%, etc.)                     |
+| `%%`       | Literal `%` character                                             |
+
+### Implementation
+
+The statusline is configured in `lua/options.lua` using a Lua function for diagnostics and native Neovim statusline syntax:
+
+```lua
+-- Diagnostics function - shows LSP error/warning/info/hint counts
+_G.statusline_diagnostics = function()
+  local counts = vim.diagnostic.count(0)
+  local parts = {}
+
+  if counts[vim.diagnostic.severity.ERROR] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.ERROR])
+  end
+  if counts[vim.diagnostic.severity.WARN] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.WARN])
+  end
+  if counts[vim.diagnostic.severity.INFO] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.INFO])
+  end
+  if counts[vim.diagnostic.severity.HINT] then
+    table.insert(parts, "  " .. counts[vim.diagnostic.severity.HINT])
+  end
+
+  return #parts > 0 and " " .. table.concat(parts, " ") .. " " or ""
+end
+
+-- Statusline format
+vim.opt.statusline = "%<%f %h%m%r%{%v:lua.statusline_diagnostics()%}%=%((%l,%c%V %) %P"
+```
+
+The diagnostics function is called from the statusline using `%{%v:lua.statusline_diagnostics()%}` syntax, which allows calling Lua functions and using `%` characters within the function.
+
 ## Key Bindings
 
 ### General
@@ -254,68 +332,68 @@ nvim
 
 **Neovim 0.11+ Default Keybindings:**
 
-| Key          | Mode | Action                 |
-| ------------ | ---- | ---------------------- |
-| `grr`        | n    | References             |
-| `gra`        | n, v | Code action            |
-| `grn`        | n    | Rename                 |
-| `gri`        | n    | Implementation         |
-| `grt`        | n    | Type definition        |
-| `gO`         | n    | Document symbols       |
-| `K`          | n    | Hover documentation    |
-| `<C-s>`      | i    | Signature help         |
+| Key     | Mode | Action              |
+| ------- | ---- | ------------------- |
+| `grr`   | n    | References          |
+| `gra`   | n, v | Code action         |
+| `grn`   | n    | Rename              |
+| `gri`   | n    | Implementation      |
+| `grt`   | n    | Type definition     |
+| `gO`    | n    | Document symbols    |
+| `K`     | n    | Hover documentation |
+| `<C-s>` | i    | Signature help      |
 
 **Additional Keybindings:**
 
-| Key          | Mode | Action                 |
-| ------------ | ---- | ---------------------- |
-| `gd`         | n    | Go to definition       |
-| `gD`         | n    | Go to declaration      |
-| `<leader>th` | n    | Toggle inlay hints     |
+| Key          | Mode | Action             |
+| ------------ | ---- | ------------------ |
+| `gd`         | n    | Go to definition   |
+| `gD`         | n    | Go to declaration  |
+| `<leader>th` | n    | Toggle inlay hints |
 
 ### Diagnostics
 
-| Key          | Mode | Action                   |
-| ------------ | ---- | ------------------------ |
-| `[d`         | n    | Previous diagnostic      |
-| `]d`         | n    | Next diagnostic          |
-| `gl`         | n    | Show diagnostic float    |
-| `<leader>ld` | n    | Diagnostic list          |
+| Key          | Mode | Action                |
+| ------------ | ---- | --------------------- |
+| `[d`         | n    | Previous diagnostic   |
+| `]d`         | n    | Next diagnostic       |
+| `gl`         | n    | Show diagnostic float |
+| `<leader>ld` | n    | Diagnostic list       |
 
 ### Fuzzy Finding (FZF-lua)
 
-| Key              | Mode | Action                |
-| ---------------- | ---- | --------------------- |
-| `<leader><leader>` | n | Resume last search    |
-| `<leader>ff`   | n    | Find files            |
-| `<leader>fg`   | n    | Live grep             |
-| `<leader>fb`   | n    | Find buffers          |
-| `<leader>fh`   | n    | Help tags             |
-| `<leader>fo`   | n    | Recent files          |
-| `<leader>fc`   | n    | Commands              |
-| `<leader>fk`   | n    | Keymaps               |
-| `<leader>fr`   | n    | LSP references        |
-| `<leader>fs`   | n    | Document symbols      |
-| `<leader>fw`   | n    | Workspace symbols     |
-| `<leader>fd`   | n    | Document diagnostics  |
-| `<leader>fD`   | n    | Workspace diagnostics |
-| `<leader>fm`   | n    | Git modified files    |
+| Key                | Mode | Action                |
+| ------------------ | ---- | --------------------- |
+| `<leader><leader>` | n    | Resume last search    |
+| `<leader>ff`       | n    | Find files            |
+| `<leader>fg`       | n    | Live grep             |
+| `<leader>fb`       | n    | Find buffers          |
+| `<leader>fh`       | n    | Help tags             |
+| `<leader>fo`       | n    | Recent files          |
+| `<leader>fc`       | n    | Commands              |
+| `<leader>fk`       | n    | Keymaps               |
+| `<leader>fr`       | n    | LSP references        |
+| `<leader>fs`       | n    | Document symbols      |
+| `<leader>fw`       | n    | Workspace symbols     |
+| `<leader>fd`       | n    | Document diagnostics  |
+| `<leader>fD`       | n    | Workspace diagnostics |
+| `<leader>fm`       | n    | Git modified files    |
 
 **Within FZF window:**
 
-| Key       | Action                        |
-| --------- | ----------------------------- |
-| `Tab`     | Mark/unmark item              |
-| `Alt-a`   | Select all                    |
-| `Alt-d`   | Deselect all                  |
-| `Enter`   | Accept (open selected items)  |
+| Key     | Action                       |
+| ------- | ---------------------------- |
+| `Tab`   | Mark/unmark item             |
+| `Alt-a` | Select all                   |
+| `Alt-d` | Deselect all                 |
+| `Enter` | Accept (open selected items) |
 
 **Note:** LSP navigation uses Neovim defaults (`grr`, `gra`, `grn`, etc.). Use `<leader>f*` mappings above for fuzzy finder versions.
 
 ### File Explorer (nvim-tree)
 
-| Key          | Mode | Action               |
-| ------------ | ---- | -------------------- |
+| Key         | Mode | Action               |
+| ----------- | ---- | -------------------- |
 | `<leader>e` | n    | Open at current file |
 | `<leader>E` | n    | Toggle explorer      |
 
@@ -393,31 +471,31 @@ nvim
 
 ### Navigation (Flash)
 
-| Key          | Mode    | Action                   |
-| ------------ | ------- | ------------------------ |
-| `<leader>fj` | n/x/o   | Flash jump               |
-| `<leader>fJ` | n/x/o   | Flash treesitter         |
-| `<leader>fr` | o       | Remote flash             |
-| `<leader>fR` | o/x     | Treesitter search        |
-| `<c-s>`      | c       | Toggle flash search      |
+| Key          | Mode  | Action              |
+| ------------ | ----- | ------------------- |
+| `<leader>fj` | n/x/o | Flash jump          |
+| `<leader>fJ` | n/x/o | Flash treesitter    |
+| `<leader>fr` | o     | Remote flash        |
+| `<leader>fR` | o/x   | Treesitter search   |
+| `<c-s>`      | c     | Toggle flash search |
 
 ### Snacks
 
-| Key          | Mode | Action                       |
-| ------------ | ---- | ---------------------------- |
-| `<leader>un` | n    | Dismiss all notifications    |
-| `<leader>nh` | n    | Notification history         |
-| `<c-/>`      | n/t  | Toggle terminal              |
-| `<c-_>`      | n/t  | Toggle terminal (alternative)|
+| Key          | Mode | Action                        |
+| ------------ | ---- | ----------------------------- |
+| `<leader>un` | n    | Dismiss all notifications     |
+| `<leader>nh` | n    | Notification history          |
+| `<c-/>`      | n/t  | Toggle terminal               |
+| `<c-_>`      | n/t  | Toggle terminal (alternative) |
 
 ### UI Toggles
 
-| Key          | Mode | Action                |
-| ------------ | ---- | --------------------- |
-| `<leader>uf` | n    | Toggle autoformat     |
-| `<leader>up` | n    | Toggle auto-pairs     |
-| `<leader>th` | n    | Toggle inlay hints    |
-| `<leader>tb` | n    | Toggle git blame      |
+| Key          | Mode | Action             |
+| ------------ | ---- | ------------------ |
+| `<leader>uf` | n    | Toggle autoformat  |
+| `<leader>up` | n    | Toggle auto-pairs  |
+| `<leader>th` | n    | Toggle inlay hints |
+| `<leader>tb` | n    | Toggle git blame   |
 
 ## Plugins
 

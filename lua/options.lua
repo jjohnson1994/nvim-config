@@ -113,7 +113,7 @@ keymap("n", "<leader>bd", ":bd<CR>", { desc = "Delete buffer" })
 keymap("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
--- Statusline with LSP diagnostics
+-- Statusline with LSP diagnostics (see README.md "Status Bar" section for full documentation)
 _G.statusline_diagnostics = function()
   local counts = vim.diagnostic.count(0)
   local parts = {}
@@ -134,7 +134,7 @@ _G.statusline_diagnostics = function()
   return #parts > 0 and " " .. table.concat(parts, " ") .. " " or ""
 end
 
--- Set statusline
-vim.opt.statusline = "%<%f %h%m%r%{%v:lua.statusline_diagnostics()%}%=%(%l,%c%V %) %P"
+-- Configure statusline (see README.md "Status Bar" section for format details)
+vim.opt.statusline = "%<%f %h%m%r%{%v:lua.statusline_diagnostics()%}%=%((%l,%c%V %) %P"
 
 -- Note: LSP servers are enabled in lua/plugins/lsp-config.lua after configuration
