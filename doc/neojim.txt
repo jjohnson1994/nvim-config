@@ -1,0 +1,413 @@
+*neojim.txt*  Modern Neovim configuration for web development
+
+==============================================================================
+CONTENTS                                                    *neojim-contents*
+
+    1. Introduction ..................... |neojim-introduction|
+    2. Features ......................... |neojim-features|
+    3. Prerequisites .................... |neojim-prerequisites|
+    4. Installation ..................... |neojim-installation|
+    5. Plugins .......................... |neojim-plugins|
+    6. Keybindings ...................... |neojim-keybindings|
+    7. LSP Servers ...................... |neojim-lsp|
+    8. Customization .................... |neojim-customization|
+    9. Troubleshooting .................. |neojim-troubleshooting|
+
+==============================================================================
+1. INTRODUCTION                                       *neojim-introduction*
+
+NeoJim is a modern Neovim configuration built for web development with React,
+TypeScript, and modern JavaScript tooling. Uses Neovim 0.11+ native LSP APIs
+with lazy loading and optimized performance.
+
+99% Built by Claude Code
+
+Full Documentation: https://yourusername.github.io/nvim/
+
+==============================================================================
+2. FEATURES                                               *neojim-features*
+
+    • Modern Architecture - Built on Neovim 0.11+ with native LSP support
+    • Fast Performance - Lazy loading with lazy.nvim plugin manager
+    • Web Development - Optimized for React, TypeScript, Vue, Svelte
+    • Multiple Themes - tokyonight, catppuccin, rose-pine, github, and more
+    • Minimal Core - Close to stock Neovim with essential enhancements
+    • Smart Search - FZF-lua for fuzzy finding and navigation
+    • File Explorer - nvim-tree with git integration
+    • Auto-completion - blink.cmp with LuaSnip snippets
+    • LSP Integration - Full TypeScript/JavaScript language support
+    • Formatting - Auto-format on save with ESLint and Prettier
+    • Git Integration - Gitsigns and Fugitive
+    • Testing - Neotest with Vitest support
+
+==============================================================================
+3. PREREQUISITES                                   *neojim-prerequisites*
+
+Required:
+    • Neovim 0.11+ - Required for native LSP features
+    • Git - For plugin management
+    • Node.js & npm - For LSP servers and formatters
+    • ripgrep - For fast searching with fzf-lua
+    • fd - Recommended for file finding (required on macOS)
+    • A Nerd Font - For icons (recommended: JetBrainsMono Nerd Font)
+
+macOS Installation:
+>
+    brew install neovim ripgrep fd node
+    brew install --cask font-jetbrains-mono-nerd-font
+<
+
+Linux (Ubuntu/Debian):
+>
+    sudo snap install nvim --classic
+    sudo apt install git ripgrep fd-find nodejs npm
+<
+
+Windows (Scoop):
+>
+    scoop install neovim git ripgrep fd nodejs-lts
+    scoop bucket add nerd-fonts
+    scoop install JetBrainsMono-NF
+<
+
+==============================================================================
+4. INSTALLATION                                       *neojim-installation*
+
+1. Backup existing configuration:
+>
+    mv ~/.config/nvim ~/.config/nvim.backup
+<
+
+2. Clone this configuration:
+>
+    git clone https://github.com/yourusername/yourrepo ~/.config/nvim
+<
+
+3. Launch Neovim (plugins will auto-install):
+>
+    nvim
+<
+
+4. Install LSP servers and tools:
+>
+    :Mason
+<
+    Install these packages:
+    - LSP Servers: lua_ls, vtsls, svelte
+    - Formatters: prettierd, stylua, eslint_d
+    - Linters: eslint_d
+
+5. Restart Neovim and verify:
+>
+    :checkhealth lazy
+    :checkhealth vim.lsp
+<
+
+==============================================================================
+5. PLUGINS                                               *neojim-plugins*
+
+LSP & COMPLETION ~
+    • blink.cmp - Performant completion with fuzzy matching
+    • LuaSnip - Snippet engine with friendly-snippets support
+    • nvim-lspconfig - Quickstart configs for Neovim LSP
+    • mason.nvim - Package manager for LSP servers
+
+SYNTAX & PARSING ~
+    • nvim-treesitter - Better syntax highlighting and parsing
+    • nvim-treesitter-textobjects - Syntax-aware text objects
+    • nvim-ts-autotag - Auto close and rename HTML/JSX tags
+    • ts-error-translator.nvim - Readable TypeScript errors
+
+FORMATTING & LINTING ~
+    • conform.nvim - Lightweight formatting
+    • nvim-lint - Asynchronous linting
+
+GIT INTEGRATION ~
+    • gitsigns.nvim - Git decorations, hunks, and blame
+    • vim-fugitive - Premier Git plugin for Vim/Neovim
+
+FILE NAVIGATION & SEARCH ~
+    • fzf-lua - Blazingly fast fuzzy finder
+    • nvim-tree.lua - File explorer with git integration
+
+EDITING ENHANCEMENTS ~
+    • flash.nvim - Navigate with search labels
+    • nvim-surround - Add/change/delete surrounding pairs
+    • mini.ai - Extended text objects
+    • mini.pairs - Auto-pairs for brackets
+    • mini.basics - Common configuration presets
+    • mini.bracketed - Navigate with [ and ]
+
+UI & VISUAL ~
+    • snacks.nvim - QoL plugins (notifications, scrolling, dashboard)
+    • which-key.nvim - Display keybindings in popup
+    • trouble.nvim - Pretty diagnostics list
+    • vim-illuminate - Highlight word references
+    • mini.indentscope - Indent scope visualization
+    • marks.nvim - View and interact with marks
+
+TESTING ~
+    • neotest - Extensible testing framework with Vitest adapter
+
+SPECIALIZED TOOLS ~
+    • tailwind-tools.nvim - Tailwind CSS tooling
+
+COLORSCHEMES ~
+    • catppuccin - Soothing pastel theme
+    • github-nvim-theme - GitHub's Neovim theme (default: dark_dimmed)
+    • kanagawa.nvim - Inspired by Hokusai painting
+    • monokai-pro.nvim - Monokai Pro theme
+    • onedark.nvim - Atom One Dark theme
+    • rose-pine - All natural pine theme
+    • tokyonight.nvim - Clean, dark Neovim theme
+
+==============================================================================
+6. KEYBINDINGS                                       *neojim-keybindings*
+
+LEADER KEY ~
+    Leader: <Space>
+    Local Leader: <Space>
+
+DISCOVERING KEYBINDINGS ~
+    <Space>     Wait after pressing to see which-key popup
+    <Space>fk   Fuzzy search all keybindings
+
+GENERAL ~
+    <Space>w    Save file
+    <Space>W    Save all files
+    <Space>q    Quit
+    <Space>Q    Quit all
+    <Space>a    Select all
+
+WINDOW NAVIGATION ~
+    <C-h>       Go to left window
+    <C-j>       Go to lower window
+    <C-k>       Go to upper window
+    <C-l>       Go to right window
+    <M-Up>      Increase window height
+    <M-Down>    Decrease window height
+    <M-Left>    Decrease window width
+    <M-Right>   Increase window width
+
+BUFFER MANAGEMENT ~
+    <Space>bd   Delete buffer
+    <Space>bn   Next buffer
+    <Space>bp   Previous buffer
+
+LSP (Language Server Protocol) ~
+    gd          Go to definition
+    gD          Go to declaration
+    grr         References
+    gra         Code action
+    grn         Rename
+    gri         Implementation
+    grt         Type definition
+    gO          Document symbols
+    K           Hover documentation
+    <C-s>       Signature help (insert mode)
+    <Space>th   Toggle inlay hints
+
+DIAGNOSTICS ~
+    [d          Previous diagnostic
+    ]d          Next diagnostic
+    gl          Show diagnostic float
+    <Space>ld   Diagnostic list
+
+FUZZY FINDING (FZF-lua) ~
+    <Space><Space>  Resume last search
+    <Space>ff       Find files
+    <Space>fg       Live grep
+    <Space>fb       Find buffers
+    <Space>fh       Help tags
+    <Space>fo       Recent files
+    <Space>fc       Commands
+    <Space>fk       Keymaps
+    <Space>fr       LSP references
+    <Space>fs       Document symbols
+    <Space>fw       Workspace symbols
+    <Space>fd       Document diagnostics
+    <Space>fD       Workspace diagnostics
+    <Space>fm       Git modified files
+
+FILE EXPLORER (nvim-tree) ~
+    <Space>e    Open at current file
+    <Space>E    Toggle explorer
+
+GIT (Gitsigns) ~
+    ]c          Next git hunk
+    [c          Previous git hunk
+    <Space>hs   Stage hunk
+    <Space>hr   Reset hunk
+    <Space>hS   Stage buffer
+    <Space>hR   Reset buffer
+    <Space>hp   Preview hunk
+    <Space>hb   Blame line
+    <Space>tb   Toggle git blame
+    <Space>hd   Diff this
+    ih          Select hunk (text object)
+
+GIT (Fugitive) ~
+    <Space>gs   Git status
+    <Space>gc   Git commit
+    <Space>gp   Git push
+    <Space>gl   Git pull
+
+FORMATTING & LINTING ~
+    <Space>cf   Format file or range
+    <Space>cl   Trigger linting
+
+DIAGNOSTICS UI (Trouble) ~
+    <Space>xx   Toggle diagnostics
+    <Space>xX   Toggle buffer diagnostics
+    <Space>xl   Location list
+    <Space>xq   Quickfix list
+    <Space>xs   Symbols
+    <Space>xL   LSP references
+
+TESTING (Neotest) ~
+    <Space>tt   Run nearest test
+    <Space>tf   Run test file
+    <Space>ts   Toggle test summary
+    <Space>to   Show test output
+
+COMPLETION & SNIPPETS ~
+    <C-Space>   Show/hide completion (insert mode)
+    <C-y>       Accept completion (insert mode)
+    <C-e>       Hide completion (insert mode)
+    <C-n>       Next completion (insert mode)
+    <C-p>       Previous completion (insert mode)
+    <Tab>       Accept/jump to next snippet placeholder
+    <S-Tab>     Jump to previous snippet placeholder
+    <C-l>       Change choice in snippet
+
+NAVIGATION (vim-illuminate) ~
+    ]]          Next reference
+    [[          Previous reference
+
+NAVIGATION (Flash) ~
+    <Space>fj   Flash jump
+    <Space>fJ   Flash treesitter
+    <Space>fr   Remote flash (operator mode)
+    <Space>fR   Treesitter search (operator/visual)
+    <C-s>       Toggle flash search (command mode)
+
+SNACKS ~
+    <Space>un   Dismiss all notifications
+    <Space>nh   Notification history
+    <C-/>       Toggle terminal
+    <C-_>       Toggle terminal (alternative)
+
+UI TOGGLES ~
+    <Space>uf   Toggle autoformat
+    <Space>up   Toggle auto-pairs
+    <Space>th   Toggle inlay hints
+    <Space>tb   Toggle git blame
+
+==============================================================================
+7. LSP SERVERS                                               *neojim-lsp*
+
+TYPESCRIPT/JAVASCRIPT (vtsls) ~
+    • Complete function calls
+    • Inlay hints for parameters, types, return types
+    • Supports React, Vue, Svelte
+
+LUA (lua_ls) ~
+    • Neovim-specific configuration
+    • Vim API awareness
+    • LuaJIT runtime
+
+FORMATTERS (via conform.nvim) ~
+    • Lua: stylua
+    • JavaScript/TypeScript: eslint_d → prettierd
+    • Vue/Svelte: eslint_d → prettierd
+    • HTML/CSS/JSON/YAML: prettierd
+
+LINTERS (via nvim-lint) ~
+    • JavaScript/TypeScript/Vue/Svelte: eslint_d
+
+==============================================================================
+8. CUSTOMIZATION                                   *neojim-customization*
+
+CHANGE COLOR SCHEME ~
+Edit lua/plugins/color-themes.lua:
+>
+    vim.cmd([[colorscheme tokyonight-night]])
+    -- Change to one of:
+    -- tokyonight-storm, tokyonight-day
+    -- github_dark_dimmed, github_light
+    -- catppuccin, kanagawa, onedark
+    -- rose-pine, monokai-pro
+<
+
+ADD CUSTOM LSP SERVER ~
+1. Create config file: lsp/your_server.lua
+2. Add server settings:
+>
+    return {
+      settings = {
+        -- Your server settings
+      },
+    }
+<
+3. Add to ensure_installed in lua/plugins/lsp-config.lua
+
+CHANGE LEADER KEY ~
+Edit lua/options.lua:
+>
+    vim.g.mapleader = "\\"  -- Change to backslash
+<
+
+ENABLE INLAY HINTS ~
+Uncomment in lua/options.lua:
+>
+    vim.lsp.inlay_hint.enable(true)
+<
+Or toggle with <Space>th
+
+DISABLE AUTO-FORMAT ON SAVE ~
+Toggle with <Space>uf or edit lua/plugins/conform.lua
+
+==============================================================================
+9. TROUBLESHOOTING                               *neojim-troubleshooting*
+
+PLUGINS NOT LOADING ~
+>
+    :Lazy sync
+    :Lazy clean
+    :Lazy update
+<
+
+LSP NOT WORKING ~
+Check LSP is running:
+>
+    :LspInfo
+<
+Check Mason installations:
+>
+    :Mason
+<
+Check health:
+>
+    :checkhealth lspconfig
+<
+
+COMPLETION NOT SHOWING ~
+Check blink.cmp is loaded:
+>
+    :lua print(vim.inspect(require("blink.cmp")))
+<
+
+FORMATTING NOT WORKING ~
+1. Check formatters are installed via Mason
+2. Verify file type is configured in lua/plugins/conform.lua
+3. Manual format: <Space>cf
+
+GIT SIGNS NOT SHOWING ~
+1. Make sure you're in a git repository
+2. Check gitsigns status:
+>
+    :Gitsigns toggle_signs
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

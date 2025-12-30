@@ -1,6 +1,12 @@
-# Neovim Configuration
+# NeoJim
 
 A modern Neovim configuration built for web development with React, TypeScript, and modern JavaScript tooling. Uses Neovim 0.11+ native LSP APIs with lazy loading and optimized performance.
+
+## Documentation
+
+📚 **[Complete Documentation Site](https://jjohnson1994.github.io/neojim/)** - Full guides, tutorials, and reference
+
+📖 **Built-in Help** - Access comprehensive help from within Neovim with `:help neojim`
 
 99% Built by Claude Code
 
@@ -101,34 +107,172 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 
 ## Installation
 
-1. **Install prerequisites** (macOS with Homebrew):
+### Quick Setup
+
+<details>
+<summary><b>macOS (Homebrew)</b></summary>
 
 ```bash
-brew install ripgrep fd
-```
+# Install prerequisites
+brew install neovim ripgrep fd node
+brew install --cask font-jetbrains-mono-nerd-font
 
-2. **Backup existing config** (if you have one):
-
-```bash
+# Backup existing config
 mv ~/.config/nvim ~/.config/nvim.backup
-```
 
-3. **Clone or copy this configuration**:
+# Clone this config
+git clone https://github.com/yourusername/yourrepo ~/.config/nvim
 
-```bash
-# If starting fresh, this config should already be in place at:
-# ~/.config/nvim
-```
-
-4. **Launch Neovim**:
-
-```bash
+# Launch Neovim (plugins will auto-install)
 nvim
 ```
 
-5. **Wait for plugins to install**: lazy.nvim will automatically install all plugins on first launch
+</details>
 
-6. **Install LSP servers and tools**:
+<details>
+<summary><b>Linux (Ubuntu/Debian)</b></summary>
+
+```bash
+# Install prerequisites
+sudo snap install nvim --classic  # or: sudo apt install neovim
+sudo apt install git ripgrep fd-find nodejs npm
+
+# Install Nerd Font
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+curl -fLo "JetBrainsMono.ttf" \
+  https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
+fc-cache -fv
+
+# Note: fd-find binary is 'fdfind' on Ubuntu, create symlink:
+mkdir -p ~/.local/bin
+ln -s $(which fdfind) ~/.local/bin/fd
+
+# Backup existing config
+mv ~/.config/nvim ~/.config/nvim.backup
+
+# Clone this config
+git clone https://github.com/yourusername/yourrepo ~/.config/nvim
+
+# Launch Neovim (plugins will auto-install)
+nvim
+```
+
+</details>
+
+<details>
+<summary><b>Linux (Fedora)</b></summary>
+
+```bash
+# Install prerequisites
+sudo dnf install neovim git ripgrep fd-find nodejs npm
+
+# Install Nerd Font
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+curl -fLo "JetBrainsMono.ttf" \
+  https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
+fc-cache -fv
+
+# Backup existing config
+mv ~/.config/nvim ~/.config/nvim.backup
+
+# Clone this config
+git clone https://github.com/yourusername/yourrepo ~/.config/nvim
+
+# Launch Neovim (plugins will auto-install)
+nvim
+```
+
+</details>
+
+<details>
+<summary><b>Linux (Arch)</b></summary>
+
+```bash
+# Install prerequisites
+sudo pacman -S neovim git ripgrep fd nodejs npm
+
+# Install Nerd Font (using AUR helper like yay)
+yay -S nerd-fonts-jetbrains-mono
+# Or manually:
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+curl -fLo "JetBrainsMono.ttf" \
+  https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
+fc-cache -fv
+
+# Backup existing config
+mv ~/.config/nvim ~/.config/nvim.backup
+
+# Clone this config
+git clone https://github.com/yourusername/yourrepo ~/.config/nvim
+
+# Launch Neovim (plugins will auto-install)
+nvim
+```
+
+</details>
+
+<details>
+<summary><b>Windows (PowerShell with Scoop)</b></summary>
+
+```powershell
+# Install Scoop if you don't have it
+# See: https://scoop.sh
+
+# Install prerequisites
+scoop install neovim git ripgrep fd nodejs-lts
+
+# Install Nerd Font
+scoop bucket add nerd-fonts
+scoop install JetBrainsMono-NF
+
+# Backup existing config
+Move-Item $env:LOCALAPPDATA\nvim $env:LOCALAPPDATA\nvim.backup -ErrorAction SilentlyContinue
+
+# Clone this config
+git clone https://github.com/yourusername/yourrepo $env:LOCALAPPDATA\nvim
+
+# Launch Neovim (plugins will auto-install)
+nvim
+```
+
+**Note:** On Windows, config is at `%LOCALAPPDATA%\nvim` instead of `~/.config/nvim`
+
+</details>
+
+<details>
+<summary><b>Windows (PowerShell with Chocolatey)</b></summary>
+
+```powershell
+# Install Chocolatey if you don't have it
+# See: https://chocolatey.org/install
+
+# Install prerequisites
+choco install neovim git ripgrep fd nodejs-lts
+
+# Install Nerd Font (download manually from nerdfonts.com and install)
+
+# Backup existing config
+Move-Item $env:LOCALAPPDATA\nvim $env:LOCALAPPDATA\nvim.backup -ErrorAction SilentlyContinue
+
+# Clone this config
+git clone https://github.com/yourusername/yourrepo $env:LOCALAPPDATA\nvim
+
+# Launch Neovim (plugins will auto-install)
+nvim
+```
+
+**Note:** On Windows, config is at `%LOCALAPPDATA%\nvim` instead of `~/.config/nvim`
+
+</details>
+
+### Post-Installation
+
+After launching Neovim and waiting for plugins to install:
+
+1. **Install LSP servers and tools via Mason**:
 
 ```vim
 :Mason
@@ -140,18 +284,28 @@ Install these packages:
 - **Formatters**: `prettierd`, `stylua`, `eslint_d`
 - **Linters**: `eslint_d` (if not already installed above)
 
-7. **Restart Neovim**:
-
-```bash
-nvim
-```
-
-8. **Verify installation**:
+2. **Restart Neovim and verify**:
 
 ```vim
 :checkhealth lazy
 :checkhealth vim.lsp
 ```
+
+📚 **For detailed installation instructions**, see the [Getting Started Guide](https://yourusername.github.io/nvim/getting-started)
+
+### Built-in Help
+
+This configuration includes a comprehensive help file. Access it from within Neovim:
+
+```vim
+:help neojim
+```
+
+Browse all sections:
+- `:help neojim-keybindings` - Complete keybinding reference
+- `:help neojim-plugins` - All installed plugins
+- `:help neojim-lsp` - LSP server configuration
+- `:help neojim-customization` - Customization guide
 
 ## File Structure
 
@@ -159,6 +313,8 @@ nvim
 ~/.config/nvim/
 ├── .stylua.toml                      # Stylua (Lua formatter) configuration
 ├── init.lua                          # Entry point - bootstraps lazy.nvim
+├── doc/
+│   └── neojim.txt                    # Built-in help documentation
 ├── lua/
 │   ├── options.lua                   # Core settings, keymaps, LSP enable
 │   └── plugins/

@@ -4,9 +4,15 @@ This file contains important guidelines for Claude when helping maintain this Ne
 
 ## Documentation Requirements
 
-**CRITICAL: Always keep documentation up to date!**
+**CRITICAL: Always keep ALL documentation up to date!**
 
-When making ANY changes to this configuration, you MUST update the relevant documentation files:
+This configuration maintains **FOUR** documentation sources that MUST be kept in sync:
+1. **README.md** - Quick reference and overview
+2. **VitePress docs (`docs/`)** - Comprehensive web documentation
+3. **Built-in Help (`doc/neojim.txt`)** - Vim help file for in-editor reference
+4. **CLAUDE.md** - Internal guidelines and gotchas for maintainers
+
+When making ANY changes to this configuration, you MUST update ALL RELEVANT documentation files across all four sources:
 
 ### 1. Plugin Changes
 
@@ -24,6 +30,11 @@ When adding, removing, or modifying plugins:
 - ✅ **Update README.md** - Installation section (if applicable)
   - Add any new LSP servers, formatters, or linters to the Mason installation list
 
+- ✅ **Update doc/neojim.txt** - Plugins section
+  - Add/remove plugin from the appropriate category
+  - Include description and key features
+  - Keep categories matching README organization
+
 - ✅ **Update CLAUDE.md** (this file)
   - Document any special considerations for the plugin
   - Add notes about plugin-specific gotchas or configuration requirements
@@ -36,6 +47,11 @@ When adding, removing, or modifying keymaps:
   - Add/remove keymap from the appropriate subsection
   - Ensure the description is clear and concise
   - Keep keymaps organized by category (General, LSP, Git, etc.)
+
+- ✅ **Update doc/neojim.txt** - Keybindings section
+  - Add/remove keymap in the appropriate category
+  - Use consistent formatting (key, mode, description)
+  - Keep categories matching README organization
 
 - ✅ **Update which-key groups** in `lua/plugins/which-key.lua`
   - Add new group registrations if introducing a new `<leader>*` prefix
@@ -58,12 +74,96 @@ When adding, removing, or modifying LSP servers:
 - ✅ **Update README.md** - File Structure section
   - Add/remove LSP config file from the lsp/ directory tree
 
+- ✅ **Update doc/neojim.txt** - LSP Servers section
+  - Add/remove server with configuration details
+  - Document features and supported file types
+  - Update formatters/linters lists if applicable
+
 ### 4. Configuration Changes
 
 When modifying core settings or options:
 
 - ✅ **Update README.md** - Core Settings section
   - Document any changes to leader keys, editor options, or defaults
+
+- ✅ **Update doc/neojim.txt** - Customization section
+  - Document new settings and how to modify them
+  - Include code examples where applicable
+
+### 5. VitePress Documentation Updates
+
+**CRITICAL: The VitePress documentation site must be kept in sync with all changes!**
+
+When making ANY changes, update the relevant VitePress documentation in `docs/`:
+
+#### Plugin Changes → Update VitePress
+
+- ✅ **Update docs/plugins.md**
+  - Add/remove plugin with full description
+  - Include features, keybindings, file location, and usage examples
+  - Keep alphabetically organized within categories
+
+- ✅ **Update docs/features.md**
+  - Add new features to appropriate sections
+  - Update feature descriptions if plugin changes affect them
+
+- ✅ **Update docs/getting-started.md** (if applicable)
+  - Add installation steps for new dependencies
+  - Update Mason package list if LSP/formatter/linter added
+
+#### Keymap Changes → Update VitePress
+
+- ✅ **Update docs/keybindings.md**
+  - Add/remove keybindings in appropriate sections
+  - Include mode, action description, and any special notes
+  - Keep organized by category (LSP, Git, Navigation, etc.)
+  - Update the "Cheat Sheet" section if adding common workflows
+
+#### LSP Server Changes → Update VitePress
+
+- ✅ **Update docs/lsp-servers.md**
+  - Add/remove server documentation with full configuration details
+  - Document features, settings, supported file types
+  - Add troubleshooting notes if needed
+
+- ✅ **Update docs/getting-started.md**
+  - Add server to Mason installation list
+
+#### Configuration/Settings Changes → Update VitePress
+
+- ✅ **Update docs/configuration.md**
+  - Document new settings, global variables, or configuration options
+  - Include code examples showing how to use/modify settings
+
+- ✅ **Update docs/customization.md**
+  - Add examples showing how to customize the new feature
+  - Include use cases and alternative approaches
+
+#### General VitePress Updates
+
+- ✅ **Always consider updating:**
+  - **docs/troubleshooting.md** - Add common issues related to your changes
+  - **docs/faq.md** - Add frequently asked questions about new features
+  - **docs/README.md** - Update if VitePress structure/build process changes
+  - **docs/index.md** - Update feature count or highlights for major changes
+
+- ✅ **Update CLAUDE.md** (this file)
+  - Document any new conventions, gotchas, or special considerations
+  - Add plugin-specific notes for complex configurations
+  - Update best practices based on lessons learned
+
+#### VitePress Update Checklist
+
+For each change, ask yourself:
+
+1. ✅ Does this affect any existing documentation pages?
+2. ✅ Should this be in the troubleshooting guide?
+3. ✅ Would users ask about this in the FAQ?
+4. ✅ Does this change any keybindings?
+5. ✅ Does this require installation steps?
+6. ✅ Are there new customization options?
+
+**Remember:** VitePress docs are the primary documentation source - README.md is a quick reference, but VitePress should be comprehensive!
 
 ## Best Practices
 
@@ -93,6 +193,10 @@ When creating git commits:
 - ❌ Using `<space>` instead of `<leader>` in keymap definitions or documentation
 - ❌ Using deprecated or outdated API methods instead of checking the latest Neovim/plugin documentation
 - ❌ Adding Claude attribution or Co-Authored-By lines to git commits
+- ❌ **Forgetting to update VitePress documentation in `docs/`** - This is the primary documentation!
+- ❌ Updating README.md but not the corresponding VitePress pages
+- ❌ Adding new features without updating docs/troubleshooting.md or docs/faq.md
+- ❌ Not updating CLAUDE.md when introducing new patterns or gotchas
 
 ## Configuration Notes
 
@@ -158,3 +262,85 @@ When creating git commits:
 ## Remember
 
 **Documentation is not optional** - it's a critical part of maintaining a usable configuration. Future you (and Claude) will thank present you for keeping everything up to date!
+
+### CRITICAL: Four Documentation Sources MUST Stay in Sync
+
+This configuration has **FOUR** documentation sources that must be updated together:
+
+1. **VitePress docs (`docs/`)** - Primary comprehensive documentation (web-based)
+   - Most detailed and user-friendly
+   - Includes guides, tutorials, and full reference
+   - Published to GitHub Pages
+
+2. **README.md** - Quick reference and overview
+   - First thing users see on GitHub
+   - Should match VitePress content but more concise
+   - Includes installation quick-start for all platforms
+
+3. **Built-in Help (`doc/neojim.txt`)** - Vim help file
+   - Accessible from within Neovim with `:help neojim`
+   - Must follow Vim help file conventions
+   - Should cover all major topics from VitePress/README
+
+4. **CLAUDE.md** - Internal guidelines and gotchas
+   - For maintainers and Claude assistant
+   - Documents special considerations and conventions
+   - Includes plugin-specific implementation notes
+
+**When in doubt, update ALL FOUR!** Each serves a different audience and access pattern.
+
+### Built-in Help File
+
+The configuration includes a Vim help file at `doc/neojim.txt` that users can access with `:help neojim`.
+
+**When to update the help file:**
+- Adding/removing plugins
+- Changing keybindings
+- Modifying LSP configurations
+- Adding customization options
+- Updating troubleshooting steps
+
+**After updating `doc/neojim.txt`, regenerate help tags:**
+```bash
+nvim --headless -c "helptags doc" -c "quit"
+```
+
+Or the tags will be automatically regenerated when Neovim starts.
+
+### Documentation Sync Checklist
+
+Before completing ANY change, verify all documentation is updated:
+
+**For Plugin Changes:**
+- [ ] README.md - Plugins section updated
+- [ ] README.md - File Structure updated
+- [ ] docs/plugins.md - Plugin added/removed with full details
+- [ ] docs/getting-started.md - Mason installation list updated (if LSP/formatter/linter)
+- [ ] doc/neojim.txt - Plugins section updated
+- [ ] CLAUDE.md - Special considerations documented (if needed)
+
+**For Keymap Changes:**
+- [ ] README.md - Key Bindings section updated
+- [ ] docs/keybindings.md - Keybinding added/removed
+- [ ] doc/neojim.txt - Keybindings section updated
+- [ ] lua/plugins/which-key.lua - Group registrations updated
+
+**For LSP Server Changes:**
+- [ ] README.md - Installation/File Structure updated
+- [ ] docs/lsp-servers.md - Server documentation added/removed
+- [ ] docs/getting-started.md - Mason installation list updated
+- [ ] doc/neojim.txt - LSP Servers section updated
+- [ ] lsp/ directory - Config file created/modified/removed
+- [ ] lua/plugins/lsp-config.lua - Server added/removed from list
+
+**For Configuration Changes:**
+- [ ] README.md - Core Settings or relevant section updated
+- [ ] docs/configuration.md - Setting documented with examples
+- [ ] doc/neojim.txt - Customization section updated
+
+**After ALL Documentation Updates:**
+- [ ] Regenerate help tags: `nvim --headless -c "helptags doc" -c "quit"`
+- [ ] Verify VitePress builds successfully (if changed)
+- [ ] Double-check all four sources are consistent
+
+**Remember:** It's better to over-document than under-document!
