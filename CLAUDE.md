@@ -245,8 +245,17 @@ When creating git commits:
 - Must use latest API to avoid deprecation warnings
 
 ### blink.cmp
-- Native Neovim 0.11+ completion that doesn't use nvim-cmp
+- Modern completion plugin for Neovim 0.10+
 - Capabilities are obtained via `require("blink.cmp").get_lsp_capabilities()`
+- Uses LuaSnip preset (`snippets.preset = "luasnip"`) for snippet integration
+- Uses `keymap.preset = "default"` for standard completion keybindings (<C-y> to accept)
+- Tab/S-Tab only handle snippet navigation (snippet_forward/snippet_backward)
+- Default sources: lsp, path, snippets, buffer (no custom providers configuration needed)
+- Uses `opts_extend` to allow extending sources elsewhere in config
+- Ghost text and auto-show documentation enabled for better UX
+- IMPORTANT: Keep configuration minimal - use presets and official docs defaults
+- IMPORTANT: Do NOT add Tab/S-Tab keymaps to LuaSnip config - blink.cmp handles all snippet navigation
+- Follow official docs at https://cmp.saghen.dev/ for any configuration changes
 
 ### nvim-treesitter
 - Treesitter parsers are installed for: lua, vim, javascript, typescript, tsx, json, html, css, markdown, bash, svelte, vue

@@ -24,7 +24,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.undofile = true
 
--- Completion settings (blink.cmp only, disable built-in completion)
+-- Completion settings
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c") -- Don't show completion messages
 

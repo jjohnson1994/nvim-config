@@ -25,23 +25,7 @@ return {
       },
     })
 
-    -- Keymaps for snippet navigation
-    vim.keymap.set({ "i", "s" }, "<Tab>", function()
-      if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        return "<Tab>"
-      end
-    end, { expr = true, silent = true, desc = "Expand or jump snippet" })
-
-    vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        return "<S-Tab>"
-      end
-    end, { expr = true, silent = true, desc = "Jump to previous snippet placeholder" })
-
+    -- Choice node navigation (Tab/S-Tab handled by blink.cmp)
     vim.keymap.set({ "i", "s" }, "<C-l>", function()
       if luasnip.choice_active() then
         luasnip.change_choice(1)

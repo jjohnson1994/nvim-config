@@ -273,14 +273,23 @@ TESTING (Neotest) ~
     <Space>to   Show test output
 
 COMPLETION & SNIPPETS ~
-    <C-Space>   Show/hide completion (insert mode)
+Powered by blink.cmp with LuaSnip. Features ghost text, auto-show
+documentation, fuzzy matching.
+
+    <C-Space>   Show completion (insert mode)
     <C-y>       Accept completion (insert mode)
-    <C-e>       Hide completion (insert mode)
+    <C-e>       Cancel completion (insert mode)
     <C-n>       Next completion (insert mode)
     <C-p>       Previous completion (insert mode)
-    <Tab>       Accept/jump to next snippet placeholder
+    <Down>      Next completion (insert mode)
+    <Up>        Previous completion (insert mode)
+    <C-b>       Scroll documentation up (insert mode)
+    <C-f>       Scroll documentation down (insert mode)
+    <Tab>       Jump to next snippet placeholder
     <S-Tab>     Jump to previous snippet placeholder
     <C-l>       Change choice in snippet
+
+Default sources: LSP, Snippets, Path, Buffer
 
 NAVIGATION (vim-illuminate) ~
     ]]          Next reference

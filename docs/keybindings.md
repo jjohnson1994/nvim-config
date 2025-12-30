@@ -208,23 +208,35 @@ These are native Neovim keybindings enabled by default in 0.11+:
 
 ## Completion & Snippets
 
+Powered by blink.cmp with LuaSnip integration. Features ghost text preview, auto-show documentation, and intelligent fuzzy matching.
+
 ### Completion
 
-| Key                | Mode | Action               |
-| ------------------ | ---- | -------------------- |
-| `<C-space>`        | i    | Show/hide completion |
-| `<C-y>`            | i    | Accept completion    |
-| `<C-e>`            | i    | Hide completion      |
-| `<C-n>` / `<Down>` | i    | Next completion      |
-| `<C-p>` / `<Up>`   | i    | Previous completion  |
+| Key                | Mode | Action                       |
+| ------------------ | ---- | ---------------------------- |
+| `<C-space>`        | i    | Show completion              |
+| `<C-y>`            | i    | Accept completion            |
+| `<C-e>`            | i    | Cancel completion            |
+| `<C-n>` / `<Down>` | i    | Next completion              |
+| `<C-p>` / `<Up>`   | i    | Previous completion          |
+| `<C-b>` / `<C-f>`  | i    | Scroll documentation up/down |
 
 ### Snippets
 
-| Key       | Mode | Action                              |
-| --------- | ---- | ----------------------------------- |
-| `<Tab>`   | i/s  | Accept/jump to next placeholder     |
-| `<S-Tab>` | i/s  | Jump to previous placeholder        |
-| `<C-l>`   | i/s  | Change choice in snippet            |
+| Key       | Mode | Action                       |
+| --------- | ---- | ---------------------------- |
+| `<Tab>`   | i/s  | Jump to next placeholder     |
+| `<S-Tab>` | i/s  | Jump to previous placeholder |
+| `<C-l>`   | i/s  | Change choice in snippet     |
+
+### Completion Sources
+
+Default sources (automatically configured by blink.cmp):
+
+1. **LSP** - Language server completions (methods, functions, variables)
+2. **Snippets** - LuaSnip snippets from friendly-snippets
+3. **Path** - File path completions
+4. **Buffer** - Words from current and other buffers
 
 ## Navigation (vim-illuminate)
 

@@ -609,16 +609,21 @@ The diagnostics function is called from the statusline using `%{%v:lua.statuslin
 
 ### Completion & Snippets
 
-| Key                | Mode | Action                                  |
-| ------------------ | ---- | --------------------------------------- |
-| `<C-space>`        | i    | Show/hide completion                    |
-| `<C-y>`            | i    | Accept completion                       |
-| `<C-e>`            | i    | Hide completion                         |
-| `<C-n>` / `<Down>` | i    | Next completion                         |
-| `<C-p>` / `<Up>`   | i    | Previous completion                     |
-| `<Tab>`            | i/s  | Accept/jump to next snippet placeholder |
-| `<S-Tab>`          | i/s  | Jump to previous snippet placeholder    |
-| `<C-l>`            | i/s  | Change choice in snippet                |
+Powered by blink.cmp with LuaSnip integration.
+
+| Key                | Mode | Action                           |
+| ------------------ | ---- | -------------------------------- |
+| `<C-space>`        | i    | Show completion                  |
+| `<C-y>`            | i    | Accept completion                |
+| `<C-e>`            | i    | Cancel completion                |
+| `<C-n>` / `<Down>` | i    | Next completion                  |
+| `<C-p>` / `<Up>`   | i    | Previous completion              |
+| `<C-b>` / `<C-f>`  | i    | Scroll documentation up/down     |
+| `<Tab>`            | i/s  | Jump to next snippet placeholder |
+| `<S-Tab>`          | i/s  | Jump to previous placeholder     |
+| `<C-l>`            | i/s  | Change choice in snippet         |
+
+**Features:** Ghost text preview, auto-show documentation, LSP/snippet/path/buffer sources
 
 ### Navigation (vim-illuminate)
 
