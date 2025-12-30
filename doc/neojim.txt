@@ -11,7 +11,8 @@ CONTENTS                                                    *neojim-contents*
     6. Keybindings ...................... |neojim-keybindings|
     7. LSP Servers ...................... |neojim-lsp|
     8. Customization .................... |neojim-customization|
-    9. Troubleshooting .................. |neojim-troubleshooting|
+    9. Updating ......................... |neojim-updating|
+   10. Troubleshooting .................. |neojim-troubleshooting|
 
 ==============================================================================
 1. INTRODUCTION                                       *neojim-introduction*
@@ -145,6 +146,7 @@ UI & VISUAL ~
     • vim-illuminate - Highlight word references
     • mini.indentscope - Indent scope visualization
     • marks.nvim - View and interact with marks
+    • update-notifier - Automatic config update notifications
 
 TESTING ~
     • neotest - Extensible testing framework with Vitest adapter
@@ -368,7 +370,38 @@ DISABLE AUTO-FORMAT ON SAVE ~
 Toggle with <Space>uf or edit lua/plugins/conform.lua
 
 ==============================================================================
-9. TROUBLESHOOTING                               *neojim-troubleshooting*
+9. UPDATING                                             *neojim-updating*
+
+AUTOMATIC UPDATE NOTIFICATIONS ~
+
+NeoJim automatically checks for configuration updates on startup. When updates
+are available, you'll see a notification showing the number of new commits.
+
+UPDATE COMMAND ~
+>
+    :UpdateConfig
+<
+This command will:
+1. Check for uncommitted changes (warns if any exist)
+2. Pull the latest changes from the remote repository
+3. Notify you to restart Neovim to apply updates
+
+Note: Make sure to commit or stash any local changes before updating to
+avoid conflicts.
+
+UPDATE PLUGINS ~
+>
+    :Lazy sync
+<
+
+UPDATE LSP SERVERS AND TOOLS ~
+>
+    :Mason
+    " Press 'U' to update all installed packages
+<
+
+==============================================================================
+10. TROUBLESHOOTING                               *neojim-troubleshooting*
 
 PLUGINS NOT LOADING ~
 >

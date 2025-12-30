@@ -400,6 +400,23 @@ Includes:
 
 **File:** `lua/plugins/marks.lua`
 
+### update-notifier
+
+**Automatic config update notifications**
+
+- Checks for updates on startup
+- Notifies when new commits are available
+- Provides `:UpdateConfig` command for easy updates
+- Warns about uncommitted changes before updating
+- Uses git fetch to check remote without blocking startup
+
+**Commands:**
+```vim
+:UpdateConfig   " Pull latest config updates
+```
+
+**File:** `lua/plugins/update-notifier.lua`
+
 ## Testing
 
 ### neotest

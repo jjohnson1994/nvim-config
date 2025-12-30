@@ -362,6 +362,7 @@ After installation, your configuration will look like this:
 │       ├── lsp-config.lua
 │       ├── blink.lua
 │       ├── treesitter.lua
+│       ├── update-notifier.lua
 │       └── ...
 └── lsp/                  # LSP server configs
     ├── lua_ls.lua
@@ -506,11 +507,36 @@ Settings → Terminal › Integrated: Font Family
 
 ## Updating
 
+### Config Updates
+
+**Automatic Notifications:**
+
+NeoJim automatically checks for configuration updates on startup. When updates are available, you'll see a notification showing the number of new commits.
+
+**Update Command:**
+
+```vim
+:UpdateConfig
+```
+
+This command will:
+1. Check for uncommitted changes (warns if any exist)
+2. Pull the latest changes from the remote repository
+3. Notify you to restart Neovim to apply updates
+
+::: warning
+Make sure to commit or stash any local changes before updating to avoid conflicts.
+:::
+
+### Plugin Updates
+
 To update plugins:
 
 ```vim
 :Lazy sync
 ```
+
+### LSP Server and Tool Updates
 
 To update LSP servers and tools:
 

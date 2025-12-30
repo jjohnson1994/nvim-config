@@ -259,6 +259,17 @@ When creating git commits:
 - Uses function-based `format_on_save` to check the global flag
 - Manual formatting (`<leader>cf`) always works regardless of toggle state
 
+### update-notifier
+- Automatically checks for config updates on VimEnter
+- Uses async `vim.system()` for git operations to avoid blocking startup
+- Runs `git fetch origin --quiet` to check for new commits
+- Compares local HEAD with remote tracking branch using `git rev-list --count HEAD..@{u}`
+- Only notifies if commits_behind > 0
+- `:UpdateConfig` command checks for uncommitted changes before pulling
+- Uses `git pull --rebase` to update configuration
+- Notifications use snacks.nvim notify module
+- Silent failures - doesn't show errors if not in git repo or no internet connection
+
 ## Remember
 
 **Documentation is not optional** - it's a critical part of maintaining a usable configuration. Future you (and Claude) will thank present you for keeping everything up to date!

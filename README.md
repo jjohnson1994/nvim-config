@@ -77,6 +77,7 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 - [**vim-illuminate**](https://github.com/RRethy/vim-illuminate) - Automatically highlight other uses of word under cursor
 - [**mini.indentscope**](https://github.com/echasnovski/mini.indentscope) - Visualize and work with indent scope
 - [**marks.nvim**](https://github.com/chentoast/marks.nvim) - View and interact with Vim marks in the sign column
+- [**update-notifier**](lua/plugins/update-notifier.lua) - Check for config updates on startup and notify when updates are available
 
 ### Testing
 
@@ -339,6 +340,7 @@ Browse all sections:
 │       ├── neotest.lua              # Testing framework
 │       ├── tailwind-tools.lua       # Tailwind CSS support
 │       ├── ts-error-translator.lua  # TypeScript error translation
+│       ├── update-notifier.lua      # Config update notifications
 │       └── color-themes.lua         # Color schemes
 └── lsp/
     ├── lua_ls.lua                   # Lua LSP config
@@ -826,6 +828,27 @@ opts = {
   },
 },
 ```
+
+## Updating
+
+### Automatic Update Notifications
+
+NeoJim automatically checks for configuration updates on startup. When updates are available, you'll see a notification with the number of new commits.
+
+### Manual Update
+
+To update your configuration:
+
+```vim
+:UpdateConfig
+```
+
+This command will:
+1. Check for uncommitted changes (and warn if any exist)
+2. Pull the latest changes from the remote repository
+3. Prompt you to restart Neovim to apply the updates
+
+**Note:** Make sure to commit or stash any local changes before updating to avoid conflicts.
 
 ## Troubleshooting
 
