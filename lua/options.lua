@@ -40,7 +40,8 @@ vim.opt.foldlevelstart = 99
 
 -- Diagnostic configuration with sign icons (Neovim 0.11+ API)
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
+  virtual_lines = true,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = "",
@@ -78,6 +79,8 @@ keymap("v", "<", "<gv", { desc = "Indent left" })
 keymap("v", ">", ">gv", { desc = "Indent right" })
 
 -- Move text up and down
+keymap("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+keymap("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move text down" })
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move text up" })
 

@@ -223,6 +223,17 @@ BUFFER MANAGEMENT ~
     <Space>bn   Next buffer
     <Space>bp   Previous buffer
 
+EDITING ~
+    <           Indent left (keeps selection) (v)
+    >           Indent right (keeps selection) (v)
+    <A-j>       Move line down (n)
+    <A-k>       Move line up (n)
+    <A-j>       Move text down (v)
+    <A-k>       Move text up (v)
+    <Space>p    Paste without yanking (x)
+    <Space>d    Delete without yanking (n/v)
+    <Space>y    Yank to system clipboard (n/v)
+
 LSP (Language Server Protocol) ~
     gd          Go to definition
     gD          Go to declaration
@@ -326,7 +337,7 @@ NAVIGATION (Flash) ~
     <Space>fj   Flash jump
     <Space>fJ   Flash treesitter
     <Space>fr   Remote flash (operator mode)
-    <Space>fR   Treesitter search (operator/visual)
+    <Space>fR   Treesitter search (normal/operator/visual)
     <C-s>       Toggle flash search (command mode)
 
 SNACKS ~

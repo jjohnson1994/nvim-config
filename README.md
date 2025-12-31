@@ -490,6 +490,8 @@ The diagnostics function is called from the statusline using `%{%v:lua.statuslin
 | ----------- | ---- | ------------------------------ |
 | `<`         | v    | Indent left (keeps selection)  |
 | `>`         | v    | Indent right (keeps selection) |
+| `Alt+j`     | n    | Move line down                 |
+| `Alt+k`     | n    | Move line up                   |
 | `Alt+j`     | v    | Move text down                 |
 | `Alt+k`     | v    | Move text up                   |
 | `<leader>p` | x    | Paste without yanking          |
@@ -649,7 +651,7 @@ Powered by blink.cmp with LuaSnip integration.
 | `<leader>fj` | n/x/o | Flash jump          |
 | `<leader>fJ` | n/x/o | Flash treesitter    |
 | `<leader>fr` | o     | Remote flash        |
-| `<leader>fR` | o/x   | Treesitter search   |
+| `<leader>fR` | n/x/o | Treesitter search   |
 | `<c-s>`      | c     | Toggle flash search |
 
 ### Snacks

@@ -244,6 +244,12 @@ When creating git commits:
 - Icons require a Nerd Font to display correctly
 - If icons don't display, check that your terminal is using a Nerd Font
 
+### Diagnostic Display
+- Uses `virtual_lines = true` to display diagnostics as separate full lines in the buffer (Neovim 0.11+ feature)
+- This provides better visibility for multi-line error messages compared to inline virtual text
+- Similar to the lsp_lines.nvim plugin, but now built into Neovim core
+- To switch back to inline virtual text: set `virtual_text = true` and `virtual_lines = false` in `vim.diagnostic.config()`
+
 ## Plugin-Specific Notes
 
 ### snacks.nvim

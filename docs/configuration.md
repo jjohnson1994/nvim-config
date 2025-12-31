@@ -115,7 +115,8 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.INFO] = "",
     },
   },
-  virtual_text = true,
+  virtual_text = false,
+  virtual_lines = true,  -- Show diagnostics as separate virtual lines
   update_in_insert = false,
   underline = true,
   severity_sort = true,
@@ -129,6 +130,8 @@ vim.diagnostic.config({
   },
 })
 ```
+
+**Virtual Lines:** Diagnostics are displayed as separate full lines in the buffer (similar to lsp_lines.nvim plugin), providing better visibility for multi-line error messages. To switch back to inline virtual text, set `virtual_text = true` and `virtual_lines = false`.
 
 Icons require a Nerd Font to display correctly.
 

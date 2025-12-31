@@ -29,7 +29,7 @@ return {
     },
     {
       "<space>fR",
-      mode = { "o", "x" },
+      mode = { "n", "o", "x" },
       function()
         require("flash").treesitter_search()
       end,

@@ -48,6 +48,8 @@ Press `<leader>` (Space) and wait to see available keybindings with which-key, o
 | ----------- | ---- | ------------------------------ |
 | `<`         | v    | Indent left (keeps selection)  |
 | `>`         | v    | Indent right (keeps selection) |
+| `Alt+j`     | n    | Move line down                 |
+| `Alt+k`     | n    | Move line up                   |
 | `Alt+j`     | v    | Move text down                 |
 | `Alt+k`     | v    | Move text up                   |
 | `<leader>p` | x    | Paste without yanking          |
@@ -252,7 +254,7 @@ Default sources (automatically configured by blink.cmp):
 | `<leader>fj` | n/x/o | Flash jump        |
 | `<leader>fJ` | n/x/o | Flash treesitter  |
 | `<leader>fr` | o     | Remote flash      |
-| `<leader>fR` | o/x   | Treesitter search |
+| `<leader>fR` | n/x/o | Treesitter search |
 | `<c-s>`      | c     | Toggle flash in search |
 
 ### How Flash Works
