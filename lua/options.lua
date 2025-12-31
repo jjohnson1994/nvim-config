@@ -8,7 +8,8 @@ vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 vim.opt.wrap = false
 vim.opt.breakindent = true
 vim.opt.tabstop = 2
@@ -77,8 +78,8 @@ keymap("v", "<", "<gv", { desc = "Indent left" })
 keymap("v", ">", ">gv", { desc = "Indent right" })
 
 -- Move text up and down
-keymap("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move text down" })
-keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text up" })
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move text down" })
+keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move text up" })
 
 -- Keep cursor centered when jumping
 keymap("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })

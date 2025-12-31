@@ -17,6 +17,21 @@ hero:
     alt: Neovim
 
 features:
+  - icon: 📘
+    title: Zero Learning Curve
+    details: All default Neovim keybindings preserved. If you know vim, you're ready to go.
+  - icon: 🎯
+    title: Non-Conflicting
+    details: Custom keybindings only use leader prefix. Default behaviors never overridden.
+  - icon: 🌱
+    title: Gradual Enhancement
+    details: Discover features at your pace. Nothing forced, everything optional.
+  - icon: 🪶
+    title: Lightweight Foundation
+    details: Minimal starting point for your customizations, not a complete IDE.
+  - icon: 🔧
+    title: Openly Extensible
+    details: Easy to customize, extend, and make your own. No complex abstractions.
   - icon: 🚀
     title: Modern Architecture
     details: Built on Neovim 0.11+ with native LSP support and latest APIs
@@ -26,21 +41,6 @@ features:
   - icon: 💻
     title: Web Development
     details: Optimized for React, TypeScript, Vue, and Svelte
-  - icon: 🎨
-    title: Beautiful Themes
-    details: Multiple color schemes including GitHub, Tokyo Night, Catppuccin
-  - icon: 🔍
-    title: Smart Search
-    details: FZF-lua for blazing fast fuzzy finding and navigation
-  - icon: ✨
-    title: Auto-completion
-    details: blink.cmp with LuaSnip for intelligent code completion
-  - icon: 🔧
-    title: Full LSP Integration
-    details: Complete TypeScript/JavaScript language server support
-  - icon: 🔀
-    title: Git Integration
-    details: Gitsigns and Fugitive for seamless version control
 ---
 
 ## Quick Start
@@ -62,6 +62,20 @@ nvim
 ## Built with Claude Code
 
 99% of this configuration was built using [Claude Code](https://claude.com/claude-code)
+
+## Philosophy
+
+NeoJim is built on the principle that **great tools should enhance, not replace, your existing skills**.
+
+If you already know vim, you can start using this configuration immediately without learning a single new keybinding. All default Neovim behaviors are preserved. Custom enhancements are available through the `<leader>` key (default: space), allowing you to discover and adopt new features at your own pace.
+
+This isn't a complete IDE or opinionated framework—it's a lightweight, carefully curated foundation that respects Neovim's defaults while providing modern tooling for web development. Use what you need, ignore what you don't, and customize everything to fit your workflow.
+
+**Core Principles:**
+- ✅ Zero learning curve for vim users
+- ✅ No conflicts with default Neovim behaviors
+- ✅ Gradual, optional feature adoption
+- ✅ Lightweight and extensible foundation
 
 ## What's Inside
 

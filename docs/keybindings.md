@@ -48,8 +48,8 @@ Press `<leader>` (Space) and wait to see available keybindings with which-key, o
 | ----------- | ---- | ------------------------------ |
 | `<`         | v    | Indent left (keeps selection)  |
 | `>`         | v    | Indent right (keeps selection) |
-| `J`         | v    | Move text down                 |
-| `K`         | v    | Move text up                   |
+| `Alt+j`     | v    | Move text down                 |
+| `Alt+k`     | v    | Move text up                   |
 | `<leader>p` | x    | Paste without yanking          |
 | `<leader>d` | n/v  | Delete without yanking         |
 | `<leader>y` | n/v  | Yank to system clipboard       |
@@ -322,6 +322,7 @@ When in terminal mode (`<c-/>`):
 | Key          | Mode | Action             |
 | ------------ | ---- | ------------------ |
 | `<leader>uf` | n    | Toggle autoformat  |
+| `<leader>ul` | n    | Toggle auto-lint   |
 | `<leader>up` | n    | Toggle auto-pairs  |
 | `<leader>th` | n    | Toggle inlay hints |
 | `<leader>tb` | n    | Toggle git blame   |

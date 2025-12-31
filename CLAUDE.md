@@ -2,6 +2,34 @@
 
 This file contains important guidelines for Claude when helping maintain this Neovim configuration.
 
+## Project Design Principles
+
+**CRITICAL: All changes MUST adhere to these core design principles!**
+
+This configuration is designed with the following non-negotiable principles:
+
+1. **Zero Learning Curve** - All default Neovim keybindings and behaviors remain unchanged. Users who know vim can start using this config immediately without learning anything new.
+
+2. **Non-Conflicting** - Custom keybindings ONLY use `<leader>` prefix or non-standard keys. Never override or modify default Neovim keybindings.
+
+3. **Gradual Enhancement** - Features are discoverable and can be adopted at the user's pace. No forced workflows or opinionated patterns that must be learned upfront.
+
+4. **Lightweight Foundation** - This is a minimal opinionated layer on top of Neovim, not a complete IDE. It's a starting point for users to build upon, not an endpoint.
+
+5. **Openly Extensible** - The configuration must be easy to customize, extend, and make your own. Avoid complex abstractions or tightly coupled patterns.
+
+### Enforcement Rule
+
+**Before implementing ANY change, verify it adheres to ALL design principles:**
+
+- ✅ Does this preserve all default Neovim behaviors?
+- ✅ Do custom keybindings only use `<leader>` or non-standard keys?
+- ✅ Can this feature be ignored/not learned without impacting basic usage?
+- ✅ Does this keep the config lightweight and focused?
+- ✅ Is this easy for users to modify, remove, or extend?
+
+**If ANY answer is "no", the change does not belong in this configuration.**
+
 ## Documentation Requirements
 
 **CRITICAL: Always keep ALL documentation up to date!**

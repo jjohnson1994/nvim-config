@@ -4,6 +4,9 @@ return {
   config = function()
     local lint = require("lint")
 
+    -- Enable auto-linting by default
+    vim.g.autolint = true
+
     lint.linters_by_ft = {
       javascript = { "eslint_d" },
       javascriptreact = { "eslint_d" },
@@ -18,7 +21,9 @@ return {
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
       group = lint_augroup,
       callback = function()
-        lint.try_lint()
+        if vim.g.autolint then
+          lint.try_lint()
+        end
       end,
     })
 
@@ -26,5 +31,11 @@ return {
     vim.keymap.set("n", "<leader>cl", function()
       lint.try_lint()
     end, { desc = "Trigger linting" })
+
+    -- Toggle auto-linting
+    vim.keymap.set("n", "<leader>ul", function()
+      vim.g.autolint = not vim.g.autolint
+      vim.notify("Auto-lint " .. (vim.g.autolint and "enabled" or "disabled"))
+    end, { desc = "Toggle auto-lint" })
   end,
 }

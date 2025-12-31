@@ -4,15 +4,16 @@
 CONTENTS                                                    *neojim-contents*
 
     1. Introduction ..................... |neojim-introduction|
-    2. Features ......................... |neojim-features|
-    3. Prerequisites .................... |neojim-prerequisites|
-    4. Installation ..................... |neojim-installation|
-    5. Plugins .......................... |neojim-plugins|
-    6. Keybindings ...................... |neojim-keybindings|
-    7. LSP Servers ...................... |neojim-lsp|
-    8. Customization .................... |neojim-customization|
-    9. Updating ......................... |neojim-updating|
-   10. Troubleshooting .................. |neojim-troubleshooting|
+    2. Philosophy ....................... |neojim-philosophy|
+    3. Features ......................... |neojim-features|
+    4. Prerequisites .................... |neojim-prerequisites|
+    5. Installation ..................... |neojim-installation|
+    6. Plugins .......................... |neojim-plugins|
+    7. Keybindings ...................... |neojim-keybindings|
+    8. LSP Servers ...................... |neojim-lsp|
+    9. Customization .................... |neojim-customization|
+   10. Updating ......................... |neojim-updating|
+   11. Troubleshooting .................. |neojim-troubleshooting|
 
 ==============================================================================
 1. INTRODUCTION                                       *neojim-introduction*
@@ -26,7 +27,33 @@ with lazy loading and optimized performance.
 Full Documentation: https://yourusername.github.io/nvim/
 
 ==============================================================================
-2. FEATURES                                               *neojim-features*
+2. PHILOSOPHY                                             *neojim-philosophy*
+
+NeoJim is designed with these core principles:
+
+Zero Learning Curve ~
+    All default Neovim keybindings and behaviors remain unchanged. If you
+    already know vim, you can start using this config immediately without
+    learning anything new.
+
+Non-Conflicting ~
+    Custom keybindings ONLY use the |<leader>| prefix (default: space) or
+    non-standard keys. No default Neovim behaviors are overridden.
+
+Gradual Enhancement ~
+    Features are discoverable and can be adopted at your own pace. No forced
+    workflows or opinionated patterns that must be learned upfront.
+
+Lightweight Foundation ~
+    This is a minimal opinionated layer on top of Neovim, not a complete IDE.
+    It's a starting point for users to build upon, not an endpoint.
+
+Openly Extensible ~
+    The configuration is designed to be easy to customize, extend, and make
+    your own. Complex abstractions and tightly coupled patterns are avoided.
+
+==============================================================================
+3. FEATURES                                               *neojim-features*
 
     • Modern Architecture - Built on Neovim 0.11+ with native LSP support
     • Fast Performance - Lazy loading with lazy.nvim plugin manager
@@ -310,6 +337,7 @@ SNACKS ~
 
 UI TOGGLES ~
     <Space>uf   Toggle autoformat
+    <Space>ul   Toggle auto-lint
     <Space>up   Toggle auto-pairs
     <Space>th   Toggle inlay hints
     <Space>tb   Toggle git blame

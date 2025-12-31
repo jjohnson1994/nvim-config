@@ -10,6 +10,16 @@ A modern Neovim configuration built for web development with React, TypeScript, 
 
 99% Built by Claude Code
 
+## Philosophy
+
+NeoJim is designed with these core principles:
+
+- **Zero Learning Curve** - All default Neovim keybindings work as expected. If you know vim, you can use this config immediately.
+- **Non-Conflicting** - Custom keybindings only use `<leader>` prefix. No default behaviors are overridden.
+- **Gradual Enhancement** - Discover and adopt features at your own pace. Nothing is forced on you.
+- **Lightweight Foundation** - A minimal starting point for your own customizations, not a complete IDE.
+- **Openly Extensible** - Easy to customize, extend, and make your own.
+
 ## Features
 
 - 🚀 **Modern Architecture**: Built on Neovim 0.11+ with native LSP support
@@ -480,8 +490,8 @@ The diagnostics function is called from the statusline using `%{%v:lua.statuslin
 | ----------- | ---- | ------------------------------ |
 | `<`         | v    | Indent left (keeps selection)  |
 | `>`         | v    | Indent right (keeps selection) |
-| `J`         | v    | Move text down                 |
-| `K`         | v    | Move text up                   |
+| `Alt+j`     | v    | Move text down                 |
+| `Alt+k`     | v    | Move text up                   |
 | `<leader>p` | x    | Paste without yanking          |
 | `<leader>d` | n/v  | Delete without yanking         |
 | `<leader>y` | n/v  | Yank to system clipboard       |
@@ -656,6 +666,7 @@ Powered by blink.cmp with LuaSnip integration.
 | Key          | Mode | Action             |
 | ------------ | ---- | ------------------ |
 | `<leader>uf` | n    | Toggle autoformat  |
+| `<leader>ul` | n    | Toggle auto-lint   |
 | `<leader>up` | n    | Toggle auto-pairs  |
 | `<leader>th` | n    | Toggle inlay hints |
 | `<leader>tb` | n    | Toggle git blame   |
