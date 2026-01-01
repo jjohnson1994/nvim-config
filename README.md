@@ -666,14 +666,20 @@ Powered by blink.cmp with LuaSnip integration.
 
 ### UI Toggles
 
-| Key          | Mode | Action                          |
-| ------------ | ---- | ------------------------------- |
-| `<leader>uf` | n    | Toggle autoformat               |
-| `<leader>ul` | n    | Toggle auto-lint                |
-| `<leader>up` | n    | Toggle auto-pairs               |
-| `<leader>ud` | n    | Toggle diagnostic display mode  |
-| `<leader>th` | n    | Toggle inlay hints              |
-| `<leader>tb` | n    | Toggle git blame                |
+| Key          | Mode | Action                                                            |
+| ------------ | ---- | ----------------------------------------------------------------- |
+| `<leader>uf` | n    | Toggle autoformat                                                 |
+| `<leader>ul` | n    | Toggle auto-lint                                                  |
+| `<leader>up` | n    | Toggle auto-pairs                                                 |
+| `<leader>ud` | n    | Toggle diagnostic display (cycles: virtual lines → text → minimal) |
+| `<leader>uu` | n    | Toggle auto update check                                          |
+| `<leader>th` | n    | Toggle inlay hints                                                |
+| `<leader>tb` | n    | Toggle git blame                                                  |
+
+**Diagnostic Display Modes:**
+- **Virtual Lines**: Diagnostics shown as separate full lines below the code (default)
+- **Virtual Text**: Diagnostics shown inline at the end of the line
+- **Minimal**: Only underlines and signs shown; view full errors with `gl` or by navigating to diagnostic
 
 ## Plugins
 

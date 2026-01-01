@@ -2,11 +2,21 @@ return {
   -- Update notifier runs on startup to check for config updates
   {
     "folke/snacks.nvim",
+    init = function()
+      -- Load saved auto update check state or enable by default
+      local persist = require("persist")
+      vim.g.auto_update_check = persist.get("auto_update_check", true)
+    end,
     opts = function(_, opts)
       -- Check for neovim config updates on startup
       vim.api.nvim_create_autocmd("VimEnter", {
         group = vim.api.nvim_create_augroup("CheckConfigUpdates", { clear = true }),
         callback = function()
+          -- Only check if auto update check is enabled
+          if not vim.g.auto_update_check then
+            return
+          end
+
           -- Only check if we're in the config directory
           local config_path = vim.fn.stdpath("config")
 
@@ -105,6 +115,15 @@ return {
           end)
         end)
       end, { desc = "Update Neovim configuration from remote" })
+
+      -- Toggle auto update check
+      vim.keymap.set("n", "<leader>uu", function()
+        local persist = require("persist")
+        vim.g.auto_update_check = not vim.g.auto_update_check
+        persist.set("auto_update_check", vim.g.auto_update_check)
+        local status = vim.g.auto_update_check and "enabled" or "disabled"
+        require("snacks").notify("Auto update check " .. status, { level = "info" })
+      end, { desc = "Toggle auto update check" })
 
       return opts
     end,

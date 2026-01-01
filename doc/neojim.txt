@@ -350,9 +350,15 @@ UI TOGGLES ~
     <Space>uf   Toggle autoformat
     <Space>ul   Toggle auto-lint
     <Space>up   Toggle auto-pairs
-    <Space>ud   Toggle diagnostic display mode
+    <Space>ud   Toggle diagnostic display (virtual lines → text → minimal)
+    <Space>uu   Toggle auto update check
     <Space>th   Toggle inlay hints
     <Space>tb   Toggle git blame
+
+Diagnostic Display Modes:
+• Virtual Lines - Diagnostics shown as separate full lines (default)
+• Virtual Text - Diagnostics shown inline at end of line
+• Minimal - Only underlines and signs; view errors with gl or [d/]d
 
 ==============================================================================
 7. LSP SERVERS                                               *neojim-lsp*
@@ -420,7 +426,7 @@ Toggle with <Space>uf or edit lua/plugins/conform.lua
 
 TOGGLE PERSISTENCE ~
 All UI toggles persist across Neovim sessions automatically:
-• Diagnostic display mode (<Space>ud) - virtual_lines vs virtual_text
+• Diagnostic display mode (<Space>ud) - virtual_lines, virtual_text, or minimal
 • Autoformat (<Space>uf) - enabled/disabled
 • Auto-lint (<Space>ul) - enabled/disabled
 • Auto-pairs (<Space>up) - enabled/disabled

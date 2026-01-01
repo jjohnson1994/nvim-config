@@ -59,7 +59,7 @@ vim.diagnostic.config({
   },
 })
 
--- Toggle diagnostic display mode (virtual_lines vs virtual_text)
+-- Toggle diagnostic display mode (virtual_lines vs virtual_text vs minimal)
 local persist = require("persist")
 
 -- Load saved diagnostic mode or use default
@@ -69,6 +69,11 @@ vim.g.diagnostic_mode = persist.get("diagnostic_mode", "virtual_lines")
 if vim.g.diagnostic_mode == "virtual_text" then
   vim.diagnostic.config({
     virtual_text = true,
+    virtual_lines = false,
+  })
+elseif vim.g.diagnostic_mode == "minimal" then
+  vim.diagnostic.config({
+    virtual_text = false,
     virtual_lines = false,
   })
 else
@@ -84,6 +89,14 @@ local function toggle_diagnostic_mode()
     })
     persist.set("diagnostic_mode", "virtual_text")
     vim.notify("Diagnostics: virtual text", vim.log.levels.INFO)
+  elseif vim.g.diagnostic_mode == "virtual_text" then
+    vim.g.diagnostic_mode = "minimal"
+    vim.diagnostic.config({
+      virtual_text = false,
+      virtual_lines = false,
+    })
+    persist.set("diagnostic_mode", "minimal")
+    vim.notify("Diagnostics: minimal (underline only)", vim.log.levels.INFO)
   else
     vim.g.diagnostic_mode = "virtual_lines"
     vim.diagnostic.config({

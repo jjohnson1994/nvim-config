@@ -55,9 +55,16 @@ return {
       {
         "<leader>ud",
         desc = function()
-          local is_lines = vim.g.diagnostic_mode == "virtual_lines"
-          local mode = is_lines and "virtual text" or "virtual lines"
-          return "Diagnostics (" .. mode .. ")"
+          local current = vim.g.diagnostic_mode or "virtual_lines"
+          local next_mode
+          if current == "virtual_lines" then
+            next_mode = "virtual text"
+          elseif current == "virtual_text" then
+            next_mode = "minimal"
+          else
+            next_mode = "virtual lines"
+          end
+          return "Diagnostics (" .. next_mode .. ")"
         end,
       },
       {
@@ -72,6 +79,13 @@ return {
         desc = function()
           local action = vim.g.git_blame_enabled and "disable" or "enable"
           return "Git blame (" .. action .. ")"
+        end,
+      },
+      {
+        "<leader>uu",
+        desc = function()
+          local action = vim.g.auto_update_check and "disable" or "enable"
+          return "Auto update check (" .. action .. ")"
         end,
       },
     })

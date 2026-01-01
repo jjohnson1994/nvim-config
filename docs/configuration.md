@@ -131,7 +131,15 @@ vim.diagnostic.config({
 })
 ```
 
-**Virtual Lines:** Diagnostics are displayed as separate full lines in the buffer (similar to lsp_lines.nvim plugin), providing better visibility for multi-line error messages. To switch back to inline virtual text, set `virtual_text = true` and `virtual_lines = false`.
+**Diagnostic Display Modes:**
+
+The configuration supports three diagnostic display modes that can be toggled with `<leader>ud`:
+
+1. **Virtual Lines** (default): Diagnostics shown as separate full lines in the buffer (similar to lsp_lines.nvim plugin), providing better visibility for multi-line error messages.
+2. **Virtual Text**: Diagnostics shown inline at the end of the line.
+3. **Minimal**: Only underlines and signs shown in the gutter. View full error messages with `gl` (show diagnostic float) or by navigating to the diagnostic location with `[d` or `]d`.
+
+The selected mode persists across sessions. Press `<leader>ud` to cycle through modes: virtual lines → virtual text → minimal → virtual lines.
 
 Icons require a Nerd Font to display correctly.
 
@@ -253,6 +261,13 @@ See [Statusline documentation](/statusline) for details.
 ```lua
 vim.g.autoformat = true  -- Enable/disable auto-format on save
 ```
+
+### Auto Update Check Toggle
+```lua
+vim.g.auto_update_check = true  -- Enable/disable automatic config update checks on startup
+```
+
+Toggle with `<leader>uu`. When enabled, NeoJim checks for config updates from the remote repository on startup. The toggle state persists across sessions.
 
 ### Leader Keys
 ```lua

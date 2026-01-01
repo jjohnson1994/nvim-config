@@ -245,19 +245,24 @@ When creating git commits:
 - If icons don't display, check that your terminal is using a Nerd Font
 
 ### Diagnostic Display
-- Uses `virtual_lines = true` to display diagnostics as separate full lines in the buffer (Neovim 0.11+ feature)
-- This provides better visibility for multi-line error messages compared to inline virtual text
-- Similar to the lsp_lines.nvim plugin, but now built into Neovim core
-- To switch back to inline virtual text: set `virtual_text = true` and `virtual_lines = false` in `vim.diagnostic.config()`
+- Supports three diagnostic display modes that can be toggled with `<leader>ud`:
+  1. **virtual_lines** (default): Displays diagnostics as separate full lines in the buffer (Neovim 0.11+ feature)
+  2. **virtual_text**: Displays diagnostics inline at the end of the line
+  3. **minimal**: Only shows underlines and signs; no virtual text or lines
+- Toggle cycles through modes: virtual_lines → virtual_text → minimal → virtual_lines
+- The selected mode persists across sessions using the persist module
+- In minimal mode, users can still view full error messages using `gl` or by navigating to diagnostics with `[d`/`]d`
+- Similar to the lsp_lines.nvim plugin, but uses built-in Neovim 0.11 features
 
 ### Toggle Persistence
 - All toggleable options persist across sessions using the `lua/persist.lua` module
 - State is saved to `~/.local/share/nvim/neojim_state.json` (or equivalent on your platform)
 - The following toggles are persisted:
-  - Diagnostic display mode (`<leader>ud`) - virtual_lines vs virtual_text
+  - Diagnostic display mode (`<leader>ud`) - virtual_lines, virtual_text, or minimal
   - Autoformat (`<leader>uf`) - enabled/disabled
   - Auto-lint (`<leader>ul`) - enabled/disabled
   - Auto-pairs (`<leader>up`) - enabled/disabled
+  - Auto update check (`<leader>uu`) - enabled/disabled
   - Inlay hints (`<leader>th`) - enabled/disabled
   - Git blame (`<leader>tb`) - enabled/disabled
 - The persist module provides a simple API:
@@ -319,7 +324,9 @@ When creating git commits:
 - Manual formatting (`<leader>cf`) always works regardless of toggle state
 
 ### update-notifier
-- Automatically checks for config updates on VimEnter
+- Automatically checks for config updates on VimEnter (can be toggled with `<leader>uu`)
+- Auto update check is enabled by default (`vim.g.auto_update_check = true`)
+- Toggle state persists across sessions using the persist module
 - Uses async `vim.system()` for git operations to avoid blocking startup
 - Runs `git fetch origin --quiet` to check for new commits
 - Compares local HEAD with remote tracking branch using `git rev-list --count HEAD..@{u}`
