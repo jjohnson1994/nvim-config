@@ -1,12 +1,18 @@
 return {
 	"lewis6991/gitsigns.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	opts = {
-		attach_to_untracked = true,
-		current_line_blame = true,
-		preview_config = {
-			border = "rounded",
-		},
+	init = function()
+		-- Load saved git blame state
+		local persist = require("persist")
+		vim.g.git_blame_enabled = persist.get("git_blame_enabled", true)
+	end,
+	opts = function()
+		return {
+			attach_to_untracked = true,
+			current_line_blame = vim.g.git_blame_enabled,
+			preview_config = {
+				border = "rounded",
+			},
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
 
@@ -53,7 +59,12 @@ return {
 			map("n", "<leader>hb", function()
 				gs.blame_line({ full = true })
 			end, { desc = "Blame line" })
-			map("n", "<leader>tb", gs.toggle_current_line_blame, { desc = "Toggle git blame" })
+			map("n", "<leader>tb", function()
+				local persist = require("persist")
+				gs.toggle_current_line_blame()
+				vim.g.git_blame_enabled = not vim.g.git_blame_enabled
+				persist.set("git_blame_enabled", vim.g.git_blame_enabled)
+			end, { desc = "Toggle git blame" })
 			map("n", "<leader>hd", gs.diffthis, { desc = "Diff this" })
 			map("n", "<leader>hD", function()
 				gs.diffthis("~")
@@ -63,5 +74,6 @@ return {
 			-- Text object
 			map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
 		end,
-	},
+		}
+	end,
 }

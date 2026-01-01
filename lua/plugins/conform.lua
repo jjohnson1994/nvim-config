@@ -32,8 +32,9 @@ return {
     end,
   },
   init = function()
-    -- Enable autoformat by default
-    vim.g.autoformat = true
+    -- Load saved autoformat state or enable by default
+    local persist = require("persist")
+    vim.g.autoformat = persist.get("autoformat", true)
   end,
   config = function(_, opts)
     require("conform").setup(opts)
@@ -49,7 +50,9 @@ return {
 
     -- Toggle autoformat
     vim.keymap.set("n", "<leader>uf", function()
+      local persist = require("persist")
       vim.g.autoformat = not vim.g.autoformat
+      persist.set("autoformat", vim.g.autoformat)
       local status = vim.g.autoformat and "enabled" or "disabled"
       vim.notify("Autoformat " .. status, vim.log.levels.INFO)
     end, { desc = "Toggle autoformat" })

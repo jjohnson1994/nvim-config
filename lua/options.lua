@@ -51,13 +51,49 @@ vim.diagnostic.config({
     },
   },
   underline = true,
-  update_in_insert = false,
+  update_in_insert = true,
   severity_sort = true,
   float = {
     border = "rounded",
     source = "always",
   },
 })
+
+-- Toggle diagnostic display mode (virtual_lines vs virtual_text)
+local persist = require("persist")
+
+-- Load saved diagnostic mode or use default
+vim.g.diagnostic_mode = persist.get("diagnostic_mode", "virtual_lines")
+
+-- Apply saved diagnostic mode on startup
+if vim.g.diagnostic_mode == "virtual_text" then
+  vim.diagnostic.config({
+    virtual_text = true,
+    virtual_lines = false,
+  })
+else
+  -- Already configured above with virtual_lines = true
+end
+
+local function toggle_diagnostic_mode()
+  if vim.g.diagnostic_mode == "virtual_lines" then
+    vim.g.diagnostic_mode = "virtual_text"
+    vim.diagnostic.config({
+      virtual_text = true,
+      virtual_lines = false,
+    })
+    persist.set("diagnostic_mode", "virtual_text")
+    vim.notify("Diagnostics: virtual text", vim.log.levels.INFO)
+  else
+    vim.g.diagnostic_mode = "virtual_lines"
+    vim.diagnostic.config({
+      virtual_text = false,
+      virtual_lines = true,
+    })
+    persist.set("diagnostic_mode", "virtual_lines")
+    vim.notify("Diagnostics: virtual lines", vim.log.levels.INFO)
+  end
+end
 
 -- Core keymaps
 local keymap = vim.keymap.set
@@ -116,6 +152,9 @@ keymap("n", "<leader>a", "ggVG", { desc = "Select all" })
 keymap("n", "<leader>bd", ":bd<CR>", { desc = "Delete buffer" })
 keymap("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
+
+-- Toggle diagnostic display mode
+keymap("n", "<leader>ud", toggle_diagnostic_mode, { desc = "Toggle diagnostic display mode" })
 
 -- Statusline with LSP diagnostics (see README.md "Status Bar" section for full documentation)
 _G.statusline_diagnostics = function()

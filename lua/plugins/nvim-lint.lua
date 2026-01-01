@@ -3,9 +3,10 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local lint = require("lint")
+    local persist = require("persist")
 
-    -- Enable auto-linting by default
-    vim.g.autolint = true
+    -- Load saved auto-lint state or enable by default
+    vim.g.autolint = persist.get("autolint", true)
 
     lint.linters_by_ft = {
       javascript = { "eslint_d" },
@@ -35,6 +36,7 @@ return {
     -- Toggle auto-linting
     vim.keymap.set("n", "<leader>ul", function()
       vim.g.autolint = not vim.g.autolint
+      persist.set("autolint", vim.g.autolint)
       vim.notify("Auto-lint " .. (vim.g.autolint and "enabled" or "disabled"))
     end, { desc = "Toggle auto-lint" })
   end,

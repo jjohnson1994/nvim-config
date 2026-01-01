@@ -350,6 +350,7 @@ UI TOGGLES ~
     <Space>uf   Toggle autoformat
     <Space>ul   Toggle auto-lint
     <Space>up   Toggle auto-pairs
+    <Space>ud   Toggle diagnostic display mode
     <Space>th   Toggle inlay hints
     <Space>tb   Toggle git blame
 
@@ -416,6 +417,22 @@ Or toggle with <Space>th
 
 DISABLE AUTO-FORMAT ON SAVE ~
 Toggle with <Space>uf or edit lua/plugins/conform.lua
+
+TOGGLE PERSISTENCE ~
+All UI toggles persist across Neovim sessions automatically:
+• Diagnostic display mode (<Space>ud) - virtual_lines vs virtual_text
+• Autoformat (<Space>uf) - enabled/disabled
+• Auto-lint (<Space>ul) - enabled/disabled
+• Auto-pairs (<Space>up) - enabled/disabled
+• Inlay hints (<Space>th) - enabled/disabled
+• Git blame (<Space>tb) - enabled/disabled
+
+Settings are saved to: ~/.local/share/nvim/neojim_state.json
+
+To reset all toggles to defaults:
+>
+    rm ~/.local/share/nvim/neojim_state.json
+<
 
 ==============================================================================
 9. UPDATING                                             *neojim-updating*

@@ -250,6 +250,22 @@ When creating git commits:
 - Similar to the lsp_lines.nvim plugin, but now built into Neovim core
 - To switch back to inline virtual text: set `virtual_text = true` and `virtual_lines = false` in `vim.diagnostic.config()`
 
+### Toggle Persistence
+- All toggleable options persist across sessions using the `lua/persist.lua` module
+- State is saved to `~/.local/share/nvim/neojim_state.json` (or equivalent on your platform)
+- The following toggles are persisted:
+  - Diagnostic display mode (`<leader>ud`) - virtual_lines vs virtual_text
+  - Autoformat (`<leader>uf`) - enabled/disabled
+  - Auto-lint (`<leader>ul`) - enabled/disabled
+  - Auto-pairs (`<leader>up`) - enabled/disabled
+  - Inlay hints (`<leader>th`) - enabled/disabled
+  - Git blame (`<leader>tb`) - enabled/disabled
+- The persist module provides a simple API:
+  - `persist.get(key, default)` - Get a value from state
+  - `persist.set(key, value)` - Set a value and persist it
+- State file is automatically created on first toggle
+- To reset all toggles to defaults, delete the state file: `rm ~/.local/share/nvim/neojim_state.json`
+
 ## Plugin-Specific Notes
 
 ### snacks.nvim

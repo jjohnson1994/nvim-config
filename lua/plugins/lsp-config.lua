@@ -27,6 +27,11 @@ return {
       "saghen/blink.cmp",
       "williamboman/mason.nvim",
     },
+    init = function()
+      -- Load saved inlay hints state
+      local persist = require("persist")
+      vim.g.inlay_hints_enabled = persist.get("inlay_hints_enabled", false)
+    end,
     config = function()
       -- Get blink.cmp capabilities
       local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -86,10 +91,20 @@ return {
           map("n", "gl", vim.diagnostic.open_float, "Show diagnostic")
           map("n", "<leader>ld", vim.diagnostic.setloclist, "Diagnostic list")
 
-          -- Toggle inlay hints
+          -- Apply saved inlay hints state and setup toggle
           if vim.lsp.inlay_hint then
+            -- Apply saved state
+            if vim.g.inlay_hints_enabled then
+              vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+            end
+
+            -- Toggle inlay hints
             map("n", "<leader>th", function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+              local persist = require("persist")
+              local enabled = not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
+              vim.lsp.inlay_hint.enable(enabled)
+              vim.g.inlay_hints_enabled = enabled
+              persist.set("inlay_hints_enabled", enabled)
             end, "Toggle inlay hints")
           end
         end,
