@@ -34,6 +34,15 @@ Press `<leader>` (Space) and wait to see available keybindings with which-key, o
 | `<M-Left>`  | n    | Decrease window width  |
 | `<M-Right>` | n    | Increase window width  |
 
+## Horizontal Scrolling
+
+| Key     | Mode | Action       |
+| ------- | ---- | ------------ |
+| `<M-h>` | n    | Scroll right |
+| `<M-l>` | n    | Scroll left  |
+
+**Note:** Can hold these keys for continuous scrolling. Default Neovim keys (`zh`, `zl`, `zH`, `zL`) also available.
+
 ## Buffer Management
 
 | Key          | Mode | Action          |
@@ -328,6 +337,7 @@ When in terminal mode (`<c-/>`):
 | `<leader>up` | n    | Toggle auto-pairs                                                 |
 | `<leader>ud` | n    | Toggle diagnostic display (cycles: virtual lines → text → minimal) |
 | `<leader>uu` | n    | Toggle auto update check                                          |
+| `<leader>uw` | n    | Toggle line wrap                                                  |
 | `<leader>th` | n    | Toggle inlay hints                                                |
 | `<leader>tb` | n    | Toggle git blame                                                  |
 

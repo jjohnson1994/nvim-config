@@ -88,6 +88,13 @@ return {
           return "Auto update check (" .. action .. ")"
         end,
       },
+      {
+        "<leader>uw",
+        desc = function()
+          local action = vim.g.wrap_enabled and "disable" or "enable"
+          return "Line wrap (" .. action .. ")"
+        end,
+      },
     })
   end,
 }

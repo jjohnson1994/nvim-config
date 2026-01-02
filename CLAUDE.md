@@ -263,6 +263,7 @@ When creating git commits:
   - Auto-lint (`<leader>ul`) - enabled/disabled
   - Auto-pairs (`<leader>up`) - enabled/disabled
   - Auto update check (`<leader>uu`) - enabled/disabled
+  - Line wrap (`<leader>uw`) - enabled/disabled
   - Inlay hints (`<leader>th`) - enabled/disabled
   - Git blame (`<leader>tb`) - enabled/disabled
 - The persist module provides a simple API:

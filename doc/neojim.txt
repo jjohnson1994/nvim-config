@@ -218,6 +218,12 @@ WINDOW NAVIGATION ~
     <M-Left>    Decrease window width
     <M-Right>   Increase window width
 
+HORIZONTAL SCROLLING ~
+    <M-h>       Scroll right (can hold for continuous scrolling)
+    <M-l>       Scroll left (can hold for continuous scrolling)
+
+Note: Default Neovim keys (zh, zl, zH, zL) also available.
+
 BUFFER MANAGEMENT ~
     <Space>bd   Delete buffer
     <Space>bn   Next buffer
@@ -352,6 +358,7 @@ UI TOGGLES ~
     <Space>up   Toggle auto-pairs
     <Space>ud   Toggle diagnostic display (virtual lines → text → minimal)
     <Space>uu   Toggle auto update check
+    <Space>uw   Toggle line wrap
     <Space>th   Toggle inlay hints
     <Space>tb   Toggle git blame
 

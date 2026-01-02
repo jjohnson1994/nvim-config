@@ -25,6 +25,40 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.undofile = true
 
+-- Terminal title - set to project name
+vim.opt.title = true
+vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')} - nvim"
+
+-- Function to get project root and update title
+local function update_title()
+  -- Try to find .git directory
+  local git_dir = vim.fn.finddir(".git", ".;")
+  if git_dir ~= "" then
+    -- :p adds trailing slash for dirs, so :h:h gets parent of .git
+    local project_name = vim.fn.fnamemodify(git_dir, ":p:h:h:t")
+    vim.opt.titlestring = project_name .. " - nvim"
+    return
+  end
+
+  -- Try to find package.json
+  local package_json = vim.fn.findfile("package.json", ".;")
+  if package_json ~= "" then
+    local project_name = vim.fn.fnamemodify(package_json, ":p:h:t")
+    vim.opt.titlestring = project_name .. " - nvim"
+    return
+  end
+
+  -- Fall back to current directory name
+  local cwd = vim.fn.getcwd()
+  local dir_name = vim.fn.fnamemodify(cwd, ":t")
+  vim.opt.titlestring = dir_name .. " - nvim"
+end
+
+-- Set title on startup and when directory changes
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+  callback = update_title,
+})
+
 -- Completion settings
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c") -- Don't show completion messages
@@ -59,8 +93,16 @@ vim.diagnostic.config({
   },
 })
 
--- Toggle diagnostic display mode (virtual_lines vs virtual_text vs minimal)
+-- Persist module for toggle state
 local persist = require("persist")
+
+-- Load and apply wrap setting
+vim.g.wrap_enabled = persist.get("wrap_enabled", false)
+if vim.g.wrap_enabled then
+  vim.opt.wrap = true
+end
+
+-- Toggle diagnostic display mode (virtual_lines vs virtual_text vs minimal)
 
 -- Load saved diagnostic mode or use default
 vim.g.diagnostic_mode = persist.get("diagnostic_mode", "virtual_lines")
@@ -123,6 +165,10 @@ keymap("n", "<M-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
 keymap("n", "<M-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
 keymap("n", "<M-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
 
+-- Horizontal scrolling (can hold to keep scrolling)
+keymap("n", "<M-h>", "3zh", { desc = "Scroll right" })
+keymap("n", "<M-l>", "3zl", { desc = "Scroll left" })
+
 -- Better indenting
 keymap("v", "<", "<gv", { desc = "Indent left" })
 keymap("v", ">", ">gv", { desc = "Indent right" })
@@ -168,6 +214,17 @@ keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
 -- Toggle diagnostic display mode
 keymap("n", "<leader>ud", toggle_diagnostic_mode, { desc = "Toggle diagnostic display mode" })
+
+-- Toggle line wrapping
+local function toggle_wrap()
+  vim.opt.wrap = not vim.opt.wrap:get()
+  vim.g.wrap_enabled = vim.opt.wrap:get()
+  persist.set("wrap_enabled", vim.g.wrap_enabled)
+  local status = vim.g.wrap_enabled and "enabled" or "disabled"
+  vim.notify("Line wrap " .. status, vim.log.levels.INFO)
+end
+
+keymap("n", "<leader>uw", toggle_wrap, { desc = "Toggle line wrap" })
 
 -- Statusline with LSP diagnostics (see README.md "Status Bar" section for full documentation)
 _G.statusline_diagnostics = function()
