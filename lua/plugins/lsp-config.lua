@@ -26,6 +26,7 @@ return {
     dependencies = {
       "saghen/blink.cmp",
       "williamboman/mason.nvim",
+      "b0o/schemastore.nvim",
     },
     init = function()
       -- Load saved inlay hints state
@@ -37,7 +38,7 @@ return {
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- List of LSP servers to configure
-      local servers = { "lua_ls", "vtsls", "svelte" }
+      local servers = { "jsonls", "lua_ls", "svelte", "vtsls" }
 
       -- Configure each server using vim.lsp.config
       for _, server_name in ipairs(servers) do
@@ -84,6 +85,20 @@ return {
           -- Additional useful keymaps (not provided by default)
           map("n", "gd", vim.lsp.buf.definition, "Go to definition")
           map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+
+          -- Go to definition in splits/tabs
+          map("n", "<leader>gv", function()
+            vim.cmd.vsplit()
+            vim.lsp.buf.definition()
+          end, "Definition (vertical split)")
+          map("n", "<leader>gh", function()
+            vim.cmd.split()
+            vim.lsp.buf.definition()
+          end, "Definition (horizontal split)")
+          map("n", "<leader>gt", function()
+            vim.cmd("tab split")
+            vim.lsp.buf.definition()
+          end, "Definition (new tab)")
 
           -- Diagnostic keymaps
           map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")

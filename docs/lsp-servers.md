@@ -4,7 +4,7 @@ Language Server Protocol (LSP) configuration and server details.
 
 ## Configured Servers
 
-This configuration includes three LSP servers optimized for web development:
+This configuration includes four LSP servers optimized for web development:
 
 ### TypeScript/JavaScript (vtsls)
 
@@ -108,6 +108,49 @@ This configuration includes three LSP servers optimized for web development:
 - `.lua` - Lua files
 - Neovim config files
 
+### JSON (jsonls)
+
+**JSON language server with schema validation**
+
+- JSON and JSONC file support
+- Schema validation for common config files
+- Auto-completion based on schemas
+- Powered by schemastore.nvim
+
+**Configuration file:** `lsp/jsonls.lua`
+
+#### Features
+
+- **Schema Validation**: Validates JSON against schemas for:
+  - `package.json` - npm package configuration
+  - `tsconfig.json` - TypeScript configuration
+  - `.eslintrc.json` - ESLint configuration
+  - And hundreds more via schemastore
+
+- **Auto-completion**: Schema-aware completion for:
+  - Property names
+  - Property values
+  - Enum values
+  - Documentation on hover
+
+- **Diagnostics**: Real-time validation errors
+
+#### Settings
+
+```lua
+{
+  json = {
+    schemas = require("schemastore").json.schemas(),
+    validate = { enable = true },
+  },
+}
+```
+
+#### Supported File Types
+
+- `.json` - JSON files
+- `.jsonc` - JSON with comments
+
 ### Svelte
 
 **Svelte framework support**
@@ -171,9 +214,10 @@ LSP servers are installed via Mason:
 ```
 
 Search for and install:
-- `vtsls` - TypeScript/JavaScript
+- `json-lsp` - JSON
 - `lua_ls` - Lua
 - `svelte` - Svelte (optional)
+- `vtsls` - TypeScript/JavaScript
 
 ## Adding a New Server
 

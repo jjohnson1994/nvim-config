@@ -16,7 +16,7 @@ return {
       { "<leader>b", group = "Buffer" },
       { "<leader>c", group = "Code" },
       { "<leader>f", group = "Find" },
-      { "<leader>g", group = "Git" },
+      { "<leader>g", group = "Git/Go to" },
       { "<leader>h", group = "Hunk" },
       { "<leader>l", group = "LSP" },
       { "<leader>n", group = "Notifications" },

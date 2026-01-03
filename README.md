@@ -43,6 +43,7 @@ NeoJim is designed with these core principles:
 - [**LuaSnip**](https://github.com/L3MON4D3/LuaSnip) - Snippet engine with friendly-snippets support
 - [**nvim-lspconfig**](https://github.com/neovim/nvim-lspconfig) - Quickstart configs for Neovim LSP (used via native API)
 - [**mason.nvim**](https://github.com/williamboman/mason.nvim) - Portable package manager for LSP servers, formatters, and linters
+- [**schemastore.nvim**](https://github.com/b0o/schemastore.nvim) - JSON schemas for JSON LSP server
 
 ### Syntax & Parsing
 
@@ -87,7 +88,7 @@ NeoJim is designed with these core principles:
 - [**vim-illuminate**](https://github.com/RRethy/vim-illuminate) - Automatically highlight other uses of word under cursor
 - [**mini.indentscope**](https://github.com/echasnovski/mini.indentscope) - Visualize and work with indent scope
 - [**marks.nvim**](https://github.com/chentoast/marks.nvim) - View and interact with Vim marks in the sign column
-- [**update-notifier**](lua/plugins/update-notifier.lua) - Check for config updates on startup and notify when updates are available
+- [**update-notifier**](lua/plugins/update-notifier.lua) - Auto-update config, plugins, and Treesitter on startup; refresh Mason registry
 
 ### Testing
 
@@ -291,7 +292,7 @@ After launching Neovim and waiting for plugins to install:
 
 Install these packages:
 
-- **LSP Servers**: `lua_ls`, `vtsls`, `svelte`
+- **LSP Servers**: `json-lsp`, `lua_ls`, `svelte`, `vtsls`
 - **Formatters**: `prettierd`, `stylua`, `eslint_d`
 - **Linters**: `eslint_d` (if not already installed above)
 
@@ -354,9 +355,10 @@ Browse all sections:
 │       ├── update-notifier.lua      # Config update notifications
 │       └── color-themes.lua         # Color schemes
 └── lsp/
+    ├── jsonls.lua                   # JSON LSP config
     ├── lua_ls.lua                   # Lua LSP config
-    ├── vtsls.lua                    # TypeScript/JavaScript LSP config
-    └── svelte.lua                   # Svelte LSP config
+    ├── svelte.lua                   # Svelte LSP config
+    └── vtsls.lua                    # TypeScript/JavaScript LSP config
 ```
 
 ## Core Settings
@@ -525,11 +527,14 @@ The diagnostics function is called from the statusline using `%{%v:lua.statuslin
 
 **Additional Keybindings:**
 
-| Key          | Mode | Action             |
-| ------------ | ---- | ------------------ |
-| `gd`         | n    | Go to definition   |
-| `gD`         | n    | Go to declaration  |
-| `<leader>th` | n    | Toggle inlay hints |
+| Key          | Mode | Action                           |
+| ------------ | ---- | -------------------------------- |
+| `gd`         | n    | Go to definition                 |
+| `gD`         | n    | Go to declaration                |
+| `<leader>gv` | n    | Definition (vertical split)      |
+| `<leader>gh` | n    | Definition (horizontal split)    |
+| `<leader>gt` | n    | Definition (new tab)             |
+| `<leader>th` | n    | Toggle inlay hints               |
 
 ### Diagnostics
 
@@ -681,7 +686,7 @@ Powered by blink.cmp with LuaSnip integration.
 | `<leader>ul` | n    | Toggle auto-lint                                                  |
 | `<leader>up` | n    | Toggle auto-pairs                                                 |
 | `<leader>ud` | n    | Toggle diagnostic display (cycles: virtual lines → text → minimal) |
-| `<leader>uu` | n    | Toggle auto update check                                          |
+| `<leader>uu` | n    | Toggle auto-update (config, plugins, Treesitter, Mason registry)  |
 | `<leader>uw` | n    | Toggle line wrap                                                  |
 | `<leader>th` | n    | Toggle inlay hints                                                |
 | `<leader>tb` | n    | Toggle git blame                                                  |
@@ -869,11 +874,20 @@ opts = {
 
 ### Automatic Update Notifications
 
-NeoJim automatically checks for configuration updates on startup. When updates are available, you'll see a notification with the number of new commits.
+NeoJim automatically checks for and installs updates on startup (can be toggled with `<leader>uu`). When auto-update is enabled, the following are automatically updated:
+
+- **Configuration**: Checks for new commits and notifies if updates are available
+- **Plugins**: Updates all lazy.nvim plugins in the background
+- **Treesitter parsers**: Updates all installed language parsers silently (only notifies if updates occur)
+- **Mason registry**: Refreshes the registry to check for package updates (run `:MasonUpdateAll` to install updates)
+
+Toggle auto-update with `<leader>uu` to enable/disable this behavior. The setting persists across sessions.
+
+**Note:** Mason packages are not auto-installed on startup to avoid slowdowns. Use `:MasonUpdateAll` to update all packages, or open `:Mason` and press `U`.
 
 ### Manual Update
 
-To update your configuration:
+**Configuration:**
 
 ```vim
 :UpdateConfig
@@ -885,6 +899,14 @@ This command will:
 3. Prompt you to restart Neovim to apply the updates
 
 **Note:** Make sure to commit or stash any local changes before updating to avoid conflicts.
+
+**Mason Packages:**
+
+```vim
+:MasonUpdateAll   " Update all installed LSP servers, formatters, and linters
+```
+
+Or open `:Mason` and press `U` to update all packages interactively.
 
 ## Troubleshooting
 

@@ -69,8 +69,98 @@ return {
               )
             end
           )
+
+          -- Auto-update lazy plugins, mason packages, and treesitter parsers
+          vim.schedule(function()
+            -- Update lazy plugins (runs silently in background)
+            local lazy_ok, lazy = pcall(require, "lazy")
+            if lazy_ok then
+              lazy.update({
+                show = false, -- Don't show the UI
+                wait = false, -- Don't block
+              })
+            end
+
+            -- Update mason packages
+            -- Note: We only refresh the registry to check for updates
+            -- Automatic installation could be slow, so users should run :MasonUpdateAll
+            -- or open :Mason and press 'U' to update all packages manually
+            local mason_ok, mason_registry = pcall(require, "mason-registry")
+            if mason_ok then
+              -- Refresh registry in background (silent)
+              pcall(function()
+                mason_registry.refresh()
+              end)
+            end
+
+            -- Update treesitter parsers silently (only notify if updates occur)
+            local ts_ok = pcall(require, "nvim-treesitter.install")
+            if ts_ok then
+              -- Temporarily disable notifications by redirecting messages
+              local old_notify = vim.notify
+              local update_occurred = false
+
+              vim.notify = function(msg, level, opts)
+                -- Capture if an update actually occurred
+                if msg and (msg:match("updated") or msg:match("installed")) then
+                  update_occurred = true
+                end
+                -- Suppress the default "all parsers are up to date" message
+                if not (msg and msg:match("All parsers are up%-to%-date")) then
+                  -- Allow other important messages through
+                  if msg and (msg:match("error") or msg:match("Error")) then
+                    old_notify(msg, level, opts)
+                  end
+                end
+              end
+
+              -- Run the update
+              vim.cmd("TSUpdate")
+
+              -- Restore original notify
+              vim.notify = old_notify
+            end
+          end)
         end,
       })
+
+      -- Create :MasonUpdateAll command to update all Mason packages
+      vim.api.nvim_create_user_command("MasonUpdateAll", function()
+        local mason_ok, mason_registry = pcall(require, "mason-registry")
+        if not mason_ok then
+          require("snacks").notify("Mason is not available", {
+            title = "Mason Update Failed",
+            level = "error",
+          })
+          return
+        end
+
+        require("snacks").notify("Updating all Mason packages...", {
+          title = "Mason Update",
+          level = "info",
+        })
+
+        mason_registry.refresh(function()
+          local installed_packages = mason_registry.get_installed_packages()
+          local total = #installed_packages
+          local updated = 0
+
+          for _, pkg in ipairs(installed_packages) do
+            pkg:install():once("closed", function()
+              updated = updated + 1
+              if updated == total then
+                require("snacks").notify(
+                  string.format("Updated %d Mason package%s", total, total > 1 and "s" or ""),
+                  {
+                    title = "Mason Update Complete",
+                    level = "info",
+                  }
+                )
+              end
+            end)
+          end
+        end)
+      end, { desc = "Update all Mason packages" })
 
       -- Create :UpdateConfig command to pull updates
       vim.api.nvim_create_user_command("UpdateConfig", function()

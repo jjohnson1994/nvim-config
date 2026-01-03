@@ -325,14 +325,25 @@ When creating git commits:
 - Manual formatting (`<leader>cf`) always works regardless of toggle state
 
 ### update-notifier
-- Automatically checks for config updates on VimEnter (can be toggled with `<leader>uu`)
-- Auto update check is enabled by default (`vim.g.auto_update_check = true`)
+- Automatically updates everything on VimEnter (can be toggled with `<leader>uu`)
+- Auto update is enabled by default (`vim.g.auto_update_check = true`)
 - Toggle state persists across sessions using the persist module
-- Uses async `vim.system()` for git operations to avoid blocking startup
+- Updates the following on startup when enabled:
+  - **Config**: Checks for new commits using async git operations
+  - **Lazy plugins**: Calls `lazy.update({ show = false, wait = false })` to update plugins in background
+  - **Treesitter parsers**: Runs `:TSUpdate` with notifications suppressed (only shows if updates occur)
+    - Temporarily overrides `vim.notify` to suppress "all parsers are up-to-date" messages
+    - Allows error messages through
+    - Restores original `vim.notify` after update completes
+  - **Mason registry**: Refreshes registry to check for updates (doesn't auto-install packages to avoid slowdowns)
+- All update operations run asynchronously without blocking startup
+- Uses `vim.schedule()` to ensure updates run on main thread
+- Config update check uses async `vim.system()` for git operations
 - Runs `git fetch origin --quiet` to check for new commits
 - Compares local HEAD with remote tracking branch using `git rev-list --count HEAD..@{u}`
 - Only notifies if commits_behind > 0
 - `:UpdateConfig` command checks for uncommitted changes before pulling
+- `:MasonUpdateAll` command updates all installed Mason packages
 - Uses `git pull --rebase` to update configuration
 - Notifications use snacks.nvim notify module
 - Silent failures - doesn't show errors if not in git repo or no internet connection

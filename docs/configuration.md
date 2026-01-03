@@ -262,12 +262,20 @@ See [Statusline documentation](/statusline) for details.
 vim.g.autoformat = true  -- Enable/disable auto-format on save
 ```
 
-### Auto Update Check Toggle
+### Auto Update Toggle
 ```lua
-vim.g.auto_update_check = true  -- Enable/disable automatic config update checks on startup
+vim.g.auto_update_check = true  -- Enable/disable automatic updates on startup
 ```
 
-Toggle with `<leader>uu`. When enabled, NeoJim checks for config updates from the remote repository on startup. The toggle state persists across sessions.
+Toggle with `<leader>uu`. When enabled, NeoJim automatically updates the following on startup:
+- **Config**: Checks for new commits from the remote repository
+- **Plugins**: Updates all lazy.nvim plugins in the background
+- **Treesitter parsers**: Updates all installed parsers silently (only notifies if updates occur)
+- **Mason registry**: Refreshes to check for package updates (doesn't auto-install)
+
+All updates run asynchronously without blocking startup. The toggle state persists across sessions.
+
+**Note:** Mason packages are not auto-installed to avoid startup slowdowns. Use `:MasonUpdateAll` to update all packages.
 
 ### Leader Keys
 ```lua

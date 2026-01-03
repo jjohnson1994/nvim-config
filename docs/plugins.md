@@ -71,6 +71,17 @@ Complete reference of all plugins in this configuration.
 
 **File:** `lua/plugins/lsp-config.lua`
 
+### schemastore.nvim
+
+**JSON schemas for JSON LSP server**
+
+- Provides JSON schemas for common configuration files
+- Auto-completion for package.json, tsconfig.json, and more
+- Validates JSON files against schemas
+- Integrated with JSON language server
+
+**File:** `lua/plugins/lsp-config.lua` (dependency)
+
 ## Syntax & Parsing
 
 ### nvim-treesitter
@@ -402,18 +413,29 @@ Includes:
 
 ### update-notifier
 
-**Automatic config update notifications**
+**Automatic updates for config, plugins, and dependencies**
 
-- Checks for updates on startup
-- Notifies when new commits are available
-- Provides `:UpdateConfig` command for easy updates
+- Auto-updates on startup (toggle with `<leader>uu`)
+- Updates lazy.nvim plugins in the background
+- Updates Treesitter parsers silently (only notifies if updates occur)
+- Refreshes Mason registry to check for package updates (doesn't auto-install)
+- Checks for config updates and notifies when available
+- Provides `:UpdateConfig` and `:MasonUpdateAll` commands
 - Warns about uncommitted changes before updating
-- Uses git fetch to check remote without blocking startup
+- All update operations run asynchronously without blocking startup
 
 **Commands:**
 ```vim
-:UpdateConfig   " Pull latest config updates
+:UpdateConfig      " Pull latest config updates
+:MasonUpdateAll    " Update all Mason packages
 ```
+
+**Keybindings:**
+```
+<leader>uu   " Toggle auto-update on startup
+```
+
+**Note:** Mason packages are not auto-installed on startup to avoid slowdowns. Use `:MasonUpdateAll` to update all packages.
 
 **File:** `lua/plugins/update-notifier.lua`
 

@@ -311,9 +311,10 @@ After plugins are installed, open Mason to install language servers:
 
 #### LSP Servers
 
+- `json-lsp` - JSON language server
 - `lua_ls` - Lua language server
-- `vtsls` - TypeScript/JavaScript language server
 - `svelte` - Svelte language server (optional)
+- `vtsls` - TypeScript/JavaScript language server
 
 #### Formatters
 
@@ -507,13 +508,27 @@ Settings → Terminal › Integrated: Font Family
 
 ## Updating
 
-### Config Updates
+### Automatic Updates
 
-**Automatic Notifications:**
+**Auto-Update on Startup:**
 
-NeoJim automatically checks for configuration updates on startup. When updates are available, you'll see a notification showing the number of new commits.
+NeoJim can automatically update everything on startup. Toggle with `<leader>uu` (enabled by default).
 
-**Update Command:**
+When auto-update is enabled, the following are automatically updated:
+- **Config**: Checks for new commits and notifies when available
+- **Plugins**: Updates all lazy.nvim plugins in the background
+- **Treesitter parsers**: Updates all installed parsers silently (only notifies if updates occur)
+- **Mason registry**: Refreshes to check for package updates (doesn't auto-install)
+
+All updates run asynchronously without blocking startup. The toggle state persists across sessions.
+
+::: tip
+Mason packages are not auto-installed on startup to avoid slowdowns. Use `:MasonUpdateAll` to update all packages, or open `:Mason` and press `U`.
+:::
+
+### Manual Updates
+
+**Config Updates:**
 
 ```vim
 :UpdateConfig
@@ -528,17 +543,19 @@ This command will:
 Make sure to commit or stash any local changes before updating to avoid conflicts.
 :::
 
-### Plugin Updates
-
-To update plugins:
+**Plugin Updates:**
 
 ```vim
 :Lazy sync
 ```
 
-### LSP Server and Tool Updates
+**LSP Server and Tool Updates:**
 
-To update LSP servers and tools:
+```vim
+:MasonUpdateAll   # Update all packages automatically
+```
+
+Or use the interactive UI:
 
 ```vim
 :Mason

@@ -84,11 +84,14 @@ These are native Neovim keybindings enabled by default in 0.11+:
 
 ### Additional LSP Keybindings
 
-| Key          | Mode | Action             |
-| ------------ | ---- | ------------------ |
-| `gd`         | n    | Go to definition   |
-| `gD`         | n    | Go to declaration  |
-| `<leader>th` | n    | Toggle inlay hints |
+| Key          | Mode | Action                           |
+| ------------ | ---- | -------------------------------- |
+| `gd`         | n    | Go to definition                 |
+| `gD`         | n    | Go to declaration                |
+| `<leader>gv` | n    | Definition (vertical split)      |
+| `<leader>gh` | n    | Definition (horizontal split)    |
+| `<leader>gt` | n    | Definition (new tab)             |
+| `<leader>th` | n    | Toggle inlay hints               |
 
 ## Diagnostics
 
@@ -336,7 +339,7 @@ When in terminal mode (`<c-/>`):
 | `<leader>ul` | n    | Toggle auto-lint                                                  |
 | `<leader>up` | n    | Toggle auto-pairs                                                 |
 | `<leader>ud` | n    | Toggle diagnostic display (cycles: virtual lines → text → minimal) |
-| `<leader>uu` | n    | Toggle auto update check                                          |
+| `<leader>uu` | n    | Toggle auto-update (config, plugins, Treesitter, Mason registry)  |
 | `<leader>uw` | n    | Toggle line wrap                                                  |
 | `<leader>th` | n    | Toggle inlay hints                                                |
 | `<leader>tb` | n    | Toggle git blame                                                  |
