@@ -35,6 +35,7 @@ This configuration is designed with the following non-negotiable principles:
 **CRITICAL: Always keep ALL documentation up to date!**
 
 This configuration maintains **FOUR** documentation sources that MUST be kept in sync:
+
 1. **README.md** - Quick reference and overview
 2. **VitePress docs (`docs/`)** - Comprehensive web documentation
 3. **Built-in Help (`doc/neojim.txt`)** - Vim help file for in-editor reference
@@ -229,22 +230,25 @@ When creating git commits:
 ## Configuration Notes
 
 ### Sign Column (signcolumn)
+
 - Set to `auto:2` to allow up to 2 sign columns
 - This prevents conflicts when multiple signs exist on the same line (e.g., marks + diagnostics, git signs + marks)
 - Automatically shows/hides columns as needed
 - If you need more than 2 signs on a line, increase to `auto:3`
 
 ### Diagnostic Signs
+
 - Custom icons are defined for LSP diagnostics using the modern `vim.diagnostic.config()` API (Neovim 0.11+):
-  - Error:  (circle with X)
-  - Warning:  (triangle with exclamation)
-  - Hint:  (lightbulb)
-  - Info:  (info circle)
+  - Error: (circle with X)
+  - Warning: (triangle with exclamation)
+  - Hint: (lightbulb)
+  - Info: (info circle)
 - Signs are configured via the `signs.text` table in `vim.diagnostic.config()`
 - Icons require a Nerd Font to display correctly
 - If icons don't display, check that your terminal is using a Nerd Font
 
 ### Diagnostic Display
+
 - Supports three diagnostic display modes that can be toggled with `<leader>ud`:
   1. **virtual_lines** (default): Displays diagnostics as separate full lines in the buffer (Neovim 0.11+ feature)
   2. **virtual_text**: Displays diagnostics inline at the end of the line
@@ -255,6 +259,7 @@ When creating git commits:
 - Similar to the lsp_lines.nvim plugin, but uses built-in Neovim 0.11 features
 
 ### Toggle Persistence
+
 - All toggleable options persist across sessions using the `lua/persist.lua` module
 - State is saved to `~/.local/share/nvim/neojim_state.json` (or equivalent on your platform)
 - The following toggles are persisted:
@@ -275,6 +280,7 @@ When creating git commits:
 ## Plugin-Specific Notes
 
 ### snacks.nvim
+
 - Unified quality-of-life plugin collection that replaces nvim-notify and neoscroll.nvim
 - Provides multiple modules: notifier, scroll, dashboard, terminal, and more
 - The notifier module replaces `vim.notify` in the init function
@@ -284,6 +290,7 @@ When creating git commits:
 - Lazygit integration available through snacks (optional - requires lazygit installed)
 
 ### flash.nvim
+
 - Modern navigation plugin using search labels and enhanced character motions
 - Primary key is `<leader>fj` for jump mode - shows labels on search matches
 - `<leader>fJ` for treesitter-aware navigation (jumps to syntax nodes)
@@ -292,15 +299,18 @@ When creating git commits:
 - Can be toggled in command mode with `<c-s>` during search
 
 ### marks.nvim
+
 - Displays marks in the sign column with visual indicators
 - Works alongside diagnostics and git signs thanks to `signcolumn = "auto:2"`
 - Sign priority is configured: lower=10, upper=15, builtin=8, bookmark=20
 
 ### nvim-ts-autotag
+
 - Requires standalone setup call with `opts` wrapper (not treesitter config)
 - Must use latest API to avoid deprecation warnings
 
 ### blink.cmp
+
 - Modern completion plugin for Neovim 0.10+
 - Capabilities are obtained via `require("blink.cmp").get_lsp_capabilities()`
 - Uses LuaSnip preset (`snippets.preset = "luasnip"`) for snippet integration
@@ -314,10 +324,12 @@ When creating git commits:
 - Follow official docs at https://cmp.saghen.dev/ for any configuration changes
 
 ### nvim-treesitter
+
 - Treesitter parsers are installed for: lua, vim, javascript, typescript, tsx, json, html, css, markdown, bash, svelte, vue
 - Auto-install is disabled - parsers must be explicitly listed
 
 ### conform.nvim (Auto-format Toggle)
+
 - Auto-format on save is controlled by `vim.g.autoformat` global variable
 - Default: enabled (`vim.g.autoformat = true`)
 - Toggle with `<leader>uf` - shows notification when toggled
@@ -325,6 +337,7 @@ When creating git commits:
 - Manual formatting (`<leader>cf`) always works regardless of toggle state
 
 ### update-notifier
+
 - Automatically updates everything on VimEnter (can be toggled with `<leader>uu`)
 - Auto update is enabled by default (`vim.g.auto_update_check = true`)
 - Toggle state persists across sessions using the persist module
@@ -383,6 +396,7 @@ This configuration has **FOUR** documentation sources that must be updated toget
 The configuration includes a Vim help file at `doc/neojim.txt` that users can access with `:help neojim`.
 
 **When to update the help file:**
+
 - Adding/removing plugins
 - Changing keybindings
 - Modifying LSP configurations
@@ -390,6 +404,7 @@ The configuration includes a Vim help file at `doc/neojim.txt` that users can ac
 - Updating troubleshooting steps
 
 **After updating `doc/neojim.txt`, regenerate help tags:**
+
 ```bash
 nvim --headless -c "helptags doc" -c "quit"
 ```
@@ -401,6 +416,7 @@ Or the tags will be automatically regenerated when Neovim starts.
 Before completing ANY change, verify all documentation is updated:
 
 **For Plugin Changes:**
+
 - [ ] README.md - Plugins section updated
 - [ ] README.md - File Structure updated
 - [ ] docs/plugins.md - Plugin added/removed with full details
@@ -409,12 +425,14 @@ Before completing ANY change, verify all documentation is updated:
 - [ ] CLAUDE.md - Special considerations documented (if needed)
 
 **For Keymap Changes:**
+
 - [ ] README.md - Key Bindings section updated
 - [ ] docs/keybindings.md - Keybinding added/removed
 - [ ] doc/neojim.txt - Keybindings section updated
 - [ ] lua/plugins/which-key.lua - Group registrations updated
 
 **For LSP Server Changes:**
+
 - [ ] README.md - Installation/File Structure updated
 - [ ] docs/lsp-servers.md - Server documentation added/removed
 - [ ] docs/getting-started.md - Mason installation list updated
@@ -423,11 +441,13 @@ Before completing ANY change, verify all documentation is updated:
 - [ ] lua/plugins/lsp-config.lua - Server added/removed from list
 
 **For Configuration Changes:**
+
 - [ ] README.md - Core Settings or relevant section updated
 - [ ] docs/configuration.md - Setting documented with examples
 - [ ] doc/neojim.txt - Customization section updated
 
 **After ALL Documentation Updates:**
+
 - [ ] Regenerate help tags: `nvim --headless -c "helptags doc" -c "quit"`
 - [ ] Verify VitePress builds successfully (if changed)
 - [ ] Double-check all four sources are consistent

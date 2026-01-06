@@ -63,7 +63,7 @@ Common issues and solutions for this Neovim configuration.
 
 1. Check if LSP is running:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
 
 2. Verify server is installed:
@@ -82,8 +82,9 @@ Common issues and solutions for this Neovim configuration.
 
 5. Restart LSP:
    ```vim
-   :LspRestart
+   :lua vim.lsp.stop_client(vim.lsp.get_clients())
    ```
+   Then reopen the file or run `:e`
 
 ### Diagnostics Not Showing
 
@@ -98,7 +99,7 @@ Common issues and solutions for this Neovim configuration.
 
 2. Verify LSP is attached:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
 
 3. Check if signs are disabled:
@@ -134,7 +135,7 @@ Common issues and solutions for this Neovim configuration.
 
 4. Verify server supports inlay hints:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
    Look for `inlayHintProvider` capability
 
@@ -153,7 +154,7 @@ Common issues and solutions for this Neovim configuration.
 
 2. Check LSP is attached:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
 
 3. Manually trigger completion:
@@ -339,7 +340,7 @@ Common issues and solutions for this Neovim configuration.
 
 1. Check running LSP servers:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
 
 2. Stop unnecessary servers:

@@ -4,7 +4,7 @@ Language Server Protocol (LSP) configuration and server details.
 
 ## Configured Servers
 
-This configuration includes four LSP servers optimized for web development:
+This configuration includes five LSP servers optimized for web development and documentation:
 
 ### TypeScript/JavaScript (vtsls)
 
@@ -173,6 +173,32 @@ This configuration includes four LSP servers optimized for web development:
 
 - `.svelte` - Svelte components
 
+### Markdown (marksman)
+
+**Markdown language server for navigation and organization**
+
+- Wiki-link support
+- Reference finding
+- Document symbols
+- Code completion for links and references
+
+**Configuration file:** `lsp/marksman.lua`
+
+#### Features
+
+- **Wiki-Links**: Navigate between markdown files using `[[wiki-links]]`
+- **References**: Find all references to a heading or file
+- **Document Symbols**: Browse document structure and headings
+- **Completion**: Auto-complete file names in links
+- **Hover**: Preview linked files and references
+- **Diagnostics**: Detect broken links
+
+#### Supported File Types
+
+- `.md` - Markdown files
+- `.markdown` - Markdown files
+- `.mdx` - MDX files (Markdown with JSX)
+
 ## Common LSP Features
 
 All configured LSP servers provide these features:
@@ -216,6 +242,7 @@ LSP servers are installed via Mason:
 Search for and install:
 - `json-lsp` - JSON
 - `lua_ls` - Lua
+- `marksman` - Markdown
 - `svelte` - Svelte (optional)
 - `vtsls` - TypeScript/JavaScript
 
@@ -252,13 +279,14 @@ vim.lsp.inlay_hint.enable(true)
 ### Check if LSP is attached
 
 ```vim
-:LspInfo
+:lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
 ```
 
-Shows:
-- Attached servers
-- Server capabilities
-- Server status
+This shows all LSP clients attached to the current buffer with their:
+- Name
+- ID
+- Root directory
+- Capabilities
 
 ### Check LSP health
 
@@ -283,7 +311,7 @@ Shows:
 
 2. Check LSP info:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
 
 3. Check logs:
@@ -300,7 +328,7 @@ Shows:
 
 2. Check LSP is attached:
    ```vim
-   :LspInfo
+   :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
    ```
 
 ### Diagnostics not showing

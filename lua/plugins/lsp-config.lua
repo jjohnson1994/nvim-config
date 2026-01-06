@@ -38,7 +38,7 @@ return {
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- List of LSP servers to configure
-      local servers = { "jsonls", "lua_ls", "svelte", "vtsls" }
+      local servers = { "jsonls", "lua_ls", "marksman", "svelte", "vtsls" }
 
       -- Configure each server using vim.lsp.config
       for _, server_name in ipairs(servers) do

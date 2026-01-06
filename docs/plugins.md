@@ -45,13 +45,14 @@ Complete reference of all plugins in this configuration.
 
 **File:** `lua/plugins/luasnip.lua`
 
-### nvim-lspconfig
+### Native LSP Configuration
 
-**Quickstart configs for Neovim LSP**
+**Uses Neovim 0.11+ vim.lsp.config API**
 
-- Pre-configured LSP servers
-- Easy server setup
-- Capabilities configuration
+- No nvim-lspconfig dependency needed
+- Direct use of native `vim.lsp.config()` and `vim.lsp.enable()`
+- LSP server configs in `lsp/` directory
+- Clean, minimal setup
 
 **File:** `lua/plugins/lsp-config.lua`
 

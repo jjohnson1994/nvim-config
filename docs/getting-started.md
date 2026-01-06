@@ -313,6 +313,7 @@ After plugins are installed, open Mason to install language servers:
 
 - `json-lsp` - JSON language server
 - `lua_ls` - Lua language server
+- `marksman` - Markdown language server
 - `svelte` - Svelte language server (optional)
 - `vtsls` - TypeScript/JavaScript language server
 
@@ -367,6 +368,7 @@ After installation, your configuration will look like this:
 │       └── ...
 └── lsp/                  # LSP server configs
     ├── lua_ls.lua
+    ├── marksman.lua
     ├── vtsls.lua
     └── svelte.lua
 ```

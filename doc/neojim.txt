@@ -121,7 +121,7 @@ Windows (Scoop):
     :Mason
 <
     Install these packages:
-    - LSP Servers: json-lsp, lua_ls, svelte, vtsls
+    - LSP Servers: json-lsp, lua_ls, marksman, svelte, vtsls
     - Formatters: prettierd, stylua, eslint_d
     - Linters: eslint_d
 
@@ -137,7 +137,7 @@ Windows (Scoop):
 LSP & COMPLETION ~
     • blink.cmp - Performant completion with fuzzy matching
     • LuaSnip - Snippet engine with friendly-snippets support
-    • nvim-lspconfig - Quickstart configs for Neovim LSP
+    • Native LSP - Uses Neovim 0.11+ vim.lsp.config API
     • mason.nvim - Package manager for LSP servers
     • schemastore.nvim - JSON schemas for JSON LSP server
 
@@ -384,6 +384,12 @@ LUA (lua_ls) ~
     • Vim API awareness
     • LuaJIT runtime
 
+MARKDOWN (marksman) ~
+    • Wiki-link navigation and completion
+    • Find references to headings and files
+    • Document symbols and structure
+    • Broken link detection
+
 TYPESCRIPT/JAVASCRIPT (vtsls) ~
     • Complete function calls
     • Inlay hints for parameters, types, return types
@@ -518,7 +524,7 @@ PLUGINS NOT LOADING ~
 LSP NOT WORKING ~
 Check LSP is running:
 >
-    :LspInfo
+    :lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
 <
 Check Mason installations:
 >
@@ -526,7 +532,7 @@ Check Mason installations:
 <
 Check health:
 >
-    :checkhealth lspconfig
+    :checkhealth vim.lsp
 <
 
 COMPLETION NOT SHOWING ~

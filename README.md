@@ -41,7 +41,7 @@ NeoJim is designed with these core principles:
 
 - [**blink.cmp**](https://github.com/saghen/blink.cmp) - Performant, batteries-included completion plugin with fuzzy matching
 - [**LuaSnip**](https://github.com/L3MON4D3/LuaSnip) - Snippet engine with friendly-snippets support
-- [**nvim-lspconfig**](https://github.com/neovim/nvim-lspconfig) - Quickstart configs for Neovim LSP (used via native API)
+- **Native LSP** - Uses Neovim 0.11+ `vim.lsp.config` API (no nvim-lspconfig needed)
 - [**mason.nvim**](https://github.com/williamboman/mason.nvim) - Portable package manager for LSP servers, formatters, and linters
 - [**schemastore.nvim**](https://github.com/b0o/schemastore.nvim) - JSON schemas for JSON LSP server
 
@@ -292,7 +292,7 @@ After launching Neovim and waiting for plugins to install:
 
 Install these packages:
 
-- **LSP Servers**: `json-lsp`, `lua_ls`, `svelte`, `vtsls`
+- **LSP Servers**: `json-lsp`, `lua_ls`, `marksman`, `svelte`, `vtsls`
 - **Formatters**: `prettierd`, `stylua`, `eslint_d`
 - **Linters**: `eslint_d` (if not already installed above)
 
@@ -357,6 +357,7 @@ Browse all sections:
 └── lsp/
     ├── jsonls.lua                   # JSON LSP config
     ├── lua_ls.lua                   # Lua LSP config
+    ├── marksman.lua                 # Markdown LSP config
     ├── svelte.lua                   # Svelte LSP config
     └── vtsls.lua                    # TypeScript/JavaScript LSP config
 ```
@@ -704,9 +705,8 @@ Powered by blink.cmp with LuaSnip integration.
 
 ### LSP & Language Support
 
-- **nvim-lspconfig**: LSP configuration
+- **Native LSP**: Uses Neovim 0.11+ `vim.lsp.config` API
 - **mason.nvim**: LSP/formatter/linter installer
-- **mason-lspconfig.nvim**: Bridge between Mason and lspconfig
 
 ### Completion & Snippets
 
@@ -923,7 +923,7 @@ Or open `:Mason` and press `U` to update all packages interactively.
 1. Check LSP is running:
 
 ```vim
-:LspInfo
+:lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))
 ```
 
 2. Check Mason installations:
@@ -935,7 +935,7 @@ Or open `:Mason` and press `U` to update all packages interactively.
 3. Check health:
 
 ```vim
-:checkhealth lspconfig
+:checkhealth vim.lsp
 ```
 
 ### Completion not showing
