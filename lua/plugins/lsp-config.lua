@@ -18,6 +18,34 @@ return {
     },
   },
 
+  -- Auto-install LSP servers, formatters, and linters
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    event = "VeryLazy",
+    opts = {
+      ensure_installed = {
+        -- LSP Servers
+        "json-lsp",
+        "lua_ls",
+        "marksman",
+        "svelte",
+        "vtsls",
+
+        -- Formatters
+        "prettierd",
+        "stylua",
+        "eslint_d",
+
+        -- Linters
+        "markdownlint-cli2",
+      },
+      auto_update = false,
+      run_on_start = true,
+      start_delay = 3000, -- 3 second delay
+    },
+  },
+
   -- Configure LSP servers using Neovim 0.11+ native API
   {
     dir = vim.fn.stdpath("config"),

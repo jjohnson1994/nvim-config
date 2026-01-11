@@ -299,37 +299,32 @@ nvim
 
 This may take a few minutes on first launch.
 
-### 4. Install LSP Servers and Tools
+### 4. Automatic Tool Installation
 
-After plugins are installed, open Mason to install language servers:
+**All LSP servers, formatters, and linters are automatically installed on first launch!**
 
-```vim
-:Mason
-```
-
-**Install these packages:**
+The `mason-tool-installer.nvim` plugin will automatically install:
 
 #### LSP Servers
-
 - `json-lsp` - JSON language server
 - `lua_ls` - Lua language server
 - `marksman` - Markdown language server
-- `svelte` - Svelte language server (optional)
+- `svelte` - Svelte language server
 - `vtsls` - TypeScript/JavaScript language server
 
 #### Formatters
-
 - `prettierd` - Faster Prettier daemon
 - `stylua` - Lua formatter
 - `eslint_d` - ESLint daemon for faster linting/formatting
 
 #### Linters
+- `markdownlint-cli2` - Markdown linter
 
-- `eslint_d` - (if not already installed above)
+::: tip
+Installation happens after a 3-second delay on startup. You'll see notifications when tools are being installed. Open `:Mason` to check installation status.
+:::
 
-**Tip**: Use `/` to search in Mason, `i` to install, `X` to uninstall.
-
-### 5. Restart Neovim
+### 5. Verify Installation
 
 Close and reopen Neovim:
 

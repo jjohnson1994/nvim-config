@@ -43,6 +43,7 @@ NeoJim is designed with these core principles:
 - [**LuaSnip**](https://github.com/L3MON4D3/LuaSnip) - Snippet engine with friendly-snippets support
 - **Native LSP** - Uses Neovim 0.11+ `vim.lsp.config` API (no nvim-lspconfig needed)
 - [**mason.nvim**](https://github.com/williamboman/mason.nvim) - Portable package manager for LSP servers, formatters, and linters
+- [**mason-tool-installer.nvim**](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) - Auto-install LSP servers, formatters, and linters on startup
 - [**schemastore.nvim**](https://github.com/b0o/schemastore.nvim) - JSON schemas for JSON LSP server
 
 ### Syntax & Parsing
@@ -79,6 +80,7 @@ NeoJim is designed with these core principles:
 - [**mini.pairs**](https://github.com/echasnovski/mini.pairs) - Auto-pairs for brackets, quotes, and more
 - [**mini.basics**](https://github.com/echasnovski/mini.basics) - Common configuration presets
 - [**mini.bracketed**](https://github.com/echasnovski/mini.bracketed) - Go forward/backward with `[` and `]` for various objects
+- [**render-markdown.nvim**](https://github.com/MeanderingProgrammer/render-markdown.nvim) - Enhanced markdown rendering with beautiful headings, code blocks, and lists
 
 ### UI & Visual
 
@@ -282,26 +284,26 @@ nvim
 
 ### Post-Installation
 
-After launching Neovim and waiting for plugins to install:
+After launching Neovim:
 
-1. **Install LSP servers and tools via Mason**:
+1. **Wait for automatic installation**:
+   - Plugins will install automatically (managed by lazy.nvim)
+   - LSP servers, formatters, and linters will auto-install after a 3-second delay (managed by mason-tool-installer)
+   - You'll see notifications when installation completes
 
-```vim
-:Mason
-```
-
-Install these packages:
-
-- **LSP Servers**: `json-lsp`, `lua_ls`, `marksman`, `svelte`, `vtsls`
-- **Formatters**: `prettierd`, `stylua`, `eslint_d`
-- **Linters**: `eslint_d` (if not already installed above)
-
-2. **Restart Neovim and verify**:
+2. **Verify installation**:
 
 ```vim
 :checkhealth lazy
 :checkhealth vim.lsp
+:Mason  # Check that all tools are installed
 ```
+
+**Note**: All required tools are automatically installed on first launch:
+
+- **LSP Servers**: `json-lsp`, `lua_ls`, `marksman`, `svelte`, `vtsls`
+- **Formatters**: `prettierd`, `stylua`, `eslint_d`
+- **Linters**: `eslint_d`, `markdownlint-cli2`
 
 📚 **For detailed installation instructions**, see the [Getting Started Guide](https://yourusername.github.io/nvim/getting-started)
 
@@ -314,6 +316,7 @@ This configuration includes a comprehensive help file. Access it from within Neo
 ```
 
 Browse all sections:
+
 - `:help neojim-keybindings` - Complete keybinding reference
 - `:help neojim-plugins` - All installed plugins
 - `:help neojim-lsp` - LSP server configuration
@@ -350,6 +353,7 @@ Browse all sections:
 │       ├── vim-illuminate.lua       # Highlight references
 │       ├── marks.lua                # Mark indicators
 │       ├── neotest.lua              # Testing framework
+│       ├── render-markdown.lua      # Markdown rendering
 │       ├── tailwind-tools.lua       # Tailwind CSS support
 │       ├── ts-error-translator.lua  # TypeScript error translation
 │       ├── update-notifier.lua      # Config update notifications
@@ -528,14 +532,14 @@ The diagnostics function is called from the statusline using `%{%v:lua.statuslin
 
 **Additional Keybindings:**
 
-| Key          | Mode | Action                           |
-| ------------ | ---- | -------------------------------- |
-| `gd`         | n    | Go to definition                 |
-| `gD`         | n    | Go to declaration                |
-| `<leader>gv` | n    | Definition (vertical split)      |
-| `<leader>gh` | n    | Definition (horizontal split)    |
-| `<leader>gt` | n    | Definition (new tab)             |
-| `<leader>th` | n    | Toggle inlay hints               |
+| Key          | Mode | Action                        |
+| ------------ | ---- | ----------------------------- |
+| `gd`         | n    | Go to definition              |
+| `gD`         | n    | Go to declaration             |
+| `<leader>gv` | n    | Definition (vertical split)   |
+| `<leader>gh` | n    | Definition (horizontal split) |
+| `<leader>gt` | n    | Definition (new tab)          |
+| `<leader>th` | n    | Toggle inlay hints            |
 
 ### Diagnostics
 
@@ -679,20 +683,27 @@ Powered by blink.cmp with LuaSnip integration.
 | `<c-/>`      | n/t  | Toggle terminal               |
 | `<c-_>`      | n/t  | Toggle terminal (alternative) |
 
+### Markdown
+
+| Key          | Mode | Action                    |
+| ------------ | ---- | ------------------------- |
+| `<leader>mr` | n    | Toggle markdown rendering |
+
 ### UI Toggles
 
-| Key          | Mode | Action                                                            |
-| ------------ | ---- | ----------------------------------------------------------------- |
-| `<leader>uf` | n    | Toggle autoformat                                                 |
-| `<leader>ul` | n    | Toggle auto-lint                                                  |
-| `<leader>up` | n    | Toggle auto-pairs                                                 |
+| Key          | Mode | Action                                                             |
+| ------------ | ---- | ------------------------------------------------------------------ |
+| `<leader>uf` | n    | Toggle autoformat                                                  |
+| `<leader>ul` | n    | Toggle auto-lint                                                   |
+| `<leader>up` | n    | Toggle auto-pairs                                                  |
 | `<leader>ud` | n    | Toggle diagnostic display (cycles: virtual lines → text → minimal) |
-| `<leader>uu` | n    | Toggle auto-update (config, plugins, Treesitter, Mason registry)  |
-| `<leader>uw` | n    | Toggle line wrap                                                  |
-| `<leader>th` | n    | Toggle inlay hints                                                |
-| `<leader>tb` | n    | Toggle git blame                                                  |
+| `<leader>uu` | n    | Toggle auto-update (config, plugins, Treesitter, Mason registry)   |
+| `<leader>uw` | n    | Toggle line wrap                                                   |
+| `<leader>th` | n    | Toggle inlay hints                                                 |
+| `<leader>tb` | n    | Toggle git blame                                                   |
 
 **Diagnostic Display Modes:**
+
 - **Virtual Lines**: Diagnostics shown as separate full lines below the code (default)
 - **Virtual Text**: Diagnostics shown inline at the end of the line
 - **Minimal**: Only underlines and signs shown; view full errors with `gl` or by navigating to diagnostic
@@ -800,6 +811,7 @@ Powered by blink.cmp with LuaSnip integration.
 ### Linters (via nvim-lint)
 
 - **JavaScript/TypeScript/Vue/Svelte**: eslint_d
+- **Markdown**: markdownlint-cli2
 
 ## Customization
 
@@ -894,6 +906,7 @@ Toggle auto-update with `<leader>uu` to enable/disable this behavior. The settin
 ```
 
 This command will:
+
 1. Check for uncommitted changes (and warn if any exist)
 2. Pull the latest changes from the remote repository
 3. Prompt you to restart Neovim to apply the updates

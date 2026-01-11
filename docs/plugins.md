@@ -72,6 +72,22 @@ Complete reference of all plugins in this configuration.
 
 **File:** `lua/plugins/lsp-config.lua`
 
+### mason-tool-installer.nvim
+
+**Auto-install LSP servers, formatters, and linters on startup**
+
+- Automatically installs all required tools on first launch
+- Runs after a 3-second delay to avoid blocking startup
+- Ensures consistent tooling across machines
+- No manual installation needed
+
+**Auto-installed tools:**
+- LSP Servers: json-lsp, lua_ls, marksman, svelte, vtsls
+- Formatters: prettierd, stylua, eslint_d
+- Linters: markdownlint-cli2
+
+**File:** `lua/plugins/lsp-config.lua`
+
 ### schemastore.nvim
 
 **JSON schemas for JSON LSP server**
@@ -335,6 +351,28 @@ Complete reference of all plugins in this configuration.
 - Many targets (buffers, files, quickfix, etc.)
 
 **File:** `lua/plugins/mini-bracketed.lua`
+
+### render-markdown.nvim
+
+**Enhanced markdown rendering with beautiful headings, code blocks, and lists**
+
+- Renders markdown with enhanced visual styling in Neovim
+- Beautiful heading icons and separators
+- Enhanced code block rendering
+- Styled lists with custom bullet points
+- Conceals markdown syntax for cleaner reading
+- Toggle rendering on/off as needed
+
+**Features:**
+- Heading icons for all levels (H1-H6)
+- Full-width code block rendering
+- Custom bullet point icons
+- Works with treesitter for accurate parsing
+
+**Keybindings:**
+- `<leader>mr` - Toggle markdown rendering
+
+**File:** `lua/plugins/render-markdown.lua`
 
 ## UI & Visual
 

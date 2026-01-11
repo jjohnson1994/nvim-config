@@ -84,6 +84,13 @@ vim.opt.updatetime = 300      -- Faster completion
 vim.opt.timeoutlen = 300      -- Faster which-key popup
 ```
 
+#### Command Preview
+```lua
+vim.opt.inccommand = "nosplit"  -- Preview substitutions inline
+```
+
+Shows live preview of substitutions (`:s/old/new/g`) directly in the buffer as you type.
+
 #### Folding (LSP-based)
 ```lua
 vim.opt.foldmethod = "expr"
@@ -142,6 +149,25 @@ The configuration supports three diagnostic display modes that can be toggled wi
 The selected mode persists across sessions. Press `<leader>ud` to cycle through modes: virtual lines → virtual text → minimal → virtual lines.
 
 Icons require a Nerd Font to display correctly.
+
+### Markdown-Specific Settings
+
+Markdown files have enhanced settings for better reading and editing experience:
+
+```lua
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.conceallevel = 2      -- Conceal markdown syntax
+    vim.opt_local.concealcursor = "nc"  -- Show syntax in insert/visual mode
+    vim.opt_local.spell = true          -- Enable spell checking
+    vim.opt_local.wrap = true           -- Wrap long lines
+    vim.opt_local.linebreak = true      -- Break at word boundaries
+  end,
+})
+```
+
+These settings work with the render-markdown.nvim plugin to provide a beautiful reading experience. Toggle rendering with `<leader>mr`.
 
 ## Plugin Manager (lazy.nvim)
 

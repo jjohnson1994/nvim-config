@@ -19,6 +19,7 @@ return {
       { "<leader>g", group = "Git/Go to" },
       { "<leader>h", group = "Hunk" },
       { "<leader>l", group = "LSP" },
+      { "<leader>m", group = "Markdown" },
       { "<leader>n", group = "Notifications" },
       { "<leader>t", group = "Toggle/Test" },
       { "<leader>u", group = "UI" },

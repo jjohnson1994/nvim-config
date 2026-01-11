@@ -15,6 +15,7 @@ return {
       typescriptreact = { "eslint_d" },
       vue = { "eslint_d" },
       svelte = { "eslint_d" },
+      markdown = { "markdownlint-cli2" },
     }
 
     -- Auto-lint on save and text changed

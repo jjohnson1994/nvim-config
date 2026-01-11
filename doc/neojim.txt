@@ -116,16 +116,17 @@ Windows (Scoop):
     nvim
 <
 
-4. Install LSP servers and tools:
->
-    :Mason
-<
-    Install these packages:
+4. Automatic installation:
+    - Plugins install automatically (via lazy.nvim)
+    - LSP servers, formatters, and linters auto-install after 3-second delay
+      (via mason-tool-installer.nvim)
+
+    Auto-installed tools:
     - LSP Servers: json-lsp, lua_ls, marksman, svelte, vtsls
     - Formatters: prettierd, stylua, eslint_d
-    - Linters: eslint_d
+    - Linters: markdownlint-cli2
 
-5. Restart Neovim and verify:
+5. Verify installation:
 >
     :checkhealth lazy
     :checkhealth vim.lsp
@@ -139,6 +140,7 @@ LSP & COMPLETION ~
     • LuaSnip - Snippet engine with friendly-snippets support
     • Native LSP - Uses Neovim 0.11+ vim.lsp.config API
     • mason.nvim - Package manager for LSP servers
+    • mason-tool-installer.nvim - Auto-install LSP servers, formatters, linters
     • schemastore.nvim - JSON schemas for JSON LSP server
 
 SYNTAX & PARSING ~
@@ -166,6 +168,7 @@ EDITING ENHANCEMENTS ~
     • mini.pairs - Auto-pairs for brackets
     • mini.basics - Common configuration presets
     • mini.bracketed - Navigate with [ and ]
+    • render-markdown.nvim - Enhanced markdown rendering
 
 UI & VISUAL ~
     • snacks.nvim - QoL plugins (notifications, scrolling, dashboard)
@@ -356,6 +359,9 @@ SNACKS ~
     <C-/>       Toggle terminal
     <C-_>       Toggle terminal (alternative)
 
+MARKDOWN ~
+    <Space>mr   Toggle markdown rendering
+
 UI TOGGLES ~
     <Space>uf   Toggle autoformat
     <Space>ul   Toggle auto-lint
@@ -403,6 +409,7 @@ FORMATTERS (via conform.nvim) ~
 
 LINTERS (via nvim-lint) ~
     • JavaScript/TypeScript/Vue/Svelte: eslint_d
+    • Markdown: markdownlint-cli2
 
 ==============================================================================
 8. CUSTOMIZATION                                   *neojim-customization*

@@ -279,6 +279,19 @@ When creating git commits:
 
 ## Plugin-Specific Notes
 
+### mason-tool-installer.nvim
+
+- Automatically installs all required LSP servers, formatters, and linters on startup
+- Configured with `run_on_start = true` and `start_delay = 3000` (3 seconds)
+- The delay prevents blocking startup while still ensuring tools are installed quickly
+- Auto-update is disabled (`auto_update = false`) - tools are only installed if missing
+- When adding new LSP servers, formatters, or linters:
+  - Add them to the `ensure_installed` list in `lua/plugins/lsp-config.lua`
+  - Update all documentation (README, VitePress, neojim.txt)
+  - Users will get the new tool automatically on next startup
+- No need to manually install tools via `:Mason` anymore - everything is automated
+- To manually check installation status: `:Mason`
+
 ### snacks.nvim
 
 - Unified quality-of-life plugin collection that replaces nvim-notify and neoscroll.nvim

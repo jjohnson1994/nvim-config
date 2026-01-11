@@ -331,6 +331,14 @@ When in terminal mode (`<c-/>`):
 | `<C-/>`     | Hide terminal          |
 | `<C-h/j/k/l>` | Navigate to window   |
 
+## Markdown
+
+| Key          | Mode | Action                    |
+| ------------ | ---- | ------------------------- |
+| `<leader>mr` | n    | Toggle markdown rendering |
+
+Powered by render-markdown.nvim. Enhances markdown viewing with beautiful headings, styled code blocks, and custom bullet points. Conceals markdown syntax for cleaner reading.
+
 ## UI Toggles
 
 | Key          | Mode | Action                                                            |

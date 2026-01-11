@@ -24,6 +24,7 @@ vim.opt.splitright = true
 vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.undofile = true
+vim.opt.inccommand = "nosplit" -- shows preview inline in the buffer
 
 -- Terminal title - set to project name
 vim.opt.title = true
@@ -249,5 +250,17 @@ end
 
 -- Configure statusline (see README.md "Status Bar" section for format details)
 vim.opt.statusline = "%<%f %h%m%r%{%v:lua.statusline_diagnostics()%}%=%((%l,%c%V %) %P"
+
+-- Markdown-specific settings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.opt_local.concealcursor = "nc"
+    vim.opt_local.spell = true
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+  end,
+})
 
 -- Note: LSP servers are enabled in lua/plugins/lsp-config.lua after configuration
