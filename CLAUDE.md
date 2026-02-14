@@ -264,6 +264,7 @@ When creating git commits:
 - State is saved to `~/.local/share/nvim/neojim_state.json` (or equivalent on your platform)
 - The following toggles are persisted:
   - Diagnostic display mode (`<leader>ud`) - virtual_lines, virtual_text, or minimal
+  - Tab path display (`<leader>ut`) - paths or filenames only
   - Autoformat (`<leader>uf`) - enabled/disabled
   - Auto-lint (`<leader>ul`) - enabled/disabled
   - Auto-pairs (`<leader>up`) - enabled/disabled
@@ -310,6 +311,13 @@ When creating git commits:
 - `<leader>fr` for remote flash (operator mode only)
 - `<leader>fR` for treesitter search (operator/visual modes)
 - Can be toggled in command mode with `<c-s>` during search
+
+### nvim-tree.lua
+
+- Tab sync is enabled (`tab.sync.open = true`, `tab.sync.close = true`)
+- When nvim-tree is open and a new tab is created/switched to, the tree auto-opens in that tab
+- Closing nvim-tree in any tab closes it across all tabs
+- Tree state (expanded folders) is shared across tab instances
 
 ### marks.nvim
 

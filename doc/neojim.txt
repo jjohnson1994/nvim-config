@@ -367,6 +367,7 @@ UI TOGGLES ~
     <Space>ul   Toggle auto-lint
     <Space>up   Toggle auto-pairs
     <Space>ud   Toggle diagnostic display (virtual lines → text → minimal)
+    <Space>ut   Toggle tab path display (paths vs filenames only)
     <Space>uu   Toggle auto-update (config, plugins, Treesitter, Mason registry)
     <Space>uw   Toggle line wrap
     <Space>th   Toggle inlay hints
@@ -456,6 +457,7 @@ Toggle with <Space>uf or edit lua/plugins/conform.lua
 TOGGLE PERSISTENCE ~
 All UI toggles persist across Neovim sessions automatically:
 • Diagnostic display mode (<Space>ud) - virtual_lines, virtual_text, or minimal
+• Tab path display (<Space>ut) - paths or filenames only
 • Autoformat (<Space>uf) - enabled/disabled
 • Auto-lint (<Space>ul) - enabled/disabled
 • Auto-pairs (<Space>up) - enabled/disabled

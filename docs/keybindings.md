@@ -347,6 +347,7 @@ Powered by render-markdown.nvim. Enhances markdown viewing with beautiful headin
 | `<leader>ul` | n    | Toggle auto-lint                                                  |
 | `<leader>up` | n    | Toggle auto-pairs                                                 |
 | `<leader>ud` | n    | Toggle diagnostic display (cycles: virtual lines → text → minimal) |
+| `<leader>ut` | n    | Toggle tab path display (paths vs filenames only)                 |
 | `<leader>uu` | n    | Toggle auto-update (config, plugins, Treesitter, Mason registry)  |
 | `<leader>uw` | n    | Toggle line wrap                                                  |
 | `<leader>th` | n    | Toggle inlay hints                                                |

@@ -288,6 +288,13 @@ See [Statusline documentation](/statusline) for details.
 vim.g.autoformat = true  -- Enable/disable auto-format on save
 ```
 
+### Tab Path Display Toggle
+```lua
+vim.g.tabline_paths = true  -- Show abbreviated paths in tabs (false = filenames only)
+```
+
+Toggle with `<leader>ut`. When enabled (default), tabs show abbreviated file paths (e.g., `l/p/filename.lua`). When disabled, tabs show only the filename.
+
 ### Auto Update Toggle
 ```lua
 vim.g.auto_update_check = true  -- Enable/disable automatic updates on startup

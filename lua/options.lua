@@ -216,6 +216,69 @@ keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 -- Toggle diagnostic display mode
 keymap("n", "<leader>ud", toggle_diagnostic_mode, { desc = "Toggle diagnostic display mode" })
 
+-- Custom tabline with toggleable path display
+vim.g.tabline_paths = persist.get("tabline_paths", true)
+
+function _G.custom_tabline()
+  local s = ""
+  for i = 1, vim.fn.tabpagenr("$") do
+    local buflist = vim.fn.tabpagebuflist(i)
+    local winnr = vim.fn.tabpagewinnr(i)
+    local bufnr = buflist[winnr]
+
+    -- If the active window is a special buffer (e.g. NvimTree), find a regular file buffer instead
+    local ft = vim.fn.getbufvar(bufnr, "&filetype")
+    if ft == "NvimTree" or ft == "neo-tree" or ft == "help" then
+      for _, b in ipairs(buflist) do
+        local bft = vim.fn.getbufvar(b, "&filetype")
+        if bft ~= "NvimTree" and bft ~= "neo-tree" and bft ~= "help" then
+          bufnr = b
+          break
+        end
+      end
+    end
+
+    local name = vim.fn.bufname(bufnr)
+
+    if name == "" then
+      name = "[No Name]"
+    elseif vim.g.tabline_paths then
+      name = vim.fn.pathshorten(vim.fn.fnamemodify(name, ":."))
+    else
+      name = vim.fn.fnamemodify(name, ":t")
+    end
+
+    -- Modified indicator
+    if vim.fn.getbufvar(bufnr, "&modified") == 1 then
+      name = name .. " [+]"
+    end
+
+    -- Highlight active tab
+    if i == vim.fn.tabpagenr() then
+      s = s .. "%#TabLineSel#"
+    else
+      s = s .. "%#TabLine#"
+    end
+
+    s = s .. " " .. i .. " " .. name .. " "
+  end
+
+  s = s .. "%#TabLineFill#%T"
+  return s
+end
+
+vim.opt.tabline = "%!v:lua.custom_tabline()"
+
+local function toggle_tabline_paths()
+  vim.g.tabline_paths = not vim.g.tabline_paths
+  persist.set("tabline_paths", vim.g.tabline_paths)
+  vim.cmd("redrawtabline")
+  local status = vim.g.tabline_paths and "paths" or "filenames only"
+  vim.notify("Tab display: " .. status, vim.log.levels.INFO)
+end
+
+keymap("n", "<leader>ut", toggle_tabline_paths, { desc = "Toggle tab paths" })
+
 -- Toggle line wrapping
 local function toggle_wrap()
   vim.opt.wrap = not vim.opt.wrap:get()

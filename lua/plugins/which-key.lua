@@ -90,6 +90,13 @@ return {
         end,
       },
       {
+        "<leader>ut",
+        desc = function()
+          local action = vim.g.tabline_paths and "filenames only" or "paths"
+          return "Tab display (" .. action .. ")"
+        end,
+      },
+      {
         "<leader>uw",
         desc = function()
           local action = vim.g.wrap_enabled and "disable" or "enable"
